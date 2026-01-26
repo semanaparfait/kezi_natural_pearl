@@ -1,4 +1,4 @@
-import { Award, Leaf, Shield, Heart, Sparkles } from "lucide-react"
+import { Award, Leaf, Shield, Heart } from "lucide-react"
 
 function WhyChooseKezi() {
   const features = [

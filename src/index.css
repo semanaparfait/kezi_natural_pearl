@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+:root {
+  --primary-color: #5f7c6a;
+    --primary: #3f5f50;
+    --secondary-light-green:#e9f2ec;
+    --secondary-cream-white:#faf9f6;
+    --secondary-beige:#f2ede6;
+    --accent-color:#c9a86a;
+    --gold-color:#b8935a;
+    --bolder-gray:#e0e0e0;
+    --dark-background:#1e2a3a;
+    --dark-card:#2A3A4A;
+    --success-green:#4CAF50;
+    --error-red:#D9534F;
+}

@@ -14,7 +14,7 @@ function Navbar() {
     ]
   return (
     <header>
-        <nav className='flex items-center justify-between p-4 bg-[var(--primary)] text-white'>
+        <nav className='flex items-center justify-between px-4 bg-[var(--primary)] text-white'>
             <div>
                 <img src={logo} alt="KEZI Logo" className='w-15 h-15 brightness-0 invert' />
             </div>

@@ -1,6 +1,7 @@
 import Button from "@/components/Button"
 import { ArrowRight } from "lucide-react"
 import { Link } from "react-router-dom"
+import Heroimg from '@/assets/hero/hero.jpeg'
 
 function Hero() {
   return (
@@ -8,7 +9,7 @@ function Hero() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1920&q=80')`,
+          backgroundImage: `url(${Heroimg})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />

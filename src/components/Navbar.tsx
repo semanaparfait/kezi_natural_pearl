@@ -8,9 +8,9 @@ function Navbar() {
     const Pathanme = useLocation().pathname;
     const Links = [
         {name: "Home", link: "/"},
+        {name: "Shop", link: "/shop"},
         {name: "About", link: "/about"},
         {name: "Contact Us", link: "/contact-us"},
-        {name: "Account", link: "/account"},
     ]
   return (
     <header>
@@ -18,7 +18,7 @@ function Navbar() {
             <div>
                 <img src={logo} alt="KEZI Logo" className='w-15 h-15 brightness-0 invert' />
             </div>
-            <ul className='flex gap-4'>
+            <ul className='md:flex hidden gap-4'>
                 {Links.map((link) => (
                     <li key={link.name} >
                         <Link to={link.link} className={`${Pathanme === link.link ? "text-[var(--gold-color)] underline font-semibold" : ""}`}>
@@ -38,9 +38,11 @@ function Navbar() {
                 </select>
                 </div>
                 <ShoppingCart/>
+                <Link to="/account">
                 <Button variant="primary" size="md">
                     Sign Up
                 </Button>
+                </Link>
             </div>
 
         </nav>

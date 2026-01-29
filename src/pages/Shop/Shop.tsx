@@ -1,6 +1,12 @@
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
+
 function Shop() {
   return (
-    <div>Shop</div>
+    <section>
+      <Navbar/>
+      <Footer/>
+    </section>
   )
 }
 

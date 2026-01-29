@@ -3,6 +3,7 @@ import Button from '@/components/Button';
 import { useLocation } from 'react-router-dom';
 import { Globe,  ShoppingCart,} from 'lucide-react';
 import logo from '@/assets/logo-Kezi (1).svg'
+import '@/components/Navbar.css'
 
 function Navbar() {
     const Pathanme = useLocation().pathname;
@@ -32,9 +33,9 @@ function Navbar() {
                 <div className='flex items-center gap-2'>
                     <Globe/>
 
-                <select >
+                <select className='bg-[var(--gold-color)] text-[var(--primary)] rounded-md p-1 outline-none'>
                     <option value="en">EN</option>
-                    <option value="es">ES</option>
+                    <option value="es">KI</option>
                     <option value="fr">FR</option>
                 </select>
                 </div>
@@ -44,6 +45,9 @@ function Navbar() {
                     Sign Up
                 </Button>
                 </Link>
+                <div>
+                    
+                </div>
             </div>
 
         </nav>

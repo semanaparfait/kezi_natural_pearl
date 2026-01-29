@@ -1,6 +1,7 @@
 import { useState} from "react"
 import Button from "@/components/Button"
 import Footer from "@/components/Footer"
+import { useNavigate } from "react-router-dom";
 import Input from "@/components/Input"
 import Navbar from "@/components/Navbar"
 import image from '@/assets/account/illistrator.svg'
@@ -8,10 +9,11 @@ import { toast } from "react-hot-toast"
 import {useLoginMutation,useRegisterMutation} from '@/features/auth/authApi'
 
 function Account() {
+  const navigate = useNavigate();
   const [action, setAction] = useState<'signup' | 'signin'>('signup');
   const [formData, setFormData] = useState({
     email: '',
-    phonenumber: '',
+    phoneNumber: '',
     password: '',
   });
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
@@ -23,7 +25,7 @@ function Account() {
       try {
         await register({
           email: formData.email,
-          phonenumber: formData.phonenumber,
+          phoneNumber: formData.phoneNumber,
           password: formData.password,
         }).unwrap();
 
@@ -32,7 +34,7 @@ function Account() {
         setFormData({
           email: formData.email,
           password: '',
-          phonenumber: ''
+          phoneNumber: ''
         });
       } catch (err: any) {
         console.error('Signup error:', err);
@@ -41,11 +43,15 @@ function Account() {
       }
       return;
     }
-
-    // Sign in flow
     try {
-      await login({ email: formData.email, password: formData.password }).unwrap();
+      const response = await login({
+         identifier: formData.email || formData.phoneNumber,
+         password: formData.password }).unwrap();
       toast.success('Signed in successfully!');
+      if(response.token) {
+        localStorage.setItem('token', response.token);
+      }
+      navigate('/');
     } catch (err: any) {
       console.error('Signin error:', err);
       const errorMsg = err?.data?.message || 'Signin failed';
@@ -91,7 +97,6 @@ function Account() {
             {action === 'signup' ? 'Create Account' : 'Welcome Back'}
           </h1>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            {action === 'signup' && (
             <Input 
               label="Email" 
               type="email" 
@@ -100,17 +105,18 @@ function Account() {
               className="outline-none" 
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
-            )}
+              />
+              {action === 'signup' && (
             <Input 
               label="Phone Number" 
               type="tel"
               placeholder="Enter your phone number"
               required 
               className="outline-none"
-              value={formData.phonenumber}
-              onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })}
+              value={formData.phoneNumber}
+              onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
             />
+              )}
             <Input 
               label="Password" 
               type="password" 
@@ -120,9 +126,9 @@ function Account() {
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
-            <Button variant="primary" size="md" fullWidth disabled={isLoginLoading || isRegisterLoading}>
+            <button variant="primary" size="md" disabled={isLoginLoading || isRegisterLoading}>
               {(isLoginLoading || isRegisterLoading) ? 'loading...' : (action === 'signup' ? 'Sign Up' : 'Sign In')}
-            </Button>
+            </button>
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />

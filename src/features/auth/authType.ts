@@ -14,12 +14,12 @@ export interface AuthResponse {
 }
 
 export interface LoginCredentials {
-  email: string;
+  identifier: string;
   password: string;
 }
 
 export interface RegisterData {
   email: string;
-  phonenumber: string;
+  phoneNumber: string;
   password: string;
 }

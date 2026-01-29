@@ -1,11 +1,11 @@
 import {baseApi} from '@/services/baseApi'
-import type{ AuthResponse,LoginCredentials,RegisterData} from '@/features/auth/authType'
+import type{ AuthResponse,LoginCredentials,RegisterData, User} from '@/features/auth/authType'
 
 export const authSlice = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation<AuthResponse, LoginCredentials>({
             query: (LoginCredentials) => ({
-                url: '/auth/login',
+                url: '/api/v1/Auth/login',
                 method: 'POST',
                 body: LoginCredentials,
             }),
@@ -17,6 +17,13 @@ export const authSlice = baseApi.injectEndpoints({
                 body: RegisterData,
             }),
         }),
+        getCurrentUser: builder.query<User, void>({
+            query: () => ({
+                url: '/api/v1/Auth/me',
+                method: 'GET',
+            }),
+            providesTags: ['User'],
+        }),
         logout: builder.mutation({
             query: () => ({
                 url: '/auth/logout',
@@ -26,4 +33,4 @@ export const authSlice = baseApi.injectEndpoints({
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = authSlice;
+export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useLogoutMutation } = authSlice;

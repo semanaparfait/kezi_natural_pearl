@@ -1,0 +1,14 @@
+select  ::picker(select){
+appearance: base-select;
+width: 200px;
+overflow: hidden;
+}
+::picker(select){
+    border: 0;
+    margin: .4rem 0;
+    box-shadow: 0 0 5px rgba(160, 19, 19, 0.15);
+}
+option{
+    font-size: 14px;
+    padding: 12px;
+}

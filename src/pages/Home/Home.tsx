@@ -13,8 +13,8 @@ function Home() {
         <Hero />
         <Category />
         <WhyChooseKezi />
-        <Testimonies />
         <Trendings/>
+        <Testimonies />
         <Footer />
     </div>
   )

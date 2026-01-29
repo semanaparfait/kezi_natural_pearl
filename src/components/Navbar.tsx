@@ -6,6 +6,7 @@ import logo from '@/assets/logo-Kezi (1).svg'
 
 function Navbar() {
     const Pathanme = useLocation().pathname;
+    const isHomePage = Pathanme === '/';
     const Links = [
         {name: "Home", link: "/"},
         {name: "Shop", link: "/shop"},
@@ -13,8 +14,8 @@ function Navbar() {
         {name: "Contact Us", link: "/contact-us"},
     ]
   return (
-    <header className='absolute top-0 z-50 w-full text-white '>
-        <nav className='flex items-center justify-between px-4 bg-transparent '>
+    <header className={`absolute top-0 z-50 w-full text-white ${!isHomePage ? 'bg-[var(--primary)]' : ''}`}>
+        <nav className='flex items-center justify-between px-4'>
             <div>
                 <img src={logo} alt="KEZI Logo" className='w-15 h-15 brightness-0 invert' />
             </div>

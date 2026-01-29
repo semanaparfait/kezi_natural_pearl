@@ -1,16 +1,16 @@
-import { useState } from "react"
+
 import Button from "@/components/Button"
 import Footer from "@/components/Footer"
 import Input from "@/components/Input"
 import Navbar from "@/components/Navbar"
-import {Mail, Phone, MapPin} from 'lucide-react'
+// import {Mail, Phone, MapPin} from 'lucide-react'
 
 function ContactUs() {
- const contactInfo = [
-    { type: 'phone' , value: '+1 (555) 123-4567', icon: <Phone /> },
-    { type: 'email' , value: 'contact@example.com', icon: <Mail /> },
-    { type: 'address' , value: '123 Main St, Anytown, USA', icon: <MapPin /> },
- ]
+//  const contactInfo = [
+//     { type: 'phone' , value: '+1 (555) 123-4567', icon: <Phone /> },
+//     { type: 'email' , value: 'contact@example.com', icon: <Mail /> },
+//     { type: 'address' , value: '123 Main St, Anytown, USA', icon: <MapPin /> },
+//  ]
 
   return (
     <section>
@@ -103,10 +103,9 @@ function ContactUs() {
       <div className="px-4 mb-4">
         <iframe
          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4730576220622!2d30.098852474015416!3d-1.9646178980175963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca9b295f0ced9%3A0x3cb73a2a3f5aa7c5!2sSOLVIT%20AFRICA%20Training%20Center!5e0!3m2!1sen!2srw!4v1769590230322!5m2!1sen!2srw" 
-           allowfullscreen="" 
            height={350}
            className="w-full rounded-2xl"
-           referrerpolicy="no-referrer-when-downgrade">
+           referrerPolicy="no-referrer-when-downgrade">
 
            </iframe>
       </div>

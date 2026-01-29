@@ -6,7 +6,6 @@ import { Facebook, Instagram, Twitter, Youtube, Phone, Mail,MapPin } from 'lucid
 
 function Footer() {
   const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
 
   return (
     <section className='bg-[var(--primary)] text-white'>

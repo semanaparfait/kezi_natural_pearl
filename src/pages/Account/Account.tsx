@@ -23,13 +23,11 @@ function Account() {
       try {
         await register({
           email: formData.email,
+          phonenumber: formData.phonenumber,
           password: formData.password,
-          phoneNumber: formData.phonenumber,
         }).unwrap();
 
         toast.success('Account created successfully! Please log in.');
-
-        // Switch to login form and keep the email for convenience
         setAction('signin');
         setFormData({
           email: formData.email,
@@ -58,7 +56,7 @@ function Account() {
 
   return (
     <section className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar bgColor="bg-blue-200" />
+      <Navbar />
       <div className="flex flex-1 flex-col md:flex-row items-center justify-center gap-8 md:gap-16 px-6 md:px-12 lg:px-24 ">
           <div className=" hidden">
             <img

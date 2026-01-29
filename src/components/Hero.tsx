@@ -5,11 +5,13 @@ import Heroimg from '@/assets/hero/hero.jpeg'
 
 function Hero() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative min-h-screen w-full overflow-hidden ">
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${Heroimg})`,
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          backgroundBlendMode: 'screen',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
@@ -47,19 +49,25 @@ function Hero() {
             </Link>
           </div>
 
-          <div className="flex flex-wrap gap-8 pt-8 border-t border-white/20">
-            <div>
-              <div className="text-3xl font-bold text-[var(--primary)]">100%</div>
-              <p className="text-sm text-white/80">Natural Ingredients</p>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-[var(--primary)]">Safe</div>
-              <p className="text-sm text-white/80">For All Ages</p>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-[var(--primary)]">5★</div>
-              <p className="text-sm text-white/80">Customer Rated</p>
-            </div>
+          <div className="flex flex-wrap gap-3 pt-8 border-t border-white/20 items-center">
+              <div className="flex -space-x-3">
+                <img 
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" 
+                  alt="Family member 1"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                />
+                <img 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
+                  alt="Family member 2"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                />
+                <img 
+                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" 
+                  alt="Family member 3"
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                />
+              </div>
+              <p className="text-white">Trusted by 2,000 + families</p>
           </div>
         </div>
       </div>

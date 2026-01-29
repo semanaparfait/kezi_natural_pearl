@@ -30,7 +30,7 @@ function Testimonies() {
   ]
 
   return (
-    <section className=" bg-white overflow-hidden">
+    <section className=" bg-white overflow-hidden hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
 
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">

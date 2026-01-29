@@ -3,6 +3,8 @@ import Home from '@/pages/Home/Home'
 import ContactUs from "@/pages/Contact-us/ContactUs";
 import Account from "@/pages/Account/Account";
 import { Toaster } from 'react-hot-toast'
+import About from "@/pages/About/About";
+import Shop from "@/pages/Shop/Shop";
 function App() {
 
 
@@ -15,6 +17,8 @@ function App() {
     <Route path="/" element={<Home />} />
     <Route path="/contact-us" element={<ContactUs />} />
     <Route path="/account" element={<Account />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/shop" element={<Shop />} />
   </Routes>
 </BrowserRouter>
 

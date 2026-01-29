@@ -13,12 +13,12 @@ function Navbar() {
         {name: "Contact Us", link: "/contact-us"},
     ]
   return (
-    <header>
-        <nav className='flex items-center justify-between px-4 bg-[var(--primary)] text-white'>
+    <header className='absolute top-0 z-50 w-full text-white '>
+        <nav className='flex items-center justify-between px-4 bg-transparent '>
             <div>
                 <img src={logo} alt="KEZI Logo" className='w-15 h-15 brightness-0 invert' />
             </div>
-            <ul className='md:flex hidden gap-4'>
+            <ul className='md:flex hidden gap-4 bg-white/10 px-10 py-2 rounded-full'>
                 {Links.map((link) => (
                     <li key={link.name} >
                         <Link to={link.link} className={`${Pathanme === link.link ? "text-[var(--gold-color)] underline font-semibold" : ""}`}>

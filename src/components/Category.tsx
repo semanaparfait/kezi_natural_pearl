@@ -1,5 +1,5 @@
-import adults from '@/assets/category/adults.jpeg'
-import kids from '@/assets/category/kids.jpeg'
+import adults from '@/assets/category/c2.jpeg'
+import kids from '@/assets/category/c1.jpeg'
 import { ArrowRight } from 'lucide-react'
 function Category() {
   const categories = [

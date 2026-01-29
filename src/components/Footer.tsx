@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import logo from '@/assets/logo-Kezi (1).svg'
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react'
+import { Facebook, Instagram, Twitter, Youtube, Phone, Mail,MapPin } from 'lucide-react'
 
 function Footer() {
   const [email, setEmail] = useState('')
@@ -25,13 +25,6 @@ function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className='!border-white/30 !bg-white/10 !text-white placeholder:!text-white/50'
-              />
-              <textarea 
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className='w-full p-3 rounded-2xl border border-white/30 bg-white/10 text-white placeholder-white/50 resize-none focus:border-[var(--gold-color)] focus:ring-2 focus:ring-[var(--gold-color)] transition' 
-                rows={3} 
-                placeholder='Your message'
               />
               <Button fullWidth>Subscribe</Button>
             </div>
@@ -63,9 +56,9 @@ function Footer() {
           <div className='flex flex-col gap-3 flex-1 min-w-[200px]'>
             <h2 className='font-semibold text-lg'>Contact Us</h2>
             <ul className='flex flex-col gap-2'>
-              <li className='text-sm text-white/80'>📍 123 Main St, City, Country</li>
-              <li><a href='mailto:info@kezi.com' className='text-sm text-white/80 hover:text-white transition'>📧 info@kezi.com</a></li>
-              <li><a href='tel:+1234567890' className='text-sm text-white/80 hover:text-white transition'>📞 +123 456 7890</a></li>
+              <li className='text-sm text-white/80 flex gap-2'><MapPin/> 123 Main St, City, Country</li>
+              <li><a href='mailto:info@kezi.com' className='text-sm text-white/80 hover:text-white transition flex gap-2'><Mail/> info@kezi.com</a></li>
+              <li><a href='tel:+1234567890' className='text-sm text-white/80 hover:text-white transition flex gap-2'><Phone/> +123 456 7890</a></li>
             </ul>
             <div className='flex gap-3 mt-2'>
               <a href='#' aria-label='Facebook' className='flex items-center justify-center w-9 h-9 rounded-full bg-[var(--gold-color)] text-white hover:bg-[var(--accent-color)] transition'>

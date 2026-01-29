@@ -10,7 +10,6 @@ import {useLoginMutation,useRegisterMutation} from '@/features/auth/authApi'
 function Account() {
   const [action, setAction] = useState<'signup' | 'signin'>('signup');
   const [formData, setFormData] = useState({
-    fullname: '',
     email: '',
     phonenumber: '',
     password: '',
@@ -23,10 +22,9 @@ function Account() {
     if (action === 'signup') {
       try {
         await register({
-          fullname: formData.fullname,
           email: formData.email,
           password: formData.password,
-          phonenumber: formData.phonenumber,
+          phoneNumber: formData.phonenumber,
         }).unwrap();
 
         toast.success('Account created successfully! Please log in.');
@@ -36,7 +34,6 @@ function Account() {
         setFormData({
           email: formData.email,
           password: '',
-          fullname: '',
           phonenumber: ''
         });
       } catch (err: any) {
@@ -61,16 +58,16 @@ function Account() {
 
   return (
     <section className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar />
+      <Navbar bgColor="bg-blue-200" />
       <div className="flex flex-1 flex-col md:flex-row items-center justify-center gap-8 md:gap-16 px-6 md:px-12 lg:px-24 ">
-          <div className="md:flex hidden">
+          <div className=" hidden">
             <img
               src={image}
               alt="Account Illustration"
               className="w-full h-auto max-w-md mx-auto"
             />
           </div>
-      <div className="flex-1 flex items-center justify-center  py-16 ">
+      <div className="flex-2 flex items-center justify-center  py-16 ">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
           <div className="flex items-center justify-center mb-8">
             <div className="inline-flex bg-gray-100 rounded-full p-1 gap-1">
@@ -97,16 +94,6 @@ function Account() {
           </h1>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             {action === 'signup' && (
-              <Input 
-                label="Name" 
-                type="text" 
-                placeholder="Enter your name" 
-                required
-                className="outline-none"
-                value={formData.fullname}
-                onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
-              />
-            )}
             <Input 
               label="Email" 
               type="email" 
@@ -116,6 +103,7 @@ function Account() {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
+            )}
             <Input 
               label="Phone Number" 
               type="tel"

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_REACT_APP_API_URL,
+  baseUrl: 'https://kezi-pearl-production.up.railway.app',
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('accessToken');
     if (token) {

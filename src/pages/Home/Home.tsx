@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import Navbar from '@/components/Navbar'
 import Testimonies from '@/components/Testimonies'
+import Trendings from '@/components/Trendings'
 import  WhyChooseKezi from '@/components/WhyChooseKezi'
 
 function Home() {
@@ -13,6 +14,7 @@ function Home() {
         <Category />
         <WhyChooseKezi />
         <Testimonies />
+        <Trendings/>
         <Footer />
     </div>
   )

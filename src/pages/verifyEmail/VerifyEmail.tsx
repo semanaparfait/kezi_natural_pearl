@@ -9,20 +9,22 @@ function VerifyEmail() {
 
   const [verifyEmail] = useVerifyEmailMutation()
 
-const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying')
+
 
 useEffect(() => {
-  if (!token) return
+
+  if (!token) {
+    return
+  }
 
   verifyEmail({ token })
     .unwrap()
     .then((res) => {
       localStorage.setItem('token', res.token)
-      setStatus('success')
       setTimeout(() => navigate('/'), 1500)
     })
-    .catch(() => setStatus('error'))
-}, [token])
+}, [token, verifyEmail, navigate])
+
 
 
   return (

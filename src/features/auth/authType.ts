@@ -10,6 +10,8 @@ export interface User {
 }
 export interface AuthResponse {
   user: User;
+  email: string;
+  role: string;
   token: string;
 }
 

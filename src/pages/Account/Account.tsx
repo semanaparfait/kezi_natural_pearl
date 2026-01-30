@@ -51,6 +51,9 @@ function Account() {
       if(response.token) {
         localStorage.setItem('token', response.token);
       }
+      if (response.user) {
+        localStorage.setItem('user', JSON.stringify(response.user));
+      }
       navigate('/');
     } catch (err: any) {
       console.error('Signin error:', err);

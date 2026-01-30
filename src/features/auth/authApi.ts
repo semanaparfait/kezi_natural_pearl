@@ -17,9 +17,9 @@ export const authSlice = baseApi.injectEndpoints({
                 body: RegisterData,
             }),
         }),
-        getCurrentUser: builder.query<User, void>({
+        getCurrentUser: builder.query<AuthResponse, void>({
             query: () => ({
-                url: '/api/v1/Auth/me',
+                url: '/api/v1/user/me',
                 method: 'GET',
             }),
             providesTags: ['User'],

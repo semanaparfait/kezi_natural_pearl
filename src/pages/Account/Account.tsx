@@ -30,12 +30,13 @@ function Account() {
         }).unwrap();
 
         toast.success('Account created successfully! Please log in.');
-        setAction('signin');
-        setFormData({
-          email: formData.email,
-          password: '',
-          phoneNumber: ''
-        });
+        navigate('/verify-email')
+        // setAction('signin');
+        // setFormData({
+        //   email: formData.email,
+        //   password: '',
+        //   phoneNumber: ''
+        // });
       } catch (err: any) {
         console.error('Signup error:', err);
         const errorMsg = err?.data?.message || 'Signup failed';

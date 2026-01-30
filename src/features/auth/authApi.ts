@@ -1,5 +1,5 @@
 import {baseApi} from '@/services/baseApi'
-import type{ AuthResponse,LoginCredentials,RegisterData, User} from '@/features/auth/authType'
+import type{ AuthResponse,LoginCredentials,RegisterData, } from '@/features/auth/authType'
 
 export const authSlice = baseApi.injectEndpoints({
     endpoints: (builder) => ({

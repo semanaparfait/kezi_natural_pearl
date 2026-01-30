@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Button from '@/components/Button';
 import { useLocation } from 'react-router-dom';
-import { Globe, ShoppingCart, ChevronDown, Package, LayoutDashboard, LogOut, PersonStanding, CircleUser } from 'lucide-react';
+import { Globe, ShoppingCart, ChevronDown, Package, LayoutDashboard, LogOut,  CircleUser } from 'lucide-react';
 import logo from '@/assets/logo-Kezi (1).svg';
 import '@/components/Navbar.css';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';

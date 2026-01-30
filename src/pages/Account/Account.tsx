@@ -1,5 +1,5 @@
 import { useState} from "react"
-import Button from "@/components/Button"
+// import Button from "@/components/Button"
 import Footer from "@/components/Footer"
 import { useNavigate } from "react-router-dom";
 import Input from "@/components/Input"
@@ -130,7 +130,10 @@ function Account() {
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
-            <button variant="primary" size="md" disabled={isLoginLoading || isRegisterLoading}>
+            {/* <button variant="primary" size="md" disabled={isLoginLoading || isRegisterLoading}>
+              {(isLoginLoading || isRegisterLoading) ? 'loading...' : (action === 'signup' ? 'Sign Up' : 'Sign In')}
+            </button> */}
+              <button   disabled={isLoginLoading || isRegisterLoading}>
               {(isLoginLoading || isRegisterLoading) ? 'loading...' : (action === 'signup' ? 'Sign Up' : 'Sign In')}
             </button>
             <div className="relative my-4">

@@ -5,12 +5,23 @@ import Input from "@/components/Input"
 import Navbar from "@/components/Navbar"
 // import {Mail, Phone, MapPin} from 'lucide-react'
 
+import React, { useState } from "react"
+
 function ContactUs() {
 //  const contactInfo = [
 //     { type: 'phone' , value: '+1 (555) 123-4567', icon: <Phone /> },
 //     { type: 'email' , value: 'contact@example.com', icon: <Mail /> },
 //     { type: 'address' , value: '123 Main St, Anytown, USA', icon: <MapPin /> },
 //  ]
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   return (
     <section>
@@ -41,6 +52,8 @@ function ContactUs() {
                   placeholder="Your full name"
                   required
                   className="outline-none"
+                  value={form.name}
+                  onChange={handleChange}
                 />           
                 <Input
                   label="Email"
@@ -48,6 +61,8 @@ function ContactUs() {
                   placeholder="you@example.com"
                   required
                   className="outline-none"
+                  value={form.email}
+                  onChange={handleChange}
                 />
               <div>
                 <label htmlFor="subject" className="block text-sm font-semibold text-gray-900 mb-2">

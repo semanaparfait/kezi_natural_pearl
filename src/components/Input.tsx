@@ -11,7 +11,7 @@ interface EnhancedInputProps extends InputProps {
 }
 
 const baseClass =
-  "block rounded-2xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-[var(--gold-color)] focus:ring-2 focus:ring-[var(--gold-color)] transition w-full disabled:opacity-60 disabled:cursor-not-allowed px-4 py-2 text-sm"
+  "block outline-none rounded-2xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-[var(--gold-color)] focus:ring-2 focus:ring-[var(--gold-color)] transition w-full disabled:opacity-60 disabled:cursor-not-allowed px-4 py-2 text-sm "
 
 const Input: React.FC<EnhancedInputProps> = ({
   label,

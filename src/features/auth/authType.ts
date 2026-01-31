@@ -11,6 +11,10 @@ export interface User {
 export interface AuthResponse {
   user: User;
   email: string;
+  profile: string;
+  fullName: string;
+  phoneNumber: string;
+  createdAt: string;
   role: string;
   token: string;
 }
@@ -22,6 +26,8 @@ export interface LoginCredentials {
 
 export interface RegisterData {
   email: string;
+  fullName?: string;
+  profile?: string;
   phoneNumber: string;
   password: string;
 }

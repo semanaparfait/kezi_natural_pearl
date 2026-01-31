@@ -29,7 +29,7 @@ function Navbar() {
   };
 
   return (
-    <header className={`absolute top-0 z-50 w-full text-white ${!isHomePage ? 'bg-[var(--primary)]' : ''}`}>
+    <header className={` top-0 z-50 w-full text-white ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'}`}>
       <nav className="flex items-center justify-between px-4">
         <div>
           <img src={logo} alt="KEZI Logo" className="w-15 h-15 brightness-0 invert" />
@@ -99,7 +99,7 @@ function Navbar() {
               Profile
             </Link>
                       <Link 
-              to="/owner/dashboard" 
+              to="/userDashboard" 
               className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
               onClick={() => setDropdownOpen(false)}
             >

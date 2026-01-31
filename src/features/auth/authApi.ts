@@ -24,6 +24,22 @@ export const authSlice = baseApi.injectEndpoints({
             }),
             providesTags: ['User'],
         }),
+        updateUser: builder.mutation< AuthResponse, Partial<RegisterData>>({
+            query: (data) => ({
+                url: '/api/v1/user/me',
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['User'],
+        }),
+        deleteUser: builder.mutation<void, { password: string }>({
+            query: ({ password }) => ({
+                url: '/api/v1/user/me',
+                method: 'DELETE',
+                body: { password },
+            }),
+            invalidatesTags: ['User'],
+        }),
         logout: builder.mutation({
             query: () => ({
                 url: '/auth/logout',
@@ -33,4 +49,4 @@ export const authSlice = baseApi.injectEndpoints({
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useLogoutMutation } = authSlice;
+export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation, useLogoutMutation } = authSlice;

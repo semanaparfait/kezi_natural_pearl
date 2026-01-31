@@ -7,6 +7,7 @@ import About from "@/pages/About/About";
 import Shop from "@/pages/Shop/Shop";
 import VerifyEmail from "@/pages/verifyEmail/VerifyEmail";
 import VerifySuccess from "@/pages/verifySuccessful/verifySuccessful";
+import UserDashboard from "@/pages/UserDashboard/UserDashboard";
 function App() {
 
 
@@ -23,6 +24,7 @@ function App() {
     <Route path="/shop" element={<Shop />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
     <Route path="/verification-successful*" element={<VerifySuccess />} />
+    <Route path="/userDashboard" element={<UserDashboard />} />
   </Routes>
 </BrowserRouter>
 

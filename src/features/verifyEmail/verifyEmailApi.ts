@@ -4,7 +4,7 @@ import type { User } from '@/features/auth/authType'
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     verifyEmail: builder.query<
-      { token: string; user: User },
+      { token: string; message: string }, // Match backend: token and message
       { token: string }
     >({
       query: ({ token }) => ({
@@ -12,6 +12,8 @@ export const authApi = baseApi.injectEndpoints({
         method: 'GET',
         params: { token },
       }),
+      // We use providesTags so that other parts of the app 
+      // know the user status might have changed
       providesTags: ['User'],
     }),
   }),

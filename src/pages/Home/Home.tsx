@@ -5,11 +5,12 @@ import Navbar from '@/components/Navbar'
 import Testimonies from '@/components/Testimonies'
 import Trendings from '@/components/Trendings'
 import  WhyChooseKezi from '@/components/WhyChooseKezi'
-
+import Voice from '@/Voice/Voice'
 function Home() {
   return (
     <div>
         <Navbar />
+        <Voice />
         <Hero />
         <Category />
         <WhyChooseKezi />

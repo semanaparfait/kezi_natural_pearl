@@ -30,7 +30,7 @@ function Account() {
         }).unwrap();
           
         toast.success('Account created successfully! Please log in.');
-        navigate('/verify-email')
+        navigate('/verification-successful')
         // setAction('signin');
         // setFormData({
         //   email: formData.email,

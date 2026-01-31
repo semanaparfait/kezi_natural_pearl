@@ -3,19 +3,19 @@ import type { User } from '@/features/auth/authType'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    verifyEmail: builder.mutation<
+    verifyEmail: builder.query<
       { token: string; user: User },
       { token: string }
     >({
       query: ({ token }) => ({
         url: '/api/v1/auth/verify-email',
-        method: 'POST',
-        body: { token },
+        method: 'GET',
+        params: { token },
       }),
-      invalidatesTags: ['User'],
+      providesTags: ['User'],
     }),
   }),
   overrideExisting: false,
 })
 
-export const { useVerifyEmailMutation } = authApi
+export const { useVerifyEmailQuery } = authApi

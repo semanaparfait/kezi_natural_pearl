@@ -22,7 +22,7 @@ function App() {
     <Route path="/about" element={<About />} />
     <Route path="/shop" element={<Shop />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
-    <Route path="/verification-successful" element={<VerifySuccess />} />
+    <Route path="/verification-successful*" element={<VerifySuccess />} />
   </Routes>
 </BrowserRouter>
 

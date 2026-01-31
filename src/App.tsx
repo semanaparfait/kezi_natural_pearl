@@ -8,6 +8,7 @@ import Shop from "@/pages/Shop/Shop";
 import VerifyEmail from "@/pages/verifyEmail/VerifyEmail";
 import VerifySuccess from "@/pages/verifySuccessful/verifySuccessful";
 import UserDashboard from "@/pages/UserDashboard/UserDashboard";
+import Voice from "@/Voice/Voice";
 function App() {
 
 
@@ -15,7 +16,7 @@ function App() {
 
 <BrowserRouter>
   <Toaster position="top-right" reverseOrder={false} />
-
+  <Voice />
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/contact-us" element={<ContactUs />} />

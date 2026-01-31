@@ -28,7 +28,7 @@ function Account() {
           phoneNumber: formData.phoneNumber,
           password: formData.password,
         }).unwrap();
-
+          
         toast.success('Account created successfully! Please log in.');
         navigate('/verify-email')
         // setAction('signin');

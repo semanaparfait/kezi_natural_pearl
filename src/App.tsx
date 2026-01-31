@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast'
 import About from "@/pages/About/About";
 import Shop from "@/pages/Shop/Shop";
 import VerifyEmail from "@/pages/verifyEmail/VerifyEmail";
+import VerifySuccess from "@/pages/verifySuccessful/verifySuccessful";
 function App() {
 
 
@@ -20,7 +21,8 @@ function App() {
     <Route path="/account" element={<Account />} />
     <Route path="/about" element={<About />} />
     <Route path="/shop" element={<Shop />} />
-    <Route path="verify-email" element={<VerifyEmail />} />
+    <Route path="/verify-email" element={<VerifyEmail />} />
+    <Route path="/verification-successful" element={<VerifySuccess />} />
   </Routes>
 </BrowserRouter>
 

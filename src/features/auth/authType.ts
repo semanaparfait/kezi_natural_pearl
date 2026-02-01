@@ -1,13 +1,17 @@
 export interface User {
-  id: string;
-  fullname: string;
+  userId: string;
+  fullName: string | null;
   email: string;
-  phonenumber: string;
+  phoneNumber: string;
   password?: string;
-  role: 'USER' | 'ADMIN';
+  role: 'customer' | 'admin';
+  status: string;
+  emailVerifiedAt: string | null;
   createdAt: string;
   updatedAt: string;
+  deletedAt: string | null;
 }
+
 export interface AuthResponse {
   user: User;
   email: string;

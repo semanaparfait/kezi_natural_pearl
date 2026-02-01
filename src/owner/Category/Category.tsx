@@ -1,8 +1,4 @@
 import {useState} from 'react'
-
-import Button from '@/components/Button'
-import Input from '@/components/Input'
-import {useGetCategoriesQuery,usePostCategoryMutation} from '@/features/category/categoryApi'
 import CategoryList from '@/owner/Category/CategoryList'
 import AddCategoryForm from '@/owner/Category/AddCategoryForm'
 

@@ -26,7 +26,15 @@ export const categoryApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Categories"],
         }),
+        editCategory: builder.mutation<{ success: boolean; data: categoryType }, Partial<categoryType> & { categoryId: string }>({
+            query: ({ categoryId, ...body }) => ({
+                url: `/api/v1/category/${categoryId}`,
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: ["Categories"],
+        }),
     }),
 });
 
-export const { useGetCategoriesQuery, usePostCategoryMutation, useDeleteCategoryMutation } = categoryApi;
+export const { useGetCategoriesQuery, usePostCategoryMutation, useDeleteCategoryMutation, useEditCategoryMutation  } = categoryApi;

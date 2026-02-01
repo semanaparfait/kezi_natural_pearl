@@ -10,7 +10,15 @@ export const usersApi = baseApi.injectEndpoints({
             }),
             providesTags: ['Users'],
         }),
+        updateRole: builder.mutation<void, { email: string; role: string }>({
+            query: ({ email, role }) => ({
+                url: `/api/v1/user`,
+                method: 'PATCH',
+                body: {email, role },
+            }),
+            invalidatesTags: ['Users'],
+        }),
 
     }),
 });
-export const { useGetUsersQuery } = usersApi;
+export const { useGetUsersQuery, useUpdateRoleMutation } = usersApi;

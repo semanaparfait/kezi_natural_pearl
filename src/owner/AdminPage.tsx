@@ -9,6 +9,9 @@ import {
   Bell,
   Settings,
   X,
+  User,
+  Mail,
+  FileText,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo-Kezi (1).svg";
@@ -17,6 +20,9 @@ import Products from "@/owner/Products/Products";
 import Users from "@/owner/Users/Users";
 import Category from "@/owner/Category/Category";
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
+import Profile from "@/owner/Profile/Profile";
+import ContactUs from "@/owner/ContactUs/ContactUs";
+import Newsletter from "@/owner/Newsletter/Newsletter";
 
 function AdminPage() {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
@@ -30,6 +36,9 @@ function AdminPage() {
     { name: "Users", icon: UsersIcon },
     { name: "Products", icon: Package },
     { name: "Categories", icon: Tags },
+    { name: "profile", icon: User },
+    { name: "contact us", icon: Mail },
+    { name: "newsletter", icon: FileText },
   ];
 
   return (
@@ -151,6 +160,9 @@ function AdminPage() {
           {activeMenu === "Users" && <Users />}
           {activeMenu === "Products" && <Products />}
           {activeMenu === "Categories" && <Category />}
+          {activeMenu === "profile" && <Profile />}
+          {activeMenu === "contact us" && <ContactUs />}
+          {activeMenu === "newsletter" && <Newsletter />}
         </main>
       </div>
     </div>

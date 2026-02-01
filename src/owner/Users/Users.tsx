@@ -70,7 +70,7 @@ function Users() {
                 <Download size={16} />
                 Export
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-[var(--gold-color)] text-white rounded-lg hover:bg-[var(--accent-color)]">
+              <button className=" hidden items-center gap-2 px-4 py-2.5 bg-[var(--gold-color)] text-white rounded-lg hover:bg-[var(--accent-color)]">
                 <UserPlus size={16} />
                 Add User
               </button>

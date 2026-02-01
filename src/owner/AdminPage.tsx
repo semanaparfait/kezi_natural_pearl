@@ -6,7 +6,6 @@ import {
   Tags,
   Menu,
   Sun,
-  User,
   Bell,
   Settings,
   X,
@@ -122,7 +121,8 @@ function AdminPage() {
 
             <div className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 cursor-pointer transition">
               <div className="w-8 h-8 rounded-full bg-[var(--primary)] text-white flex items-center justify-center">
-                {currentUser?.fullName.charAt(0).toUpperCase() || currentUser?.email.charAt(0).toUpperCase()}
+                {(currentUser?.fullName?.slice(0, 1) || currentUser?.email?.slice(0, 1) || "U").toUpperCase()}
+
               </div>
               <div className="flex flex-col leading-tight">
 
@@ -134,7 +134,8 @@ function AdminPage() {
             {/* Mobile Profile */}
             <button className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition">
               <div className="w-8 h-8 rounded-full bg-[var(--primary)] text-white flex items-center justify-center">
-                {currentUser?.fullName.charAt(0).toUpperCase() || currentUser?.email.charAt(0).toUpperCase()}
+            {(currentUser?.fullName?.slice(0, 1) || currentUser?.email?.slice(0, 1) || "U").toUpperCase()}
+
               </div>
             </button>
 

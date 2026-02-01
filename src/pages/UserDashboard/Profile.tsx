@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const { data: currentUser, isLoading } = useGetCurrentUserQuery(undefined)
-  const [updateUser, { isLoading: isUpdating, isSuccess: updateSuccess, error: updateError }] = useUpdateUserMutation();
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+  // const [updateUser, { isLoading: isUpdating, isSuccess: updateSuccess, error: updateError }] = useUpdateUserMutation();
   const [deleteUser, { isLoading: isDeletingUser }] = useDeleteUserMutation();
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -90,7 +91,7 @@ function Profile() {
             label="Member Since"
             type="text"
             value={memberSince}
-            disabled
+            onChange={() => {}}
           />
 
           <Button

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Button from "@/components/Button";
@@ -168,7 +168,7 @@ function Shop() {
                   <div className="flex gap-2">
                     <Button className="flex-1">Add to Cart</Button>
                     <span className="hidden md:block">
-                      <Button variant="outline">Buy</Button>
+                      <Button variant="secondary">Buy</Button>
                     </span>
                   </div>
                 </div>

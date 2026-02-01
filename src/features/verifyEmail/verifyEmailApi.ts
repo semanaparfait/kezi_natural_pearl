@@ -1,5 +1,4 @@
 import { baseApi } from '@/services/baseApi'
-import type { User } from '@/features/auth/authType'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

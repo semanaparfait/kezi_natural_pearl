@@ -1,6 +1,6 @@
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { useGetCategoriesQuery, useDeleteCategoryMutation, useEditCategoryMutation } from '@/features/category/categoryApi';
+import { useGetCategoriesQuery, useDeleteCategoryMutation } from '@/features/category/categoryApi';
 import { Pencil, Tag, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from "react-hot-toast"
@@ -31,11 +31,11 @@ function CategoryList() {
     }
   };
 
-  const handleEdit = (id: string) => {
+  // const handleEdit = (id: string) => {
 
-    // Implement edit functionality here
-    toast.error("Edit functionality not implemented yet");
-  }
+  //   // Implement edit functionality here
+  //   toast.error("Edit functionality not implemented yet");
+  // }
 
   return (
     <section className="bg-white rounded-xl shadow-sm p-6">
@@ -69,7 +69,7 @@ function CategoryList() {
               }`}
             />
                   <Pencil
-              onClick={() => handleEdit(String(category.categoryId))}
+              // onClick={() => handleEdit(String(category.categoryId))}
               className={`ml-auto w-10 h-10 p-2 rounded-full cursor-pointer ${
                 deletingId === String(category.categoryId)
                   ? 'text-gray-400 bg-gray-200 animate-pulse'

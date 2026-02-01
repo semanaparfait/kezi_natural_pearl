@@ -22,7 +22,7 @@ import Category from "@/owner/Category/Category";
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import Profile from "@/owner/Profile/Profile";
 import ContactUs from "@/owner/ContactUs/ContactUs";
-import Newsletter from "@/owner/Newsletter/Newsletter";
+import Newsletter from "@/owner/NewsLetter/NewsLetter";
 
 function AdminPage() {
   const [activeMenu, setActiveMenu] = useState("Dashboard");

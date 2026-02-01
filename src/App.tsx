@@ -9,6 +9,7 @@ import VerifyEmail from "@/pages/verifyEmail/VerifyEmail";
 import VerifySuccess from "@/pages/verifySuccessful/verifySuccessful";
 import UserDashboard from "@/pages/UserDashboard/UserDashboard";
 import Voice from "@/Voice/Voice";
+import AdminPage from "@/owner/AdminPage";
 function App() {
 
 
@@ -26,6 +27,7 @@ function App() {
     <Route path="/verify-email" element={<VerifyEmail />} />
     <Route path="/verification-successful*" element={<VerifySuccess />} />
     <Route path="/userDashboard" element={<UserDashboard />} />
+    <Route path="/adminPage" element={<AdminPage />} />
   </Routes>
 </BrowserRouter>
 

@@ -32,6 +32,15 @@ export const authSlice = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['User'],
         }),
+            updateUserProfile: builder.mutation<AuthResponse, FormData>({
+            query: (formData) => ({
+                url: '/api/v1/user/me',
+                method: 'PATCH',
+                body: formData,
+            }),
+            invalidatesTags: ['User'],
+            }),
+
         deleteUser: builder.mutation<void, { password: string }>({
             query: ({ password }) => ({
                 url: '/api/v1/user/me',

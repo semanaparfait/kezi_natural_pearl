@@ -8,6 +8,8 @@ interface EnhancedInputProps extends InputProps {
   fullWidth?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
+  min?: number
+  max?: number
 }
 
 const baseClass =
@@ -18,6 +20,8 @@ const Input: React.FC<EnhancedInputProps> = ({
   type = "text",
   placeholder,
   value,
+  min,
+  max,
   onChange,
   className,
   error,
@@ -44,6 +48,8 @@ const Input: React.FC<EnhancedInputProps> = ({
           type={type}
           placeholder={placeholder}
           value={value}
+          min={min}
+          max={max}
           onChange={onChange}
           className={[
             baseClass,

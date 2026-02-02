@@ -1,8 +1,16 @@
-interface productsType {
-  id: number;
+export interface productsTypeRequest {
   name: string;
   description: string;
-  price: number;
-  category: string;
-  inStock: boolean;
+  categoryId: string;
+}
+
+export interface ProductTypeResponse {
+  productId: string;
+  name: string;
+  description: string;
+  categoryId: string;
+  imageId: string | null;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
 }

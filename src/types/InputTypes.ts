@@ -5,7 +5,8 @@ interface BaseProps {
 interface InputProps extends BaseProps {
   label?: string;
   value: string;
-  type?: "text" | "email" | "password" | "number" | "tel";
+  accept?: string;
+  type?: "text" | "email" | "password" | "number" | "tel" | "file";
   placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;

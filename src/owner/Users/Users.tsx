@@ -18,7 +18,7 @@ function Users() {
   const { data: usersData = [], isLoading, isError } =
     useGetUsersQuery(undefined);
   const [updateRole] = useUpdateRoleMutation();
-
+ console.log(usersData)
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-[60vh] text-gray-500">

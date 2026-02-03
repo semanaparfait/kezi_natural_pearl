@@ -1,6 +1,3 @@
-import Button from "@/components/Button"
-import { ArrowRight } from "lucide-react"
-import { Link } from "react-router-dom"
 import Heroimg from '@/assets/hero/hero2.jpeg'
 
 function Hero2() {

@@ -29,7 +29,7 @@ function App() {
     <Route path="/verification-successful/:token" element={<VerifySuccess />} />
     <Route path="/userDashboard" element={<UserDashboard />} />
     <Route path="/adminPage" element={<AdminPage />} />
-    <Route path="/notfound" element={<NotFound />} />
+    <Route path="*" element={<NotFound />} />
   </Routes>
 </BrowserRouter>
 

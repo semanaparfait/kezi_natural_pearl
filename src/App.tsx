@@ -10,6 +10,7 @@ import VerifySuccess from "@/pages/verifySuccessful/verifySuccessful";
 import UserDashboard from "@/pages/UserDashboard/UserDashboard";
 import Voice from "@/Voice/Voice";
 import AdminPage from "@/owner/AdminPage";
+import NotFound from "./pages/NotFound/NotFound";
 function App() {
 
 
@@ -25,9 +26,10 @@ function App() {
     <Route path="/about" element={<About />} />
     <Route path="/shop" element={<Shop />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
-    <Route path="/verification-successful*" element={<VerifySuccess />} />
+    <Route path="/verification-successful/:token" element={<VerifySuccess />} />
     <Route path="/userDashboard" element={<UserDashboard />} />
     <Route path="/adminPage" element={<AdminPage />} />
+    <Route path="/notfound" element={<NotFound />} />
   </Routes>
 </BrowserRouter>
 

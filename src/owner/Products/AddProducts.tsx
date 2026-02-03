@@ -15,8 +15,8 @@ function AddProducts() {
         oldPrice: '',
         categoryId: '',
         description: '',
-        image: null,
-    });
+        image: null as File | null,
+    });   
 
     const UploadProduct = async (e: React.FormEvent) => {
         e.preventDefault();

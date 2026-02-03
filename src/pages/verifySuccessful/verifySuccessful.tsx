@@ -6,27 +6,20 @@ function VerifySuccess() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") ?? "";
-
-  // 1. The query runs immediately because we provide the token
   const { data, isLoading, isError, isSuccess } = useVerifyEmailQuery(
     { token }, 
-    { skip: !token } // Don't run if token is missing
+    { skip: !token } 
   );
 
   useEffect(() => {
-    // 2. If the query succeeds, data will contain your { token, user }
     if (isSuccess && data) {
-      // Save the auth token returned by the backend
       localStorage.setItem("token", data.token);
-
       const timer = setTimeout(() => {
         navigate("/");
       }, 2000);
 
       return () => clearTimeout(timer);
     }
-
-    // 3. Handle missing token immediately
     if (!token) {
       navigate("/account");
     }

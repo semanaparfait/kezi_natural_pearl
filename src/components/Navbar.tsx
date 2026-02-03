@@ -29,10 +29,10 @@ function Navbar() {
   };
 
   return (
-    <header className={` top-0 z-50 w-full text-white ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'}`}>
+    <header className={` top-0 z-50 w-full text-white ${!isHomePage ? 'bg-[#9FCC66] ' : 'absolute'}`}>
       <nav className="flex items-center justify-between px-4">
         <div>
-          <img src={logo} alt="KEZI Logo" className="w-15 h-15 brightness-0 invert" />
+          <img src={logo} alt="KEZI Logo" className="w-16 h-16 brightness-0 invert" />
         </div>
         <ul className="md:flex hidden gap-4 bg-white/10 px-10 py-2 rounded-full">
           {Links.map((link) => (
@@ -40,7 +40,7 @@ function Navbar() {
               <Link
                 to={link.link}
                 className={
-                  pathname === link.link ? 'text-[var(--gold-color)] underline font-semibold' : ''
+                  pathname === link.link ? 'text-[#9FCC66] underline font-semibold' : ''
                 }
               >
                 {link.name}

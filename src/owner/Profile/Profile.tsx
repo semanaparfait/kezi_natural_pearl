@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { toast } from "react-hot-toast"
 import { useGetCurrentUserQuery,useUpdateUserMutation } from '@/features/auth/authApi';
 
 function Profile() {
@@ -40,6 +39,7 @@ function Profile() {
           label="Profile Picture"
           type="file"
           accept="image/*"
+          value=""
           onChange={(e) =>
             setProfilePicture(e.target.files?.[0] || null)
           }
@@ -70,7 +70,7 @@ function Profile() {
           }
         />
 
-        <Input label="Role" value={currentUser?.role || ""} disabled />
+        <Input label="Role" value={currentUser?.role || ""} onChange={() => {}}  />
         <Input
           label="Created At"
           value={
@@ -78,7 +78,8 @@ function Profile() {
               ? new Date(currentUser.createdAt).toLocaleDateString()
               : ""
           }
-          disabled
+          onChange={() => {}}
+          
         />
 
         <Button type="submit">Update Profile</Button>

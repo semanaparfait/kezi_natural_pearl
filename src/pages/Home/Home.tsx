@@ -1,6 +1,6 @@
 import Category from '@/components/Category'
 import Footer from '@/components/Footer'
-import Hero from '@/components/Hero'
+import Hero2 from '@/components/Hero2'
 import Navbar from '@/components/Navbar'
 import Testimonies from '@/components/Testimonies'
 import Trendings from '@/components/Trendings'
@@ -11,7 +11,7 @@ function Home() {
     <div>
         <Navbar />
         <Voice />
-        <Hero />
+        <Hero2 />
         <Category />
         <WhyChooseKezi />
         <Trendings/>

@@ -6,8 +6,9 @@ function VerifySuccess() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") ?? "";
+  const id = searchParams.get("id") ?? "";
   const { data, isLoading, isError, isSuccess } = useVerifyEmailQuery(
-    { token }, 
+    { id,token }, 
     { skip: !token } 
   );
 
@@ -16,7 +17,7 @@ function VerifySuccess() {
       localStorage.setItem("token", data.token);
       const timer = setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     }

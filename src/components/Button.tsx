@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react"
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "danger"
+type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "third"
 type ButtonSize = "sm" | "md" | "lg"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,9 +14,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<ButtonVariant, string> = {
 	primary:
-		"bg-[var(--gold-color)] cursor-pointer text-[var(--primary)] hover:bg-emerald-700 focus-visible:outline-emerald-600",
+		"bg-[var(--gold-color)] cursor-pointer text-white hover:bg-emerald-700 focus-visible:outline-emerald-600",
 	secondary:
 		"bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 focus-visible:outline-gray-500",
+	third: "bg-[var(--primary)] text-white hover:bg-gray-800 focus-visible:outline-gray-900",
+	
 	ghost:
 		"bg-transparent text-emerald-700 hover:bg-emerald-50 focus-visible:outline-emerald-600",
 	danger:
@@ -45,7 +47,7 @@ const Button = ({
 	const isDisabled = disabled || loading
 
 	const classes = [
-		"inline-flex items-center justify-center gap-2 rounded-2xl font-medium transition-colors",
+		"inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors",
 		"focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
 		"disabled:opacity-60 disabled:cursor-not-allowed",
 		variantClasses[variant],

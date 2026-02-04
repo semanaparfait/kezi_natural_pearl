@@ -11,6 +11,7 @@ import UserDashboard from "@/pages/UserDashboard/UserDashboard";
 import Voice from "@/Voice/Voice";
 import AdminPage from "@/owner/AdminPage";
 import NotFound from "./pages/NotFound/NotFound";
+import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 function App() {
 
 
@@ -30,6 +31,7 @@ function App() {
     <Route path="/userDashboard" element={<UserDashboard />} />
     <Route path="/adminPage" element={<AdminPage />} />
     <Route path="*" element={<NotFound />} />
+    <Route path="/productdetails" element={<> <ProductDetails /></>} />
   </Routes>
 </BrowserRouter>
 

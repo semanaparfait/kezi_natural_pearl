@@ -29,12 +29,12 @@ function Navbar() {
   };
 
   return (
-    <header className={` top-0 z-50 w-full text-white ${!isHomePage ? 'bg-[#9FCC66] ' : 'absolute'}`}>
-      <nav className="flex items-center justify-between px-4">
+    <header className={` top-0 z-50 w-full text-white  ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'}`}>
+      <nav className="flex items-center justify-between px-4 bg-[var(--primary)]">
         <div>
           <img src={logo} alt="KEZI Logo" className="w-16 h-16 brightness-0 invert" />
         </div>
-        <ul className="md:flex hidden gap-4 bg-white/10 px-10 py-2 rounded-full">
+        <ul className="md:flex hidden gap-4 px-10 py-2 ">
           {Links.map((link) => (
             <li key={link.name}>
               <Link
@@ -80,9 +80,9 @@ function Navbar() {
           <p className="text-sm ">{currentUser.role}</p>
         </div>
 
-        {currentUser.role === 'customer' && (
+        {/* {currentUser.role === 'customer' && ( */}
           <>
-                                <Link 
+              <Link 
               to="/owner/dashboard" 
               className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
               onClick={() => setDropdownOpen(false)}
@@ -90,7 +90,7 @@ function Navbar() {
               <Package className="w-4 h-4" />
               My Orders
             </Link>
-                                  <Link 
+            <Link 
               to="/owner/dashboard" 
               className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
               onClick={() => setDropdownOpen(false)}
@@ -106,18 +106,18 @@ function Navbar() {
               <LayoutDashboard className="w-4 h-4" />
               Dashboard
             </Link>
+            {currentUser.role === 'admin' && (
+              <Link 
+                to="/adminPage"
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                onClick={() => setDropdownOpen(false)}
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                Admin Dashboard
+              </Link>
+            )}
           </>
-        )}
-        {currentUser.role === 'admin' && (
-          <Link 
-            to="/adminPage"
-            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-            onClick={() => setDropdownOpen(false)}
-          >
-            <LayoutDashboard className="w-4 h-4" />
-            Admin Dashboard
-          </Link>
-        )}
+        {/* // )} */}
         
 
             <button

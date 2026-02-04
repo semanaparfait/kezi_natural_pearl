@@ -18,7 +18,14 @@ export const usersApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['Users'],
         }),
-
+        deleteUser: builder.mutation<void, { userId: string }>({
+            query: ({ userId }) => ({
+                url: `/api/v1/user/remove/${userId}`,
+                method: 'DELETE',
+                body: { userId },
+            }),
+            invalidatesTags: ['Users'],
+        }),
     }),
 });
-export const { useGetUsersQuery, useUpdateRoleMutation } = usersApi;
+export const { useGetUsersQuery, useUpdateRoleMutation, useDeleteUserMutation } = usersApi;

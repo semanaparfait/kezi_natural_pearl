@@ -12,13 +12,14 @@ import {
   Trash2,
   Users as UsersIcon,
 } from "lucide-react";
-import { useGetUsersQuery,useUpdateRoleMutation } from "@/features/users/usersApi";
-
+import { useGetUsersQuery,useUpdateRoleMutation,useDeleteUserMutation } from "@/features/users/usersApi";
+import toast from "react-hot-toast";
 function Users() {
-  const { data: usersData = [], isLoading, isError } =
+  const { data: usersData = [], isLoading, isError, refetch } =
     useGetUsersQuery(undefined);
   const [updateRole] = useUpdateRoleMutation();
- console.log(usersData)
+  const [deleteUser] = useDeleteUserMutation();
+//  console.log(usersData)
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-[60vh] text-gray-500">
@@ -215,14 +216,16 @@ function Users() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-1">
-                        <button className="p-2 hover:bg-gray-100 rounded-lg">
-                          <Edit size={16} />
-                        </button>
-                        <button className="p-2 hover:bg-red-50 rounded-lg text-red-600">
+                        <button 
+                        onClick={
+                          () => deleteUser({ userId: user.userId })
+                          .then(() => {
+                            toast.success(`User deleted successfully${user.email}`);
+                            refetch();
+                          })
+                          .catch(() => toast.error("Failed to delete user"))}
+                        className="p-2 hover:bg-red-50 rounded-lg text-red-600">
                           <Trash2 size={16} />
-                        </button>
-                        <button className="p-2 hover:bg-gray-100 rounded-lg">
-                          <MoreVertical size={16} />
                         </button>
                       </div>
                     </td>

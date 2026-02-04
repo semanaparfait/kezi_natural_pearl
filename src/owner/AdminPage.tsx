@@ -96,9 +96,7 @@ function AdminPage() {
         </nav>
       </aside>
 
-      {/* Main Section */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Navbar */}
         <nav className="flex items-center justify-between bg-white b px-3 sm:px-4 md:px-6 py-3 md:py-4 shadow-sm">
           <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             <button
@@ -129,10 +127,16 @@ function AdminPage() {
             </button>
 
             <div className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 cursor-pointer transition">
-              <div className="w-8 h-8 rounded-full bg-[var(--primary)] text-white flex items-center justify-center">
-                {(currentUser?.fullName?.slice(0, 1) || currentUser?.email?.slice(0, 1) || "U").toUpperCase()}
+            <img
+              src={currentUser?.profile}
+              alt="user profile"
+              className="rounded-full w-10 h-10 object-cover border-4 border-[var(--primary)] shadow-md"
+              />
+              <div className="w-8 h-8 rounded-full bg-[var(--primary)] text-white hidden items-center justify-center">
+                {( currentUser?.fullName?.slice(0, 1) || currentUser?.email?.slice(0, 1) || "U").toUpperCase()}
 
               </div>
+
               <div className="flex flex-col leading-tight">
 
               <span className="font-semibold text-sm">{currentUser?.fullName || "Not yet completed"}</span>

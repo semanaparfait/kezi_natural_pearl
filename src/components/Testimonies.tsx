@@ -5,7 +5,7 @@ function Testimonies() {
     {
       name: "Sarah Johnson",
       role: "Mother of Two",
-      image: "https://i.pinimg.com/736x/08/68/77/0868770695ca2340b89e5933e8aa4c78.jpg",
+      image: "https://i.pinimg.com/1200x/db/c6/e0/dbc6e0f2e6c25f06631a0a395e19fb3a.jpg",
       rating: 5,
       text: "My kids absolutely love Kezi soap! Their skin has never been healthier, and I love that it's all natural. The pearl essence gives their skin a beautiful glow.",
 

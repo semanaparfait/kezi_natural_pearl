@@ -38,7 +38,7 @@ const navs = [
                     <div className="flex items-center gap-4 md:gap-6 flex-1 min-w-0">
                         
                         <img
-                            src="https://i.pinimg.com/736x/6d/49/30/6d493014ce7c5e7b7b5d11f432220e04.jpg"
+                            src={currentUser?.profile}
                             alt="user profile"
                             className="rounded-full w-20 h-20 object-cover border-4 border-white shadow-md"
                         />

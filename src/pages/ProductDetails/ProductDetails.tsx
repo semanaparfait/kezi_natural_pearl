@@ -1,4 +1,4 @@
-import { Facebook, Heart, Instagram, Twitter, ChevronRight, Star, Minus, Plus, Zap, ShoppingBag } from "lucide-react";
+import { Facebook, Heart, Instagram, Twitter, ChevronRight,  Minus, Plus, Zap, ShoppingBag } from "lucide-react";
 import Button from "@/components/Button";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
@@ -90,6 +90,9 @@ function ProductDetails() {
                             <button className="h-12 w-12 flex items-center justify-center border border-[var(--bolder-gray)] rounded-full hover:bg-red-50 text-[var(--primary)] bg-white">
                                 <Heart size={20} />
                             </button>
+                        </div>
+                        <div className="flex items-center ">
+                            <p className="mr-2 text-gray-400 text-lg">share: </p><Facebook size={20}/> <Twitter size={20} /> <Instagram size={20} />
                         </div>
 
                         <div className="pt-8 space-y-4">

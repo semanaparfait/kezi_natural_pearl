@@ -87,7 +87,7 @@ function Shop() {
     
     <div className="space-y-4">
       {[
-        { label: "Under 1,000 RWF", range: "0-1000" },
+        { label: "All", range: "all" },
         { label: "1,000 - 2,000 RWF", range: "1000-2000" },
         { label: "2,000 - 5,000 RWF", range: "2000-5000" },
         { label: "Above 5,000 RWF", range: "5000-up" }

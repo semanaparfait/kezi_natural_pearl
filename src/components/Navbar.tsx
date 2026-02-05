@@ -30,17 +30,17 @@ function Navbar() {
 
   return (
     <header className={` top-0 z-50 w-full text-white  ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'}`}>
-      <nav className="flex items-center justify-between px-4 bg-[var(--primary)]">
+      <nav className="flex items-center justify-between px-4 ">
         <div>
           <img src={logo} alt="KEZI Logo" className="w-16 h-16 brightness-0 invert" />
         </div>
-        <ul className="md:flex hidden gap-4 px-10 py-2 ">
+        <ul className="md:flex hidden gap-4 px-10 py-2 bg-transparent bg-white/10  rounded-full ">
           {Links.map((link) => (
             <li key={link.name}>
               <Link
                 to={link.link}
                 className={
-                  pathname === link.link ? 'text-[#9FCC66] underline font-semibold' : ''
+                  pathname === link.link ? 'text-[var(--primary)] underline font-semibold' : ''
                 }
               >
                 {link.name}
@@ -51,7 +51,7 @@ function Navbar() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <Globe />
-            <select className="bg-[var(--gold-color)] text-[var(--primary)] rounded-md p-1 outline-none">
+            <select className=" rounded-md p-1 outline-none">
               <option value="en">EN</option>
               <option value="kiny">KI</option>
               <option value="fr">FR</option>
@@ -132,7 +132,7 @@ function Navbar() {
   </>
 ) : (
   <Link to="/account">
-    <Button variant="primary">Sign Up</Button>
+    <button className='text-black bg-white rounded-md px-3 py-2'>Sign Up</button>
   </Link>
 )}
 

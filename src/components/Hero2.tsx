@@ -27,13 +27,19 @@ function Hero2() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
         <p className="text-sm text-white/80">Discover More</p>
         <div className="animate-bounce">
           <svg className="w-5 h-5 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
+      </div>
+      <div className='bg-[var(--primary)] z-20 text-white flex justify-around py-4 absolute bottom-0 w-full'>
+        <p>Fast Shipping</p>
+        <p>Quality Products</p>
+        <p>Eco-Friendly</p>
+        <p>Customer Satisfaction</p>
       </div>
     </section>
   )

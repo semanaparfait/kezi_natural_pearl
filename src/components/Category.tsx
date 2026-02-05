@@ -1,19 +1,26 @@
-import adults from '@/assets/category/nc22.jpeg'
-import elders from '@/assets/category/nc33.jpeg'
-import kids from '@/assets/category/nc11.jpeg'
+
 import { ArrowRight } from 'lucide-react'
 function Category() {
   const categories = [
-    { name: 'For Kids', image: kids, description: 'Gentle cleansers for delicate skin' },
-    { name: 'For Adults', image: adults, description: 'Hydrating moisturizers for daily care' },
-    { name: 'For Elderly', image: elders, description: 'Nourishing serums for mature skin' },
+    { name: 'Face Care', image: "https://i.pinimg.com/736x/68/8d/b3/688db3abdc40f6d4111f72b0c34e38a3.jpg", description: 'Gentle cleansers for delicate skin' },
+    { name: 'Face Care', image: "https://i.pinimg.com/1200x/88/c5/30/88c530df33dbeeb9e72ff4667d08d3f5.jpg", description: 'Hydrating moisturizers for daily care' },
+    { name: 'Face Care', image: "https://i.pinimg.com/1200x/fb/04/4b/fb044bc8dd66189574cb992b0abf6f9a.jpg", description: 'Nourishing serums for mature skin' },
   ]
   return (
     <section className='mb-8 mt-16'>
-      <h1 className='text-center text-2xl font-bold'>Shop By Category</h1>
-      <p className='text-center text-gray-600'>Specially formulated for every age and skin type</p>
+<div className="max-w-7xl mx-auto text-center mb-16">
+  <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold-color)] font-bold mb-4 block">
+          Our Collections
+        </span>
+        <h1 className='font-serif text-4xl md:text-5xl text-[var(--primary)] mb-4 italic'>Shop By Category</h1>
+        <div className="flex items-center justify-center gap-4">
+            <span className="h-[1px] w-12 bg-[var(--gold-color)] opacity-40"></span>
+            <p className='text-[10px] uppercase tracking-[0.3em] text-gray-500 font-bold'>Formulated for every age</p>
+            <span className="h-[1px] w-12 bg-[var(--gold-color)] opacity-40"></span>
+        </div>
+      </div>
       <div>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-6 md:px-8">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6 md:px-8">
           {categories.map((category) => (
             <div key={category.name} className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
               <div className="relative h-80 overflow-hidden">

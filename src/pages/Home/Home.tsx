@@ -7,7 +7,7 @@ import Hero2 from '@/components/Hero2'
 import Navbar from '@/components/Navbar'
 import Testimonies from '@/components/Testimonies'
 import Trendings from '@/components/Trendings'
-// import  WhyChooseKezi from '@/components/WhyChooseKezi'
+import  WhyChooseKezi from '@/components/WhyChooseKezi'
 import Voice from '@/Voice/Voice'
 function Home() {
   return (
@@ -16,8 +16,8 @@ function Home() {
         <Voice />
         <Hero2 />
         <Category />
-        {/* <WhyChooseKezi /> */}
         <Trendings/>
+        <WhyChooseKezi />
         <Blogs />
         <Testimonies />
         <Community />

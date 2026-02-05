@@ -25,7 +25,7 @@ function ProductDetails() {
 
     const [count, setCount] = useState(1);
     const [selectedImage, setSelectedImage] = useState(images[0]);
-    const [activeDetailTab, setActiveDetailTab] = useState<'details' | 'additional' | 'shipping' | 'ingredients'>('details');
+    const [activeDetailTab, setActiveDetailTab] = useState<'details' | 'additional' | 'shipping' | 'ingredients' | 'reviews'>('details');
 
     return (
         <section className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
@@ -91,21 +91,21 @@ function ProductDetails() {
                                 <Heart size={20} />
                             </button>
                         </div>
-                        <div className="flex items-center ">
+                        <div className="flex gap-2 items-center ">
                             <p className="mr-2 text-gray-400 text-lg">share: </p><Facebook size={20}/> <Twitter size={20} /> <Instagram size={20} />
                         </div>
 
                         <div className="pt-8 space-y-4">
                             <div className="flex gap-6 border-b border-[var(--bolder-gray)]">
-                                {['details', 'additional','shipping','ingredients'].map(t => (
+                                {['details', 'additional','shipping','ingredients','reviews'].map(t => (
                                     <button key={t} onClick={() => setActiveDetailTab(t as any)}
-                                        className={`text-[10px] uppercase font-bold pb-2 tracking-widest border-b-2 transition-all
+                                        className={`text-[12px] uppercase font-bold pb-2 tracking-widest border-b-2 transition-all
                                         ${activeDetailTab === t ? 'border-[var(--gold-color)] text-[var(--primary)]' : 'border-transparent text-gray-400'}`}>
                                         {t}
                                     </button>
                                 ))}
                             </div>
-                            <p className="text-xs text-gray-500 leading-5">
+                            <p className="text-sm text-gray-500 leading-5">
                         {activeDetailTab === 'details' && (
                         <div className="space-y-3 text-gray-700">
                             <p>

@@ -21,7 +21,7 @@ function Trendings() {
 
         <div className="mx-auto mt-8 w-full max-w-6xl px-4 sm:px-6 lg:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
-            {products.slice(0, 6).map((product) => (
+            {products.slice(0, 4).map((product) => (
                 <Link to='/shop' key={product.id} className="group flex flex-col items-center relative rounded-2xl  border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="relative bg-[#f7eff0] w-[13rem] h-[17rem] flex items-center justify-center overflow-hidden rounded-t-2xl">
             {product.onSale && (

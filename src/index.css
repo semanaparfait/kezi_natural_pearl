@@ -3,6 +3,7 @@
 
   box-sizing: border-box;
   font-family: 'Cormorant Garamond';
+  scroll-behavior: smooth;
 }
 :root {
   --primary-color: #5f7c6a;
@@ -17,4 +18,43 @@
     --dark-card:#2A3A4A;
     --success-green:#4CAF50;
     --error-red:#D9534F;
+}
+.fadeuphero {
+  animation: fadeUp 1s ease-out;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fadelefthero {
+  animation: fadeLeft 1s ease-out;
+}
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.fadeuphero {
+  animation: fadeUp 1s ease-out;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

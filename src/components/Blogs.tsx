@@ -6,21 +6,21 @@ function Blogs() {
             id: 1,
             title: "The Beauty of Natural Pearls",
             excerpt: "Discover the timeless elegance and natural allure of pearls in modern skincare rituals.",
-            imageUrl: "https://i.pinimg.com/736x/3e/f0/ce/3ef0ce379294c7a841107328f2134af0.jpg",
+            imageUrl: "https://i.pinimg.com/1200x/d8/5c/d8/d85cd86800c90ca33446ac3dfbb9e1bd.jpg",
             date: "Feb 05, 2026"
         },
         {
             id: 2,
             title: "Sustainable Skincare Practices",
             excerpt: "Learn how to care for your skin while honoring the planet through artisanal sourcing.",
-            imageUrl: "https://i.pinimg.com/736x/52/3f/ae/523fae9aea7cbf75a2b75644c7b5ecb9.jpg",
+            imageUrl: "https://i.pinimg.com/736x/16/c5/99/16c5999c5378d8a225e1c0abe58a2e6a.jpg",
             date: "Jan 28, 2026"
         },
         {
             id: 3,
             title: "Top 5 Natural Ingredients",
             excerpt: "Explore the potent Rwandan botanicals that promote a radiant, healthy glow.",
-            imageUrl: "https://i.pinimg.com/1200x/74/13/a3/7413a30b3885dbd6e2bf943d20bcea2f.jpg",
+            imageUrl: "https://i.pinimg.com/1200x/e4/7c/5f/e47c5f10048ed7692c601fda0f4be29a.jpg",
             date: "Jan 15, 2026"
         }
     ];

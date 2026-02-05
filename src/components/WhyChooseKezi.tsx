@@ -24,7 +24,7 @@ function WhyChooseKezi() {
 
   return (
     <section className="py-24 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start">
             <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl z-10">
@@ -47,7 +47,7 @@ function WhyChooseKezi() {
                 <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold-color)] font-bold">The Difference</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-serif text-[var(--primary)] italic leading-tight">
-                Why Discerning Souls <br /> Choose Kezi.
+                Why Choose Kezi.
               </h2>
             </div>
 

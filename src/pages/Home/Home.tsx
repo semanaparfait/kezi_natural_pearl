@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar'
 import Testimonies from '@/components/Testimonies'
 import Trendings from '@/components/Trendings'
 import  WhyChooseKezi from '@/components/WhyChooseKezi'
+// import WhyChooseKezi1 from '@/components/WhyChooseKezi1'
 import Voice from '@/Voice/Voice'
 function Home() {
   return (
@@ -17,6 +18,7 @@ function Home() {
         <Hero2 />
         <Category />
         <Trendings/>
+        {/* <WhyChooseKezi1 /> */}
         <WhyChooseKezi />
         <Blogs />
         <Testimonies />

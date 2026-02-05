@@ -1,4 +1,4 @@
-import { Star, Quote } from "lucide-react"
+import { Star } from "lucide-react"
 import { useRef, useEffect, useState } from "react"
 
 function Testimonies() {

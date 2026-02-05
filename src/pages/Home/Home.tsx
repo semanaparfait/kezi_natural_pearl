@@ -1,3 +1,4 @@
+import Blogs from '@/components/Blogs'
 import Category from '@/components/Category'
 import Community from '@/components/Community'
 import Footer from '@/components/Footer'
@@ -17,9 +18,10 @@ function Home() {
         <Category />
         {/* <WhyChooseKezi /> */}
         <Trendings/>
+        <Blogs />
         <Testimonies />
-        <FQA />
         <Community />
+        <FQA />
         <Footer />
     </div>
   )

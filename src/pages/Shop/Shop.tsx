@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ChevronRight, Filter, ShoppingBag, Heart, Eye, ArrowUpDown, Zap } from "lucide-react";
+import {  ShoppingBag, Heart, ArrowUpDown, Zap } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import Button from "@/components/Button";
+
 
 const products = [
   { id: 1, name: "Lavender Bliss Soap", price: 1200, oldPrice: 1500,  image: "https://i.pinimg.com/736x/47/51/3e/47513e1567c15cee9f3c3d9d2842f413.jpg", category: "Lavender", stock: 0 },

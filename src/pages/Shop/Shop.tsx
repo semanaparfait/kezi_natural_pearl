@@ -177,10 +177,8 @@ function Shop() {
                 }
                 toast.success("We will notify you when product is back ");
               }}
-
-
-      className={`group flex flex-col h-full cursor-pointer ${product.stock === 0 ? 'opacity-70' : ''}`}
-    >
+              className={`group flex flex-col h-full cursor-pointer ${product.stock === 0 ? 'opacity-70' : ''}`}
+            >
 
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] transition-all duration-500 hover:shadow-md">
                 {isOutOfStock ? (

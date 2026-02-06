@@ -77,8 +77,8 @@ function ProductDetails() {
                             </div>
                             <h1 className="text-3xl font-serif text-[var(--primary)]">{product.name}</h1>
                             <div className="flex items-center gap-4 py-1">
-                                <span className="text-2xl font-semibold text-[var(--gold-color)]">{product.price} RWF</span>
-                                <span className="text-gray-400 line-through text-sm">{product.oldPrice} RWF</span>
+                                <span className="text-2xl font-semibold text-[var(--gold-color)]">{product.price} </span>
+                                <span className="text-gray-400 line-through text-sm">{product.oldPrice} </span>
                             </div>
                         </div>
 

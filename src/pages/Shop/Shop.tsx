@@ -1,28 +1,36 @@
 import { useState } from "react";
-import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail } from "lucide-react";
+import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail, X,User } from "lucide-react";
 import {products} from "@/components/products"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import toast from "react-hot-toast";
+import { useGetCurrentUserQuery } from '@/features/auth/authApi';
+import Button from "@/components/Button";
+import ReactPaginate from 'react-paginate';
 
-
-
-// const productss = [
-//   { id: 1, name: "Lavender Bliss Soap", price: 1200, oldPrice: 1500,  image: "https://i.pinimg.com/736x/47/51/3e/47513e1567c15cee9f3c3d9d2842f413.jpg", category: "Lavender", stock: 0 },
-//   { id: 2, name: "Citrus Zest Bar", price: 1000, oldPrice: 1300,  image: "https://i.pinimg.com/736x/62/d2/26/62d2268fcfae76758a799a43fa1428a6.jpg", category: "Citrus", stock: 12 },
-//   { id: 3, name: "Oatmeal Honey Soap", price: 1400, oldPrice: 1800, image: "https://i.pinimg.com/736x/09/0a/71/090a71baf8ff308245d6596d09e5e27d.jpg", category: "Oatmeal", stock: 3 },
-//   { id: 4, name: "Charcoal Detox Bar", price: 1500, oldPrice: 2000, image: "https://i.pinimg.com/1200x/c3/a3/d2/c3a3d2a770550aedf72e94c04b8cb867.jpg" , category: "Charcoal", stock: 20 },
-//   { id: 5, name: "Rose Petal Soap", price: 1300, oldPrice: 1600, image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?q=80&w=600", category: "Rose", stock: 8 },
-// ];
 
 const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
 
 function Shop() {
+    const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(undefined);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sort, setSort] = useState("asc");
+  const [notifyEmail, setNotifyEmail] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const productsPerPage = 6;
 
   const filtered = products.filter(p => selectedCategory === "All" || p.category === selectedCategory);
   const sorted = [...filtered].sort((a, b) => sort === "asc" ? Number(a.price) - Number(b.price) : Number(b.price) - Number(a.price));
+
+  const pageCount = Math.ceil(sorted.length / productsPerPage);
+  const indexOfFirstProduct = currentPage * productsPerPage;
+  const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
+  const currentProducts = sorted.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const handlePageChange = (event: { selected: number }) => {
+    setCurrentPage(event.selected);
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
@@ -43,7 +51,7 @@ function Shop() {
 
       <section className="max-w-5xl mx-auto px-6 py-12">
         <div className="flex flex-col lg:flex-row gap-12">
-<aside className="lg:w-64 space-y-12">
+<aside className="lg:w-64 space-y-12 sticky top-24 self-start">
   <div>
     <h2 className="text-[11px] uppercase tracking-[0.25em] font-bold text-[var(--primary)] mb-8 flex items-center justify-between">
       Categories
@@ -133,109 +141,184 @@ function Shop() {
         ))}
     </div>
   </div>
-</aside>
-<div className="flex-1">
-  <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--bolder-gray)]/50">
-    <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">
-      <span className="text-[var(--primary)]">{sorted.length}</span> Curated Items
-    </p>
-    
-    <div className="flex items-center gap-2">
-      <ArrowUpDown size={12} className="text-gray-400" />
-      <select
-        value={sort}
-        onChange={e => setSort(e.target.value)}
-        className="bg-transparent text-[10px] font-bold uppercase tracking-widest focus:outline-none cursor-pointer text-[var(--primary)]"
-      >
-        <option value="asc">Price: Low - High</option>
-        <option value="desc">Price: High - Low</option>
-      </select>
-    </div>
-  </div>
-  <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-12">
-    {sorted.map(product => {
-      const isOutOfStock = product.stock === 0;
-      return (
-        <div
-      onClick={() => {
-    if (product.stock === 0) {
-      toast.error("This product is out of stock");
-      return;
-    }
-    window.location.href = `/productdetails/${product.id}`;
-  }}
-  className={`group flex flex-col h-full cursor-pointer ${product.stock === 0 ? 'opacity-70' : ''}`}
->
+    </aside>
+    <div className="flex-1">
+      <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--bolder-gray)]/50">
+        <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">
+          <span className="text-[var(--primary)]">{sorted.length}</span> Curated Items
+        </p>
+        
+        <div className="flex items-center gap-2">
+          <ArrowUpDown size={12} className="text-gray-400" />
+          <select
+            value={sort}
+            onChange={e => setSort(e.target.value)}
+            className="bg-transparent text-[10px] font-bold uppercase tracking-widest focus:outline-none cursor-pointer text-[var(--primary)]"
+          >
+            <option value="asc">Price: Low - High</option>
+            <option value="desc">Price: High - Low</option>
+          </select>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-12">
+        {currentProducts.map(product => {
+          const isOutOfStock = product.stock === 0;
+          return (
+            <div
+              onClick={() => {
+                if (isLoading) return;
+                if (product.stock > 0) {
+                  window.location.href = `/productdetails/${product.id}`;
+                  return;
+                }
+                if (error || !currentUser) {
+                  setNotifyEmail("notify");
+                  return;
+                }
+                toast.success("We will notify you when product is back ");
+              }}
 
-          <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] transition-all duration-500 hover:shadow-md">
-            {isOutOfStock ? (
-              <div className="absolute inset-0 z-10 bg-white/60 backdrop-blur-[1px] flex items-center justify-center">
-                <span className="bg-gray-800 text-white text-[9px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
-                  Out of Stock
-                </span>
+
+      className={`group flex flex-col h-full cursor-pointer ${product.stock === 0 ? 'opacity-70' : ''}`}
+    >
+
+              <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] transition-all duration-500 hover:shadow-md">
+                {isOutOfStock ? (
+                  <div className="absolute inset-0 z-10 bg-white/60 backdrop-blur-[1px] flex items-center justify-center">
+                    <span className="bg-gray-800 text-white text-[9px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+                      Out of Stock
+                    </span>
+                  </div>
+                ) : product.stock < 5 && (
+                  <div className="absolute top-2 left-2 z-10 bg-[var(--error-red)] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm flex items-center gap-1 shadow-sm">
+                    <Zap size={8} fill="currentColor" /> LOW STOCK
+                  </div>
+                )}
+                
+                <img
+                  src={typeof product.image === 'string' ? product.image : product.image[0]}
+                  alt={product.name}
+                  className={`w-full h-full object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
+                />
               </div>
-            ) : product.stock < 5 && (
-              <div className="absolute top-2 left-2 z-10 bg-[var(--error-red)] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm flex items-center gap-1 shadow-sm">
-                <Zap size={8} fill="currentColor" /> LOW STOCK
-              </div>
+              <div className="mt-3 flex flex-col flex-1 px-1">
+                <div className="mb-2">
+                  <div className="flex items-center justify-between mb-0.5">
+                    <p className="text-[9px] uppercase tracking-widest text-[var(--gold-color)] font-bold">{product.category}</p>
+                    <div className="flex items-center gap-1.5">
+                      <span className={`w-1.5 h-1.5 rounded-full ${isOutOfStock ? 'bg-gray-300' : 'bg-[var(--success-green)] animate-pulse'}`} />
+                      <span className="text-[8px] font-bold uppercase tracking-tighter text-gray-500">
+                        {isOutOfStock ? 'Sold Out' : 'Ready'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <h3 className="font-serif text-[15px] text-[var(--primary)] leading-tight line-clamp-1 group-hover:text-black transition-colors">
+                    {product.name}
+                  </h3>
+                </div>
+                
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="text-sm font-bold text-gray-900">
+                    {product.price.toLocaleString()} 
+                  </span>
+                  <span className="text-[10px] text-gray-400 line-through">
+                    {product.oldPrice.toLocaleString()}
+                  </span>
+                </div>
+                <div className="mt-auto flex items-center gap-2 pt-1">
+                  <button 
+                    
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
+                      ${isOutOfStock 
+                        ? 'bg-gray-100 text-gray-400 cursor-pointer' 
+                        : 'bg-[var(--primary)] text-white hover:bg-[var(--primary-color)]'}`}
+                  >
+                    
+                      {isOutOfStock ? (<> Notify Me <Mail size={12} /> </>) : (<>Add to Cart <ShoppingBag size={12} /></>
             )}
-            
-            <img
-              src={typeof product.image === 'string' ? product.image : product.image[0]}
-              alt={product.name}
-              className={`w-full h-full object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
-            />
-          </div>
-          <div className="mt-3 flex flex-col flex-1 px-1">
-            <div className="mb-2">
-              <div className="flex items-center justify-between mb-0.5">
-                <p className="text-[9px] uppercase tracking-widest text-[var(--gold-color)] font-bold">{product.category}</p>
-                <div className="flex items-center gap-1.5">
-                   <span className={`w-1.5 h-1.5 rounded-full ${isOutOfStock ? 'bg-gray-300' : 'bg-[var(--success-green)] animate-pulse'}`} />
-                   <span className="text-[8px] font-bold uppercase tracking-tighter text-gray-500">
-                    {isOutOfStock ? 'Sold Out' : 'Ready'}
-                   </span>
+                  </button>
+
+                  
+                  <button className="p-2 border border-[var(--bolder-gray)] text-[var(--primary)] rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
+                    <Heart size={14} />
+                  </button>
                 </div>
               </div>
-
-              <h3 className="font-serif text-[15px] text-[var(--primary)] leading-tight line-clamp-1 group-hover:text-black transition-colors">
-                {product.name}
-              </h3>
             </div>
-            
-            <div className="flex items-baseline gap-2 mb-4">
-              <span className="text-sm font-bold text-gray-900">
-                {product.price.toLocaleString()} 
-              </span>
-              <span className="text-[10px] text-gray-400 line-through">
-                {product.oldPrice.toLocaleString()}
-              </span>
-            </div>
-            <div className="mt-auto flex items-center gap-2 pt-1">
-              <button 
-                disabled={isOutOfStock}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
-                  ${isOutOfStock 
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-[var(--primary)] text-white hover:bg-[var(--primary-color)]'}`}
-              >
-                
-                  {isOutOfStock ? (<> Notify Me <Mail size={12} /> </>) : (<>Add to Cart <ShoppingBag size={12} /></>
-  )}
-              </button>
+          );
+        })}
+      </div>
+      {pageCount > 1 && (
+        <div className="mt-12 flex justify-center">
+          <ReactPaginate
+            previousLabel="← Previous"
+            nextLabel="Next →"
+            pageCount={pageCount}
+            onPageChange={handlePageChange}
+            containerClassName="flex items-center gap-2"
+            pageClassName=""
+            pageLinkClassName="px-3 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all"
+            activeLinkClassName="bg-[var(--primary)] cursor-pointer  font-bold rounded-lg text-white border-[var(--primary)] "
+            previousClassName=""
+            previousLinkClassName="px-4 py-2 rounded-lg border  border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all disabled:opacity-50"
+            nextClassName=""
+            nextLinkClassName="px-4 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all disabled:opacity-50"
+            disabledClassName="opacity-50 cursor-not-allowed"
+          />
+        </div>
+      )}
+    </div>
+        </div>
+      {notifyEmail && (
+        <div className="fixed inset-0 z-[100] w-full h-screen flex items-center justify-center p-6">
+          <div 
+            className="absolute inset-0 bg-[var(--primary)]/30 backdrop-blur-md transition-opacity animate-in fade-in duration-500"
+            onClick={() => setNotifyEmail("")}
+          />
+          
+          <div className="relative w-full max-w-sm bg-white/95 backdrop-blur-xl rounded-[2.5rem] shadow-2xl shadow-black/30 border border-white/50 p-10 space-y-8 overflow-hidden transition-all duration-500 animate-in zoom-in-95 duration-300">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-[var(--gold-color)] opacity-10 rounded-br-full -z-10"></div>
+            <X 
+              className="absolute top-6 right-8 text-gray-300 hover:text-[var(--gold-color)] cursor-pointer transition-colors" 
+              size={20} 
+              onClick={() => setNotifyEmail("")}
+            />
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[var(--secondary-cream-white)] shadow-inner">
+                <User className="text-[var(--gold-color)]" size={24} />
+              </div>
               
-              <button className="p-2 border border-[var(--bolder-gray)] text-[var(--primary)] rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
-                <Heart size={14} />
-              </button>
+              <div className="space-y-1">
+                <h1 className="text-[10px] font-bold text-[var(--gold-color)] uppercase tracking-[0.5em]">
+                  Authentication Required
+                </h1>
+                <h2 className="text-2xl font-serif italic text-[var(--primary)]">
+                  Join the Ritual
+                </h2>
+              </div>
+            </div>
+            <div className="text-center px-2">
+              <p className="text-xs text-gray-500 leading-relaxed font-light italic">
+                To receive personalized notifications and artisanal updates, please sign in to your Kezi account.
+              </p>
+            </div>
+            <div className="pt-2">
+              <Button 
+                onClick={() => window.location.href = '/account'}
+                variant="primary"
+                className="w-full py-4 rounded-full font-bold text-[10px] uppercase tracking-[0.3em] shadow-xl shadow-[var(--primary)]/20 active:scale-95 transition-all"
+              >
+                Login to Continue
+              </Button>
+              
+              <p className="text-center mt-6 text-[9px] uppercase tracking-widest text-gray-300 font-bold">
+                Kezi Natural Pearl • Kigali
+              </p>
             </div>
           </div>
         </div>
-      );
-    })}
-  </div>
-</div>
-
-        </div>
+      )}
       </section>
 
       <div className="bg-[var(--dark-background)]"><Footer /></div>

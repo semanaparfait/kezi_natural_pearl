@@ -73,7 +73,7 @@ function Navbar() {
     </div>
 
     {dropdownOpen && (
-      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg text-black">
+      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg text-black z-50">
         <div className="px-4 py-3 border-b">
           <p className="font-semibold">{currentUser.email}</p>
           <p className="text-sm ">{currentUser.role}</p>

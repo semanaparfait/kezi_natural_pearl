@@ -1,0 +1,78 @@
+        {notifyEmail === "notify" && (
+
+      <div className="fixed inset-0 z-[100] w-full h-screen flex items-center justify-center p-6">
+        <div 
+          className="absolute inset-0 bg-[var(--primary)]/20 backdrop-blur-sm transition-opacity animate-in fade-in duration-500"
+          
+        />
+        <div className="relative w-full max-w-sm bg-white/95 backdrop-blur-md rounded-[2.5rem] shadow-2xl shadow-black/20 border border-white/50 p-8 space-y-6 overflow-hidden transition-all duration-500 animate-in zoom-in-95 duration-300">
+          <div className="absolute top-0 left-0 w-24 h-24 bg-[var(--gold-color)] opacity-20 rounded-br-full -z-10 animate-pulse"></div>
+          <X className="absolute top-5 right-10" onClick={() => setNotifyEmail("")}/>
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[var(--secondary-cream-white)] mb-4 shadow-inner">
+              <Mail className="text-[var(--gold-color)]" size={22} />
+            </div>
+            
+            <h1 className="text-[10px] font-bold text-[var(--gold-color)] uppercase tracking-[0.4em]">
+              {notifyEmail === "newemail" ? "Send to New Email" : "Personalized Request"}
+            </h1>
+          </div>
+          <div className="min-h-[100px] flex items-center justify-center">
+            {notifyEmail === "notify" ? (
+              <div className="space-y-2 text-center animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <p className="text-[11px] text-gray-400 italic">Sending notification to</p>
+                <p className="text-xl font-serif italic text-[var(--primary)] break-all px-2 leading-tight">
+                  {currentUser?.email}
+                </p>
+              </div>
+            ) : (
+              <div className="w-full flex flex-col items-center space-y-2 animate-in fade-in slide-in-from-top-2 duration-500">
+                <Input 
+                  type="email" 
+                  label="Email Address" 
+                  placeholder="email@example.com"
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col gap-3 pt-2">
+            <Button 
+              onClick={() => setNotifyEmail("notify")}
+              variant="primary"
+              className="w-full py-4 rounded-full font-bold text-[10px] uppercase tracking-[0.2em] shadow-lg active:scale-95 transition-all"
+            >
+              {notifyEmail === "newemail" ? "Save & Notify Me" : "Confirm & Notify Me"}
+            </Button>
+
+            <Button 
+              onClick={() => setNotifyEmail(notifyEmail === "newemail" ? "notify" : "newemail")}
+              variant="third"
+              className="w-full py-4 rounded-full font-bold text-[10px] uppercase tracking-[0.2em] opacity-60 hover:opacity-100 transition-all"
+            >
+              {notifyEmail === "newemail" ? "← Back to default" : "Use a different email"}
+            </Button>
+          </div>
+        </div>
+      </div>
+        )}
+
+
+
+                 <ReactPaginate
+            previousLabel="← Previous"
+            nextLabel="Next →"
+            pageCount={pageCount}
+            onPageChange={handlePageChange}
+            containerClassName="flex items-center gap-2"
+            pageClassName=""
+            pageLinkClassName="px-3 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all"
+            activeClassName="bg-[var(--primary)] rounded-lg text-white border-[var(--primary)] "
+            previousClassName=""
+            previousLinkClassName="px-4 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all disabled:opacity-50"
+            nextClassName=""
+            nextLinkClassName="px-4 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all disabled:opacity-50"
+            disabledClassName="opacity-50 cursor-not-allowed"
+          /

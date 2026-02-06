@@ -3,14 +3,19 @@ import Button from "@/components/Button";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {useParams} from "react-router-dom";
+import {products} from '@/components/products'
 
 function ProductDetails() {
-    const images = [
-        "https://i.pinimg.com/736x/68/8d/b3/688db3abdc40f6d4111f72b0c34e38a3.jpg",
-        "https://i.pinimg.com/736x/b3/21/27/b32127d45739c03aadd8b26627e99dd2.jpg",
-        "https://images.unsplash.com/photo-1607006344380-b6775a0824a7?q=80&w=600",
-        "https://images.unsplash.com/photo-1556229162-5c63ed9c4efb?q=80&w=600",
-    ];
+    const { id } = useParams(); 
+    const product = products.find(p => p.id === Number(id));
+
+    if (!product) {
+        return (<div className="min-h-screen flex items-center justify-center">
+            <h2 className="text-2xl font-semibold">Product not found.</h2>
+        </div>
+        );
+    }
 
     const relatedProducts = [
         { id: 1, name: "Charcoal Detox", price: "1,200 RWF", img: "https://i.pinimg.com/736x/47/51/3e/47513e1567c15cee9f3c3d9d2842f413.jpg" },
@@ -24,7 +29,7 @@ function ProductDetails() {
     ];
 
     const [count, setCount] = useState(1);
-    const [selectedImage, setSelectedImage] = useState(images[0]);
+    const [selectedImage, setSelectedImage] = useState(product.image[0]);
     const [activeDetailTab, setActiveDetailTab] = useState<'details' | 'additional' | 'shipping' | 'ingredients' | 'reviews'>('details');
 
     return (
@@ -52,30 +57,33 @@ function ProductDetails() {
                             <img className="w-full h-full object-cover" src={selectedImage} alt="Product" />
                         </div>
                         <div className="flex gap-2">
-                            {images.map((img, i) => (
-                                <button key={i} onClick={() => setSelectedImage(img)}
-                                    className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition-all 
-                                    ${selectedImage === img ? "border-[var(--primary)] scale-95" : "border-transparent opacity-40"}`}>
-                                    <img className="w-full h-full object-cover" src={img} />
-                                </button>
-                            ))}
+                        {(Array.isArray(product.image) ? product.image : [product.image]).map((img, i) => (
+                            <button
+                            key={i}
+                            onClick={() => setSelectedImage(img)}
+                            className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition
+                            ${selectedImage === img ? "border-[var(--primary)]" : "border-gray-200 opacity-60"}`}
+                            >
+                            <img src={img} className="w-full h-full object-cover"/>
+                            </button>
+                        ))}
                         </div>
+
                     </div>
                     <div className="flex-1 space-y-6 max-w-md">
                         <div className="space-y-2">
                             <div className="flex items-center gap-2 text-[var(--error-red)] font-bold text-[10px] uppercase tracking-widest">
-                                <Zap size={14} fill="currentColor" /> Only 8 Items Left!
+                                <Zap size={14} fill="currentColor" /> Only {product.stock} Items Left!
                             </div>
-                            <h1 className="text-3xl font-serif text-[var(--primary)]">Brown Coat Finishing Soap</h1>
+                            <h1 className="text-3xl font-serif text-[var(--primary)]">{product.name}</h1>
                             <div className="flex items-center gap-4 py-1">
-                                <span className="text-2xl font-semibold text-[var(--gold-color)]">1,000 RWF</span>
-                                <span className="text-gray-400 line-through text-sm">1,500 RWF</span>
+                                <span className="text-2xl font-semibold text-[var(--gold-color)]">{product.price} RWF</span>
+                                <span className="text-gray-400 line-through text-sm">{product.oldPrice} RWF</span>
                             </div>
                         </div>
 
                         <p className="text-gray-500 text-sm leading-relaxed italic">
-                            Handcrafted with organic cocoa and essential oils to provide a rich, nourishing lather.
-                            Handcrafted with organic cocoa and essential oils to provide a rich, nourishing lather.
+                            {product.description}
                         </p>
 
                         <div className="flex items-center gap-3 pt-4">

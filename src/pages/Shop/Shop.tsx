@@ -1,10 +1,14 @@
 import { useState } from "react";
-import {  ShoppingBag, Heart, ArrowUpDown, Zap } from "lucide-react";
+import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail } from "lucide-react";
+import {products} from "@/components/products"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
-const products = [
+
+const productss = [
   { id: 1, name: "Lavender Bliss Soap", price: 1200, oldPrice: 1500,  image: "https://i.pinimg.com/736x/47/51/3e/47513e1567c15cee9f3c3d9d2842f413.jpg", category: "Lavender", stock: 0 },
   { id: 2, name: "Citrus Zest Bar", price: 1000, oldPrice: 1300,  image: "https://i.pinimg.com/736x/62/d2/26/62d2268fcfae76758a799a43fa1428a6.jpg", category: "Citrus", stock: 12 },
   { id: 3, name: "Oatmeal Honey Soap", price: 1400, oldPrice: 1800, image: "https://i.pinimg.com/736x/09/0a/71/090a71baf8ff308245d6596d09e5e27d.jpg", category: "Oatmeal", stock: 3 },
@@ -19,7 +23,7 @@ function Shop() {
   const [sort, setSort] = useState("asc");
 
   const filtered = products.filter(p => selectedCategory === "All" || p.category === selectedCategory);
-  const sorted = [...filtered].sort((a, b) => sort === "asc" ? a.price - b.price : b.price - a.price);
+  const sorted = [...filtered].sort((a, b) => sort === "asc" ? Number(a.price) - Number(b.price) : Number(b.price) - Number(a.price));
 
   return (
     <div className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
@@ -152,9 +156,18 @@ function Shop() {
   <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-12">
     {sorted.map(product => {
       const isOutOfStock = product.stock === 0;
-
       return (
-        <div key={product.id} className={`group flex flex-col h-full ${isOutOfStock ? 'opacity-75' : ''}`}>
+        <div
+      onClick={() => {
+    if (product.stock === 0) {
+      toast.error("This product is out of stock");
+      return;
+    }
+    window.location.href = `/productdetails/${product.id}`;
+  }}
+  className={`group flex flex-col h-full cursor-pointer ${product.stock === 0 ? 'opacity-70' : ''}`}
+>
+
           <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] transition-all duration-500 hover:shadow-md">
             {isOutOfStock ? (
               <div className="absolute inset-0 z-10 bg-white/60 backdrop-blur-[1px] flex items-center justify-center">
@@ -169,7 +182,7 @@ function Shop() {
             )}
             
             <img
-              src={product.image}
+              src={typeof product.image === 'string' ? product.image : product.image[0]}
               alt={product.name}
               className={`w-full h-full object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
             />
@@ -193,7 +206,7 @@ function Shop() {
             
             <div className="flex items-baseline gap-2 mb-4">
               <span className="text-sm font-bold text-gray-900">
-                {product.price.toLocaleString()} RWF
+                {product.price.toLocaleString()} 
               </span>
               <span className="text-[10px] text-gray-400 line-through">
                 {product.oldPrice.toLocaleString()}
@@ -207,8 +220,9 @@ function Shop() {
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
                     : 'bg-[var(--primary)] text-white hover:bg-[var(--primary-color)]'}`}
               >
-                <ShoppingBag size={12} />
-                {isOutOfStock ? 'Notify Me' : 'Add'}
+                
+                  {isOutOfStock ? (<> Notify Me <Mail size={12} /> </>) : (<>Add to Cart <ShoppingBag size={12} /></>
+  )}
               </button>
               
               <button className="p-2 border border-[var(--bolder-gray)] text-[var(--primary)] rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">

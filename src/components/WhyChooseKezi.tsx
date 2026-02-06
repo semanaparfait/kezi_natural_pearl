@@ -1,4 +1,5 @@
 import { ShieldCheck, Leaf,  Award } from 'lucide-react';
+import why from '@/assets/who/Crafting The Perfect Soap.jfif.jpeg'
 
 function WhyChooseKezi() {
   const reasons = [
@@ -29,7 +30,7 @@ function WhyChooseKezi() {
           <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start">
             <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl z-10">
               <img 
-                src="https://i.pinimg.com/1200x/b2/7f/ad/b27fad3c748510883624111a3e78ee08.jpg" 
+                src={why} 
                 alt="Natural Sourcing" 
                 className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
               />

@@ -3,18 +3,17 @@ import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail } from "lucide-react";
 import {products} from "@/components/products"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 
 
-const productss = [
-  { id: 1, name: "Lavender Bliss Soap", price: 1200, oldPrice: 1500,  image: "https://i.pinimg.com/736x/47/51/3e/47513e1567c15cee9f3c3d9d2842f413.jpg", category: "Lavender", stock: 0 },
-  { id: 2, name: "Citrus Zest Bar", price: 1000, oldPrice: 1300,  image: "https://i.pinimg.com/736x/62/d2/26/62d2268fcfae76758a799a43fa1428a6.jpg", category: "Citrus", stock: 12 },
-  { id: 3, name: "Oatmeal Honey Soap", price: 1400, oldPrice: 1800, image: "https://i.pinimg.com/736x/09/0a/71/090a71baf8ff308245d6596d09e5e27d.jpg", category: "Oatmeal", stock: 3 },
-  { id: 4, name: "Charcoal Detox Bar", price: 1500, oldPrice: 2000, image: "https://i.pinimg.com/1200x/c3/a3/d2/c3a3d2a770550aedf72e94c04b8cb867.jpg" , category: "Charcoal", stock: 20 },
-  { id: 5, name: "Rose Petal Soap", price: 1300, oldPrice: 1600, image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?q=80&w=600", category: "Rose", stock: 8 },
-];
+// const productss = [
+//   { id: 1, name: "Lavender Bliss Soap", price: 1200, oldPrice: 1500,  image: "https://i.pinimg.com/736x/47/51/3e/47513e1567c15cee9f3c3d9d2842f413.jpg", category: "Lavender", stock: 0 },
+//   { id: 2, name: "Citrus Zest Bar", price: 1000, oldPrice: 1300,  image: "https://i.pinimg.com/736x/62/d2/26/62d2268fcfae76758a799a43fa1428a6.jpg", category: "Citrus", stock: 12 },
+//   { id: 3, name: "Oatmeal Honey Soap", price: 1400, oldPrice: 1800, image: "https://i.pinimg.com/736x/09/0a/71/090a71baf8ff308245d6596d09e5e27d.jpg", category: "Oatmeal", stock: 3 },
+//   { id: 4, name: "Charcoal Detox Bar", price: 1500, oldPrice: 2000, image: "https://i.pinimg.com/1200x/c3/a3/d2/c3a3d2a770550aedf72e94c04b8cb867.jpg" , category: "Charcoal", stock: 20 },
+//   { id: 5, name: "Rose Petal Soap", price: 1300, oldPrice: 1600, image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?q=80&w=600", category: "Rose", stock: 8 },
+// ];
 
 const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
 

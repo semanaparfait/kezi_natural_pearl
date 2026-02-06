@@ -52,11 +52,11 @@ function Trendings() {
               style={{ transitionDelay: `${i * 200}ms` }} // staggered animation
             >
               <div className="relative bg-[#f7eff0] w-[13rem] h-[17rem] flex items-center justify-center overflow-hidden rounded-t-2xl">
-                {product.onSale && (
+                {/* {product.onSale && (
                   <span className="absolute top-3 left-3 bg-white text-[10px] px-2 py-0.5 shadow-sm uppercase text-gray-400 rounded-full">
                     sale
                   </span>
-                )}
+                )} */}
 
                 <img 
                   src={product.image instanceof Array ? product.image[0] : product.image} 
@@ -64,7 +64,7 @@ function Trendings() {
                   className="object-contain group-hover:scale-110 transition-transform duration-500"
                 />
 
-                {product.outOfStock && (
+                {!product.stock && (
                   <div className="absolute inset-0 bg-white/40 flex items-center justify-center">
                     <div className="bg-[#f8d7da] text-[#721c24] text-[10px] font-bold px-4 py-2 uppercase tracking-widest shadow-sm rounded-full">
                       Out of Stock

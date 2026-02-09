@@ -7,12 +7,14 @@ import toast from "react-hot-toast";
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import Button from "@/components/Button";
 import ReactPaginate from 'react-paginate';
+import { useNavigate } from "react-router-dom";
 
 
 const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
 
 function Shop() {
-    const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(undefined);
+  const navigate = useNavigate();
+  const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(undefined);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sort, setSort] = useState("asc");
   const [notifyEmail, setNotifyEmail] = useState("");
@@ -168,7 +170,7 @@ function Shop() {
               onClick={() => {
                 if (isLoading) return;
                 if (product.stock > 0) {
-                  window.location.href = `/productdetails/${product.id}`;
+                  navigate(`/productdetails/${product.id}`);
                   return;
                 }
                 if (error || !currentUser) {
@@ -297,7 +299,7 @@ function Shop() {
               </div>
             </div>
             <div className="text-center px-2">
-              <p className="text-xs text-gray-500 leading-relaxed font-light italic">
+              <p className="text-lg text-gray-500 leading-relaxed font-light italic">
                 To receive personalized notifications and artisanal updates, please sign in to your Kezi account.
               </p>
             </div>

@@ -12,6 +12,7 @@ import Voice from "@/Voice/Voice";
 import AdminPage from "@/owner/AdminPage";
 import NotFound from "./pages/NotFound/NotFound";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
+import Cart from "@/pages/Cart/Cart";
 function App() {
 
 
@@ -32,6 +33,7 @@ function App() {
     <Route path="/adminPage" element={<AdminPage />} />
     <Route path="*" element={<NotFound />} />
   <Route path="/productdetails/:id" element={<ProductDetails />} />
+  <Route path="/cart" element={<Cart />} />
   </Routes>
 </BrowserRouter>
 

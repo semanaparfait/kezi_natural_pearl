@@ -61,19 +61,19 @@ function Navbar() {
 {currentUser ? (
   <>
     <div
-      className="flex items-center gap-2 bg-black/20 px-5 py-2 rounded-full cursor-pointer"
+      className="flex items-center gap-2 bg-black/20 md:px-5 px-2 py-2 rounded-full cursor-pointer"
       onClick={handleDropdown}
     >
-      <div className="w-8 h-8 bg-[var(--gold-color)] rounded-full flex items-center justify-center text-white font-semibold">
+      <div className="md:w-8 md:h-8 w-5 h-5 bg-[var(--gold-color)] rounded-full flex items-center justify-center text-white font-semibold">
         {currentUser.email.charAt(0).toUpperCase()}
       </div>
-      <p>{currentUser.email.split('@')[0].replace(/\d+/g, '')}</p>
+      <p className='md:text-base text-[11px]'>{currentUser.email.split('@')[0].replace(/\d+/g, '')}</p>
 
       <ChevronDown size={16} />
     </div>
 
     {dropdownOpen && (
-      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg text-black z-50">
+      <div className="absolute right-0 mt-2 w-fit  bg-white rounded-lg shadow-lg text-black z-50">
         <div className="px-4 py-3 border-b">
           <p className="font-semibold">{currentUser.email}</p>
           <p className="text-sm ">{currentUser.role}</p>

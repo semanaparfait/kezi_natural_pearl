@@ -35,14 +35,14 @@ function Hero2() {
           <div className={`transition-all duration-1000 transform ease-out
             ${show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}
           `}>
-            <h1 className="uppercase font-semibold pb-3 text-5xl">
+            <h1 className="uppercase font-semibold pb-3 md:text-5xl text-3xl">
               Cleans <span className="text-[var(--primary)]"> beauty</span>
             </h1>
-            <h1 className="uppercase pb-4 font-semibold text-5xl">
+            <h1 className="uppercase pb-4 font-semibold md:text-5xl text-3xl">
               begins with <span className="text-[var(--primary)]">nature</span>
             </h1>
           </div>
-          <p className={`text-lg max-w-xl transition-all duration-1000 delay-150 transform ease-out
+          <p className={`md:text-lg max-w-xl transition-all duration-1000 delay-150 transform ease-out
             ${show ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}
           `}>
             Made with pure ingredients from nature, gently crafted for everyday care, because your skin deserves the best.
@@ -62,7 +62,7 @@ function Hero2() {
           </svg>
         </div>
       </div>
-      <div className='bg-[var(--primary)] z-20 text-white flex justify-around py-4 absolute bottom-0 w-full'>
+      <div className='bg-[var(--primary)] z-20 text-white flex justify-evenly py-4 absolute bottom-0 w-full text-sm'>
         <p>Fast Shipping</p>
         <p>Quality Products</p>
         <p>Eco-Friendly</p>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { FaMicrophone } from 'react-icons/fa'
-import { Pause, Play, X, Send } from 'lucide-react'
-import Button from '@/components/Button'
+import {  X, Send } from 'lucide-react'
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import toast from 'react-hot-toast'
 import { products } from '@/components/products' // your products

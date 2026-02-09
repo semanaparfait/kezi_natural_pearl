@@ -4,20 +4,23 @@ import { Globe, ShoppingCart, ChevronDown, Package, LayoutDashboard, LogOut,  Ci
 import logo from '@/assets/logo-Kezi (1).svg';
 import '@/components/Navbar.css';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 function Navbar() {
   const pathname = useLocation().pathname;
   const isHomePage = pathname === '/';
   const token = localStorage.getItem('token');
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
-  console.log('Current User:', currentUser);
+  // console.log('Current User:', currentUser);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
 
   const Links = [
     { name: 'Home', link: '/' },
     { name: 'Shop', link: '/shop' },
     { name: 'About', link: '/about' },
+    { name: 'Blogs', link: '/blogs' },
     { name: 'Contact Us', link: '/contact-us' },
   ];
 
@@ -27,8 +30,18 @@ function Navbar() {
     window.location.reload();
   };
 
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className={` top-0 z-50 w-full text-white  ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'}`}>
+    <header className={` top-0 z-50 w-full text-white fixed  ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'} ${scrolled ? 'bg-[var(--primary)]' : ''}`}>
       <nav className="flex items-center justify-between px-4 ">
         <div>
           <img src={logo} alt="KEZI Logo" className="w-16 h-16 brightness-0 invert" />
@@ -39,7 +52,7 @@ function Navbar() {
               <Link
                 to={link.link}
                 className={
-                  pathname === link.link ? 'text-[var(--primary)] underline font-semibold' : ''
+                  pathname === link.link ? 'text-[var(--primary)]  font-semibold' : ''
                 }
               >
                 {link.name}

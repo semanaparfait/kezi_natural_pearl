@@ -13,6 +13,7 @@ import AdminPage from "@/owner/AdminPage";
 import NotFound from "./pages/NotFound/NotFound";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Cart from "@/pages/Cart/Cart";
+import Blogs from "@/pages/Blogs/Blogs";
 function App() {
 
 
@@ -32,8 +33,9 @@ function App() {
     <Route path="/userDashboard" element={<UserDashboard />} />
     <Route path="/adminPage" element={<AdminPage />} />
     <Route path="*" element={<NotFound />} />
-  <Route path="/productdetails/:id" element={<ProductDetails />} />
-  <Route path="/cart" element={<Cart />} />
+    <Route path="/productdetails/:id" element={<ProductDetails />} />
+    <Route path="/cart" element={<Cart />} />
+    <Route path="/blogs" element={<Blogs />} />
   </Routes>
 </BrowserRouter>
 

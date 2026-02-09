@@ -81,11 +81,11 @@ function Trendings() {
                 <div className="flex items-center justify-center gap-2">
                   {product.oldPrice && (
                     <span className="text-gray-400 text-xs line-through">
-                      {product.oldPrice} RWF
+                      {product.oldPrice} 
                     </span>
                   )}
                   <span className="text-gray-800 text-[14px] font-semibold">
-                    {product.price} RWF
+                    {product.price} 
                   </span>
                 </div>
               </div>

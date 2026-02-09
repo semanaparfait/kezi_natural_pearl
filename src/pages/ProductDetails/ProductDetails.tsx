@@ -31,6 +31,8 @@ function ProductDetails() {
     const [count, setCount] = useState(1);
     const [selectedImage, setSelectedImage] = useState(product.image[0]);
     const [activeDetailTab, setActiveDetailTab] = useState<'details' | 'additional' | 'shipping' | 'ingredients' | 'reviews'>('details');
+    const remaining = product.stock - count;
+    const outOfStock = product.stock === 0;
 
     return (
         <section className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
@@ -73,12 +75,13 @@ function ProductDetails() {
                     <div className="flex-1 space-y-6 max-w-md">
                         <div className="space-y-2">
                             <div className="flex items-center gap-2 text-[var(--error-red)] font-bold text-[10px] uppercase tracking-widest">
-                                <Zap size={14} fill="currentColor" /> Only {product.stock} Items Left!
+                                <Zap size={14} fill="currentColor" /> {product.stock === 0 ? "Out of Stock" : `Only ${remaining} Items Left!`}
+
                             </div>
                             <h1 className="text-3xl font-serif text-[var(--primary)]">{product.name}</h1>
                             <div className="flex items-center gap-4 py-1">
-                                <span className="text-2xl font-semibold text-[var(--gold-color)]">{product.price} </span>
-                                <span className="text-gray-400 line-through text-sm">{product.oldPrice} </span>
+                                <span className="text-2xl font-semibold text-[var(--gold-color)]">{(product.price * count).toLocaleString()} RWF</span>
+                                <span className="text-gray-400 line-through text-sm">{product.oldPrice} RWF</span>
                             </div>
                         </div>
 
@@ -87,14 +90,40 @@ function ProductDetails() {
                         </p>
 
                         <div className="flex items-center gap-3 pt-4">
-                            <div className="flex items-center border border-[var(--bolder-gray)] rounded-full h-12 bg-white px-2">
-                                <button onClick={() => setCount(m => Math.max(1, m-1))} className="px-2"><Minus size={14}/></button>
-                                <span className="w-8 text-center text-sm font-bold">{count}</span>
-                                <button onClick={() => setCount(m => m+1)} className="px-2"><Plus size={14}/></button>
+                            <div className={`flex items-center border border-[var(--bolder-gray)] rounded-full h-12 bg-white px-2
+                            ${outOfStock ? "opacity-40 pointer-events-none" : ""}`}>
+
+                            <button disabled={outOfStock} onClick={() => setCount(m => Math.max(1, m-1))} className="px-2">
+                                <Minus size={14}/>
+                            </button>
+
+                            <span className="w-8 text-center text-sm font-bold">
+                                {outOfStock ? 0 : count}
+                            </span>
+
+                            <button
+                                disabled={outOfStock || count >= product.stock}
+                                onClick={() => setCount(m => m+1)}
+                                className="px-2"
+                            >
+                                <Plus size={14}/>
+                            </button>
                             </div>
-                            <Button className="h-12 flex-1   bg-[var(--primary)] text-white rounded-full text-[11px] uppercase tracking-widest font-bold shadow-md hover:brightness-110">
-                                <p className="flex items-center justify-center">Add to Cart <ShoppingBag size={16} className="ml-2" /></p>
+
+                            <Button
+                            disabled={outOfStock}
+                            className={`h-12 flex-1 rounded-full text-[11px] uppercase tracking-widest font-bold shadow-md
+                            ${outOfStock 
+                                ? "bg-gray-400 cursor-not-allowed text-white" 
+                                : "bg-[var(--primary)] hover:brightness-110 text-white"
+                            }`}
+                            >
+                            <p className="flex items-center justify-center">
+                                {outOfStock ? "Out of Stock" : "Add to Cart"}
+                                <ShoppingBag size={16} className="ml-2" />
+                            </p>
                             </Button>
+
                             <button className="h-12 w-12 flex items-center justify-center border border-[var(--bolder-gray)] rounded-full hover:bg-red-50 text-[var(--primary)] bg-white">
                                 <Heart size={20} />
                             </button>

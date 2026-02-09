@@ -9,8 +9,8 @@ export type ImageArrayMax5 =
 export interface Product {
   id: number;
   name: string;
-  price: string;
-  oldPrice:string;
+  price: number;
+  oldPrice:number;
   image: string | ImageArrayMax5;
   stock: number;
   description: string;
@@ -20,8 +20,8 @@ export const products: Product[] = [
   {
     id: 1,
     name: "Brown Coat Finishing Soap",
-    price: "1,000 RWF",
-    oldPrice: "1,500 RWF",
+    price: 1000,
+    oldPrice: 1500,
     category: "Organic Soaps",
     stock: 0,
     description: "Handcrafted with organic cocoa and essential oils to provide a rich, nourishing lather for daily skin protection.",
@@ -36,8 +36,8 @@ export const products: Product[] = [
   {
     id: 2,
     name: "Charcoal Detox Bar",
-    price: "1,200 RWF",
-    oldPrice: "1,700 RWF",
+    price: 1200,
+    oldPrice: 1700,
     category: "Cleansers",
     stock: 12,
     description: "Activated bamboo charcoal pulls impurities from deep within pores for a refreshing, clear complexion.",
@@ -52,8 +52,8 @@ export const products: Product[] = [
   {
     id: 3,
     name: "Lavender Sleep Mist",
-    price: "2,500 RWF",
-    oldPrice: "3,000 RWF",
+    price: 2500,
+    oldPrice: 3000,
     category: "Wellness",
     stock: 5,
     description: "A calming blend of Rwandan lavender and chamomile to prep your skin and mind for deep rest.",
@@ -68,8 +68,8 @@ export const products: Product[] = [
   {
     id: 4,
     name: "Shea Glow Butter",
-    price: "1,800 RWF",
-    oldPrice: "2,200 RWF",
+    price: 1800,
+    oldPrice: 2200,
     category: "Moisturizers",
     stock: 20,
     description: "Pure, whip-textured shea butter infused with vitamin E for 24-hour hydration and a natural glow.",
@@ -84,8 +84,8 @@ export const products: Product[] = [
   {
     id: 5,
     name: "Honey & Oat Scrub",
-    price: "1,500 RWF",
-    oldPrice: "2,000 RWF",
+    price: 1500 ,
+    oldPrice: 2000 ,
     category: "Exfoliants",
     stock: 15,
     description: "Raw forest honey mixed with fine oats to gently remove dead skin cells while soothing irritation.",
@@ -100,8 +100,8 @@ export const products: Product[] = [
   {
     id: 6,
     name: "Pure Aloe Vera Gel",
-    price: "3,000 RWF",
-    oldPrice: "3,500 RWF",
+    price: 3000,
+    oldPrice: 3500,
     category: "Face Care",
     stock: 10,
     description: "Cold-pressed aloe vera leaf juice to cool, heal, and hydrate sun-exposed or sensitive skin.",
@@ -116,8 +116,8 @@ export const products: Product[] = [
   {
     id: 7,
     name: "Hibiscus Toning Water",
-    price: "2,100 RWF",
-    oldPrice: "2,600 RWF",
+    price: 2100,
+    oldPrice: 2600,
     category: "Toners",
     stock: 7,
     description: "A natural AHA toner made from dried hibiscus petals to brighten and tighten skin texture.",
@@ -132,8 +132,8 @@ export const products: Product[] = [
   {
     id: 8,
     name: "Turmeric Brightening Soap",
-    price: "1,300 RWF",
-    oldPrice: "1,800 RWF",
+    price: 1300 ,
+    oldPrice: 1800,
     category: "Organic Soaps",
     stock: 14,
     description: "Infused with turmeric root and ginger to even out skin tone and provide anti-inflammatory benefits.",
@@ -148,8 +148,8 @@ export const products: Product[] = [
   {
     id: 9,
     name: "Green Tea Facial Oil",
-    price: "4,500 RWF",
-    oldPrice: "5,000 RWF",
+    price: 4500 ,
+    oldPrice: 5000 ,
     category: "Face Care",
     stock: 4,
     description: "Lightweight, non-greasy antioxidant oil that protects skin against environmental stressors.",
@@ -164,8 +164,8 @@ export const products: Product[] = [
   {
     id: 10,
     name: "Moringa Hair Treatment",
-    price: "3,200 RWF",
-    oldPrice: "3,800 RWF",
+    price: 3200 ,
+    oldPrice: 3800 ,
     category: "Hair Care",
     stock: 9,
     description: "A protein-rich mask made from moringa oleifera to strengthen hair from root to tip.",
@@ -180,8 +180,8 @@ export const products: Product[] = [
   {
     id: 11,
     name: "Coconut Milk Bath",
-    price: "2,800 RWF",
-    oldPrice: "3,300 RWF",
+    price: 2800 ,
+    oldPrice: 3300 ,
     category: "Body Care",
     stock: 11,
     description: "Soothing bath soak made with dehydrated coconut milk for a silky, luxury spa experience at home.",
@@ -196,8 +196,8 @@ export const products: Product[] = [
   {
     id: 12,
     name: "Rosehip Night Serum",
-    price: "5,500 RWF",
-    oldPrice: "6,000 RWF",
+    price: 5500 ,
+    oldPrice: 6000 ,
     category: "Face Care",
     stock: 3,
     description: "Premium night serum with 100% pure rosehip oil to regenerate skin cells while you sleep.",
@@ -212,8 +212,8 @@ export const products: Product[] = [
   {
     id: 13,
     name: "Cinnamon Lip Scrub",
-    price: "900 RWF",
-    oldPrice: "1,200 RWF",
+    price: 900 ,
+    oldPrice: 1200 ,
     category: "Lip Care",
     stock: 25,
     description: "Sugar-based scrub with a hint of cinnamon to plump and soften lips naturally.",
@@ -228,8 +228,8 @@ export const products: Product[] = [
   {
     id: 14,
     name: "Eucalyptus Body Wash",
-    price: "3,500 RWF",
-    oldPrice: "4,000 RWF",
+    price: 3500 ,
+    oldPrice: 4000 ,
     category: "Body Care",
     stock: 8,
     description: "A refreshing, sulfate-free body wash that clears the senses with pure eucalyptus extract.",
@@ -244,8 +244,8 @@ export const products: Product[] = [
   {
     id: 15,
     name: "Zanzibar Spice Soap",
-    price: "1,400 RWF",
-    oldPrice: "1,900 RWF",
+    price: 1400 ,
+    oldPrice: 1900 ,
     category: "Organic Soaps",
     stock: 13,
     description: "A warm, aromatic soap blending cloves and nutmeg for a truly unique bathing ritual.",
@@ -260,8 +260,8 @@ export const products: Product[] = [
   {
     id: 16,
     name: "Brown Coat Finishing Soap",
-    price: "1,000 RWF",
-    oldPrice: "1,500 RWF",
+    price: 1000 ,
+    oldPrice: 1500 ,
     category: "Organic Soaps",
     stock: 0,
     description: "Handcrafted with organic cocoa and essential oils to provide a rich, nourishing lather for daily skin protection.",
@@ -276,8 +276,8 @@ export const products: Product[] = [
   {
     id: 17,
     name: "Charcoal Detox Bar",
-    price: "1,200 RWF",
-    oldPrice: "1,700 RWF",
+    price: 1200 ,
+    oldPrice: 1700 ,
     category: "Cleansers",
     stock: 12,
     description: "Activated bamboo charcoal pulls impurities from deep within pores for a refreshing, clear complexion.",
@@ -292,8 +292,8 @@ export const products: Product[] = [
   {
     id: 18,
     name: "Lavender Sleep Mist",
-    price: "2,500 RWF",
-    oldPrice: "3,000 RWF",
+    price: 2500 ,
+    oldPrice: 3000 ,
     category: "Wellness",
     stock: 5,
     description: "A calming blend of Rwandan lavender and chamomile to prep your skin and mind for deep rest.",
@@ -308,8 +308,8 @@ export const products: Product[] = [
   {
     id: 19,
     name: "Shea Glow Butter",
-    price: "1,800 RWF",
-    oldPrice: "2,200 RWF",
+    price: 1800 ,
+    oldPrice: 2200 ,
     category: "Moisturizers",
     stock: 20,
     description: "Pure, whip-textured shea butter infused with vitamin E for 24-hour hydration and a natural glow.",
@@ -324,8 +324,8 @@ export const products: Product[] = [
   {
     id: 20,
     name: "Honey & Oat Scrub",
-    price: "1,500 RWF",
-    oldPrice: "2,000 RWF",
+    price: 1500 ,
+    oldPrice: 2000 ,
     category: "Exfoliants",
     stock: 15,
     description: "Raw forest honey mixed with fine oats to gently remove dead skin cells while soothing irritation.",
@@ -340,8 +340,8 @@ export const products: Product[] = [
   {
     id: 21,
     name: "Pure Aloe Vera Gel",
-    price: "3,000 RWF",
-    oldPrice: "3,500 RWF",
+    price: 3000 ,
+    oldPrice: 3500 ,
     category: "Face Care",
     stock: 10,
     description: "Cold-pressed aloe vera leaf juice to cool, heal, and hydrate sun-exposed or sensitive skin.",
@@ -356,8 +356,8 @@ export const products: Product[] = [
   {
     id: 22,
     name: "Hibiscus Toning Water",
-    price: "2,100 RWF",
-    oldPrice: "2,600 RWF",
+    price: 2100 ,
+    oldPrice: 2600 ,
     category: "Toners",
     stock: 7,
     description: "A natural AHA toner made from dried hibiscus petals to brighten and tighten skin texture.",
@@ -372,8 +372,8 @@ export const products: Product[] = [
   {
     id: 23,
     name: "Turmeric Brightening Soap",
-    price: "1,300 RWF",
-    oldPrice: "1,800 RWF",
+    price: 1300 ,
+    oldPrice: 1800 ,
     category: "Organic Soaps",
     stock: 14,
     description: "Infused with turmeric root and ginger to even out skin tone and provide anti-inflammatory benefits.",
@@ -388,8 +388,8 @@ export const products: Product[] = [
   {
     id: 24,
     name: "Green Tea Facial Oil",
-    price: "4,500 RWF",
-    oldPrice: "5,000 RWF",
+    price: 4500 ,
+    oldPrice: 5000 ,
     category: "Face Care",
     stock: 4,
     description: "Lightweight, non-greasy antioxidant oil that protects skin against environmental stressors.",
@@ -404,8 +404,8 @@ export const products: Product[] = [
   {
     id: 25,
     name: "Moringa Hair Treatment",
-    price: "3,200 RWF",
-    oldPrice: "3,800 RWF",
+    price: 3200 ,
+    oldPrice: 3800 ,
     category: "Hair Care",
     stock: 9,
     description: "A protein-rich mask made from moringa oleifera to strengthen hair from root to tip.",
@@ -420,8 +420,8 @@ export const products: Product[] = [
   {
     id: 26,
     name: "Coconut Milk Bath",
-    price: "2,800 RWF",
-    oldPrice: "3,300 RWF",
+    price: 2800 ,
+    oldPrice: 3300 ,
     category: "Body Care",
     stock: 11,
     description: "Soothing bath soak made with dehydrated coconut milk for a silky, luxury spa experience at home.",
@@ -436,8 +436,8 @@ export const products: Product[] = [
   {
     id: 27,
     name: "Rosehip Night Serum",
-    price: "5,500 RWF",
-    oldPrice: "6,000 RWF",
+    price: 5500 ,
+    oldPrice: 6000 ,
     category: "Face Care",
     stock: 3,
     description: "Premium night serum with 100% pure rosehip oil to regenerate skin cells while you sleep.",
@@ -452,8 +452,8 @@ export const products: Product[] = [
   {
     id: 28,
     name: "Cinnamon Lip Scrub",
-    price: "900 RWF",
-    oldPrice: "1,200 RWF",
+    price: 900 ,
+    oldPrice: 1200 ,
     category: "Lip Care",
     stock: 25,
     description: "Sugar-based scrub with a hint of cinnamon to plump and soften lips naturally.",
@@ -468,8 +468,8 @@ export const products: Product[] = [
   {
     id: 29,
     name: "Eucalyptus Body Wash",
-    price: "3,500 RWF",
-    oldPrice: "4,000 RWF",
+    price: 3500 ,
+    oldPrice: 4000 ,
     category: "Body Care",
     stock: 8,
     description: "A refreshing, sulfate-free body wash that clears the senses with pure eucalyptus extract.",
@@ -484,8 +484,8 @@ export const products: Product[] = [
   {
     id: 30,
     name: "Zanzibar Spice Soap",
-    price: "1,400 RWF",
-    oldPrice: "1,900 RWF",
+    price: 1400 ,
+    oldPrice: 1900 ,
     category: "Organic Soaps",
     stock: 13,
     description: "A warm, aromatic soap blending cloves and nutmeg for a truly unique bathing ritual.",

@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {useParams} from "react-router-dom";
 import {products} from '@/components/products'
+import toast from "react-hot-toast";
+import Category from "@/components/Category";
 
 function ProductDetails() {
     const { id } = useParams(); 
@@ -34,8 +36,35 @@ function ProductDetails() {
     const stock = Number(product?.stock || 0);
     const remaining = Math.max(stock - count, 0);
     const outOfStock = stock === 0;
-    console.log("stock:", stock);
-    console.log("outOfStock:", outOfStock);
+    // console.log("stock:", stock);
+    // console.log("outOfStock:", outOfStock);
+
+
+const handleAddToCart = () => {
+    if (!product) return;
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const index = existingCart.findIndex((item: any) => item.id === product.id);
+
+    if (index >= 0) {
+        existingCart[index].quantity += count;
+        if (existingCart[index].quantity > stock) {
+            existingCart[index].quantity = stock;
+        }
+    } else {
+        existingCart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: count,
+            image: product.image[0],
+            category: product.category
+        });
+    }
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+
+    toast.success(`${product.name} added to cart!`);
+};
+
 
 
 
@@ -95,9 +124,6 @@ function ProductDetails() {
                         : `Only ${remaining} Item${remaining > 1 ? 's' : ''} Left!`
                     }
                     </div>
-
-
-
                             <h1 className="text-3xl font-serif text-[var(--primary)]">{product.name}</h1>
                             <div className="flex items-center gap-4 py-1">
                                 <span className="text-2xl font-semibold text-[var(--gold-color)]">{(product.price * count).toLocaleString()} RWF</span>
@@ -130,6 +156,7 @@ function ProductDetails() {
                             : "bg-[var(--primary)] hover:brightness-110 text-white"
                         }`}
                         disabled={outOfStock}
+                        onClick={handleAddToCart}
                         >
                         <p className="flex items-center justify-center">
                             {outOfStock ? "Out of Stock" : "Add to Cart"}

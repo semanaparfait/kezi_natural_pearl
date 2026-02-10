@@ -69,7 +69,9 @@ function Navbar() {
               <option value="fr">FR</option>
             </select>
           </div>
+          <Link to="/cart">
           <ShoppingCart />
+          </Link>
           <div className="relative">
 {currentUser ? (
   <>

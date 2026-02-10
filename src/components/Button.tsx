@@ -10,6 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	loading?: boolean
 	leftIcon?: ReactNode
 	rightIcon?: ReactNode
+	
 }
 
 const variantClasses: Record<ButtonVariant, string> = {

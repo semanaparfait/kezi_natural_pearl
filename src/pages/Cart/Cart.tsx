@@ -144,9 +144,10 @@ function Cart() {
               </div>
 
               <div className="pt-8 flex flex-col space-y-4">
-                <Button className="w-full py-5 rounded-full text-[var(--primary)] hover:bg-[var(--gold-color)] hover:text-white transition-all duration-500 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl">
+                <Link to='/checkout'
+                 className="w-full py-5 bg-[var(--gold-color)] text-center rounded-md text-[var(--primary)] hover:bg-[var(--gold-color)] hover:text-white transition-all duration-500 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl">
                   Proceed to Checkout
-                </Button>
+                </Link >
                 <Link to="/shop" className="w-full border py-5 rounded-md border-white text-center text-[9px] uppercase tracking-[0.3em] text-white/40 hover:text-[var(--gold-color)] transition-colors font-bold">
                   Continue Shopping
                 </Link>

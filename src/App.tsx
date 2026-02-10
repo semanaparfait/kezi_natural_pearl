@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Cart from "@/pages/Cart/Cart";
 import Blogs from "@/pages/Blogs/Blogs";
+import CheckOut from "@/pages/CheckOut/CheckOut";
 function App() {
 
 
@@ -36,6 +37,7 @@ function App() {
     <Route path="/productdetails/:id" element={<ProductDetails />} />
     <Route path="/cart" element={<Cart />} />
     <Route path="/blogs" element={<Blogs />} />
+    <Route path="/checkout" element={<CheckOut />} />
   </Routes>
 </BrowserRouter>
 

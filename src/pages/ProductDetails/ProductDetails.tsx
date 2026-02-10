@@ -31,14 +31,21 @@ function ProductDetails() {
     const [count, setCount] = useState(1);
     const [selectedImage, setSelectedImage] = useState(product.image[0]);
     const [activeDetailTab, setActiveDetailTab] = useState<'details' | 'additional' | 'shipping' | 'ingredients' | 'reviews'>('details');
-    const remaining = product.stock - count;
-    const outOfStock = product.stock === 0;
+    const stock = Number(product?.stock || 0);
+    const remaining = Math.max(stock - count, 0);
+    const outOfStock = stock === 0;
+    console.log("stock:", stock);
+    console.log("outOfStock:", outOfStock);
+
+
+
+
 
     return (
         <section className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
-            <div className="bg-[var(--primary)]"><Navbar /></div>
+            <Navbar />
 
-            <div className="relative w-full h-32 md:h-40 overflow-hidden bg-gray-900 flex items-center justify-center">
+            <div className="relative w-full h-32 md:h-60 overflow-hidden bg-gray-900 flex items-center justify-center">
                 <img 
                     src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1200" 
                     className="absolute w-full h-full object-cover opacity-40 grayscale"
@@ -74,10 +81,23 @@ function ProductDetails() {
                     </div>
                     <div className="flex-1 space-y-6 max-w-md">
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-[var(--error-red)] font-bold text-[10px] uppercase tracking-widest">
-                                <Zap size={14} fill="currentColor" /> {product.stock === 0 ? "Out of Stock" : `Only ${remaining} Items Left!`}
+                    <div className={`flex items-center gap-2 font-bold text-[11px] uppercase tracking-widest
+                    ${outOfStock 
+                        ? "text-[var(--error-red)]" 
+                        : remaining <= 5 
+                            ? "text-[var(--error-red)]" 
+                            : "text-[var(--primary)]"
+                    }`}
+                    >
+                    <Zap size={14} fill="currentColor" />
+                    {outOfStock 
+                        ? "Out of Stock" 
+                        : `Only ${remaining} Item${remaining > 1 ? 's' : ''} Left!`
+                    }
+                    </div>
 
-                            </div>
+
+
                             <h1 className="text-3xl font-serif text-[var(--primary)]">{product.name}</h1>
                             <div className="flex items-center gap-4 py-1">
                                 <span className="text-2xl font-semibold text-[var(--gold-color)]">{(product.price * count).toLocaleString()} RWF</span>
@@ -93,36 +113,29 @@ function ProductDetails() {
                             <div className={`flex items-center border border-[var(--bolder-gray)] rounded-full h-12 bg-white px-2
                             ${outOfStock ? "opacity-40 pointer-events-none" : ""}`}>
 
-                            <button disabled={outOfStock} onClick={() => setCount(m => Math.max(1, m-1))} className="px-2">
+                            <button  onClick={() => setCount(m => Math.max(1, m-1))} className={`px-2 ${count <= 1 ? "opacity-40 pointer-events-none" : ""}`}>
                                 <Minus size={14}/>
                             </button>
 
-                            <span className="w-8 text-center text-sm font-bold">
-                                {outOfStock ? 0 : count}
-                            </span>
+                            <span className="w-8 text-center text-sm font-bold"> {outOfStock ? 0 : count}</span>
 
-                            <button
-                                disabled={outOfStock || count >= product.stock}
-                                onClick={() => setCount(m => m+1)}
-                                className="px-2"
-                            >
+                            <button onClick={() => setCount(m => m+1)} className={`px-2 ${count >= stock ? "opacity-40 pointer-events-none" : ""}`}  >
                                 <Plus size={14}/>
                             </button>
                             </div>
 
-                            <Button
-                            disabled={outOfStock}
-                            className={`h-12 flex-1 rounded-full text-[11px] uppercase tracking-widest font-bold shadow-md
-                            ${outOfStock 
-                                ? "bg-gray-400 cursor-not-allowed text-white" 
-                                : "bg-[var(--primary)] hover:brightness-110 text-white"
-                            }`}
-                            >
-                            <p className="flex items-center justify-center">
-                                {outOfStock ? "Out of Stock" : "Add to Cart"}
-                                <ShoppingBag size={16} className="ml-2" />
-                            </p>
-                            </Button>
+                        <Button className={`h-12 flex-1 rounded-full text-[11px] uppercase tracking-widest font-bold shadow-md
+                        ${outOfStock 
+                            ? "bg-yellow-500 cursor-not-allowed text-white" 
+                            : "bg-[var(--primary)] hover:brightness-110 text-white"
+                        }`}
+                        disabled={outOfStock}
+                        >
+                        <p className="flex items-center justify-center">
+                            {outOfStock ? "Out of Stock" : "Add to Cart"}
+                            <ShoppingBag size={16} className="ml-2" />
+                        </p>
+                        </Button>
 
                             <button className="h-12 w-12 flex items-center justify-center border border-[var(--bolder-gray)] rounded-full hover:bg-red-50 text-[var(--primary)] bg-white">
                                 <Heart size={20} />

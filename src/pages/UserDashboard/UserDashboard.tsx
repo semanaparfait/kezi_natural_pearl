@@ -39,7 +39,9 @@ const navs = [
                         <div className="truncate">
                             <h1 className="text-xl sm:text-2xl font-bold truncate">{currentUser?.email}</h1>
                             <p className="text-sm sm:text-base opacity-80 truncate">{currentUser?.phoneNumber}</p>
-                            <p className="text-xs sm:text-sm opacity-70">{new Date(currentUser?.createdAt).toLocaleDateString()}</p>
+                            <p className="text-xs sm:text-sm opacity-70">
+                                {currentUser?.createdAt ? new Date(currentUser.createdAt).toLocaleDateString() : ''}
+                            </p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 flex-shrink-0 justify-center">

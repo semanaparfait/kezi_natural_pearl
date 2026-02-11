@@ -84,9 +84,9 @@ function AddProducts() {
                 stockQuantity: 0, weight: 0, ingredients: '',
             });
             toast.success("Product added successfully!");
-        } catch (err) {
+        } catch (err: any) {
             console.error("Upload Error:", err);
-            toast.error(err?.data?.message || "Failed to add product");
+            toast.error(err?.data?.message || err?.message || "Failed to add product");
         }
     };
 

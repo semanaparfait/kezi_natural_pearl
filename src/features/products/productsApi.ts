@@ -1,5 +1,5 @@
 import { baseApi } from "@/services/baseApi";
-import type {productsTypeRequest,ProductTypeResponse} from '@/features/products/productsType'
+import type {ProductTypeResponse} from '@/features/products/productsType'
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

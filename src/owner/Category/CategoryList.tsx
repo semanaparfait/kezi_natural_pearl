@@ -1,7 +1,7 @@
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { useGetCategoriesQuery, useDeleteCategoryMutation } from '@/features/category/categoryApi';
-import { Pencil, Tag, Trash } from 'lucide-react';
+import { Pencil,  Trash } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from "react-hot-toast"
 
@@ -47,7 +47,7 @@ function CategoryList() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {categories?.map((category) => (
           <div
-            key={category.categoryId}
+            key={category.id}
             className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
           >
             <div className="w-10 h-10 rounded-full bg-[var(--primary)]/10 flex items-center justify-center">
@@ -61,17 +61,17 @@ function CategoryList() {
             <div className='flex ml-auto gap-2'>
 
             <Trash
-              onClick={() => handleDelete(String(category.categoryId))}
+              onClick={() => handleDelete(String(category.id))}
               className={`ml-auto w-10 h-10 p-2 rounded-full cursor-pointer ${
-                deletingId === String(category.categoryId)
+                deletingId === String(category.id)
                   ? 'text-gray-400 bg-gray-200 animate-pulse'
                   : 'text-red-500 bg-red-200 hover:text-red-700'
               }`}
             />
                   <Pencil
-              // onClick={() => handleEdit(String(category.categoryId))}
+              // onClick={() => handleEdit(String(category.id))}
               className={`ml-auto w-10 h-10 p-2 rounded-full cursor-pointer ${
-                deletingId === String(category.categoryId)
+                deletingId === String(category.id)
                   ? 'text-gray-400 bg-gray-200 animate-pulse'
                   : 'text-white bg-[var(--primary)] hover:text-red-700'
               }`}

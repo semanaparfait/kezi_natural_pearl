@@ -5,8 +5,6 @@ import {
   Package,
   Tags,
   Menu,
-  Sun,
-  Bell,
   Settings,
   X,
   User,

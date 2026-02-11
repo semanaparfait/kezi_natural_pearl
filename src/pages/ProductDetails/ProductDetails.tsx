@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import {useParams} from "react-router-dom";
 import {products} from '@/components/products'
 import toast from "react-hot-toast";
-import Category from "@/components/Category";
+
 
 function ProductDetails() {
     const { id } = useParams(); 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MoveLeft, Check, ShieldCheck, Truck,MapPin, Mic, ArrowRight, LocateFixed } from "lucide-react";
+import { MoveLeft, Check, ShieldCheck, Truck,MapPin,  LocateFixed } from "lucide-react";
 import Button from "@/components/Button";
 
 function CheckOut() {

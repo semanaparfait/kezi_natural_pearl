@@ -1,6 +1,4 @@
-import { Mail, MessageCircle, Phone, ChevronRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { Mail, MessageCircle, Phone } from "lucide-react";
 
 function Support() {
   const contactMethods = [

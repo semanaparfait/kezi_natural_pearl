@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { MoveLeft, Minus, Plus, Trash2, ShieldCheck, Truck } from 'lucide-react'
-import Button from '@/components/Button'
 import { Link } from 'react-router-dom'
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 
@@ -12,7 +11,6 @@ function Cart() {
     return JSON.parse(localStorage.getItem("cart") || "[]");
   });
 
-  // Update localStorage whenever cart changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);

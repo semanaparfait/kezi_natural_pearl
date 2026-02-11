@@ -51,7 +51,7 @@ function CategoryList() {
             className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
           >
             <div className="w-10 h-10 rounded-full bg-[var(--primary)]/10 flex items-center justify-center">
-              <Tag className="w-5 h-5 text-[var(--primary)]" />
+              <img src={category.image} alt={category.name} className="w-6 h-6 object-cover rounded-full" />
             </div>
 
             <div>

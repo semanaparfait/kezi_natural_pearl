@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 
-import { ArrowLeft, Backpack, ShoppingBag, Wallet,  User,Package,Truck,ShoppingCart,CreditCard,FileText,MapPin,HelpCircle,LogOut, } from "lucide-react";
+import { ArrowLeft, Backpack, ShoppingBag, Wallet,  User,Package,CreditCard,MapPin,HelpCircle,LogOut, } from "lucide-react";
 import Profile from "@/pages/UserDashboard/Profile";
 import OrderHistory from "./OrderHistory";
-import TrackOrders from "./TrackOrders";
-import CartHistory from "./CartHistory";
 import PaymentMethods from "./PaymentMethods";
-import Invoices from "./Invoices";
 import Address from "./Address";
 import Support from "./Support";
 import Logout from "./Logout";
@@ -19,10 +16,7 @@ function UserDashboard() {
 const navs = [
   { name: 'Profile', icon: User, },
   { name: 'Order History', icon: Package },
-  { name: 'Track Orders', icon: Truck },
-  { name: 'Cart History', icon: ShoppingCart },
   { name: 'Payment Methods', icon: CreditCard },
-  { name: 'Invoices', icon: FileText },
   { name: 'Address', icon: MapPin },
   { name: 'Support', icon: HelpCircle },
   { name: 'Logout', icon: LogOut },
@@ -45,7 +39,7 @@ const navs = [
                         <div className="truncate">
                             <h1 className="text-xl sm:text-2xl font-bold truncate">{currentUser?.email}</h1>
                             <p className="text-sm sm:text-base opacity-80 truncate">{currentUser?.phoneNumber}</p>
-                            <p className="text-xs sm:text-sm opacity-70">{currentUser?.createdAt}</p>
+                            <p className="text-xs sm:text-sm opacity-70">{new Date(currentUser?.createdAt).toLocaleDateString()}</p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 flex-shrink-0 justify-center">
@@ -92,20 +86,8 @@ const navs = [
                     <OrderHistory/>
 
                 )}
-                {activeNav === 'Track Orders' && (
-                    <TrackOrders/>
-                    
-                )}
-                {activeNav === 'Cart History' && (
-                    <CartHistory/>
-                    
-                )}
                 {activeNav === 'Payment Methods' && (
                     <PaymentMethods/>
-                    
-                )}
-                {activeNav === 'Invoices' && (
-                    <Invoices/>
                     
                 )}
                 {activeNav === 'Address' && (

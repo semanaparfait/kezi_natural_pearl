@@ -48,11 +48,11 @@ function Account() {
     }
     try {
       const response = await login({
-         identifier: formData.email || formData.phoneNumber,
+         email: formData.email,
          password: formData.password }).unwrap();
       toast.success('Signed in successfully!');
-      if(response.token) {
-        localStorage.setItem('token', response.token);
+      if(response.access_token) {
+        localStorage.setItem('token', response.access_token);
       }
       if (response.user) {
         localStorage.setItem('user', JSON.stringify(response.user));

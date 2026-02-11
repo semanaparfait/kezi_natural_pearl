@@ -10,15 +10,14 @@ export const categoryApi = baseApi.injectEndpoints({
             }),
             providesTags: ["Categories"],
         }),
-        postCategory: builder.mutation<{ success: boolean; data: categoryType }, Partial<categoryType>>({
-        query: (body) => ({
+        postCategory: builder.mutation<{ success: boolean; data: categoryType }, FormData>({
+        query: (formData) => ({
             url: "/api/v1/category",
             method: "POST",
-            body,
+            body: formData,   
         }),
         invalidatesTags: ["Categories"],
         }),
-
         deleteCategory: builder.mutation<{ success: boolean; id: string }, string>({
             query: (categoryId) => ({
                 url: `/api/v1/category/${categoryId}`,

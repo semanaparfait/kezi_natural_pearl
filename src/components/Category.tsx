@@ -27,7 +27,7 @@ function Category() {
   ]
 
   return (
-    <section ref={sectionRef} className='mb-8 mt-16 overflow-hidden'>
+    <section ref={sectionRef} className='mb-8 mt-16 '>
       <div className={`max-w-7xl mx-auto text-center mb-16 transition-all duration-700 ease-out transform
         ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
       `}>

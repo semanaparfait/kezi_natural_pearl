@@ -29,8 +29,7 @@ function Blogs() {
         <section className="py-24 bg-[var(--secondary-cream-white)] ">
             <div className="max-w-7xl mx-auto px-6">
                 
-                {/* --- EDITORIAL HEADER --- */}
-                <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
+                <div className="flex flex-col md:flex-row items-end justify-between mb-10 gap-8 md:px-10">
                     <div className="max-w-xl">
                         <div className="flex items-center gap-3 mb-4">
                             <span className="h-[1px] w-8 bg-[var(--gold-color)]"></span>
@@ -46,7 +45,7 @@ function Blogs() {
                         </p>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+                <div className="grid md:grid-cols-3 gap-20 md:px-10">
                     {blogsPost.map((post) => (
                         <div key={post.id} className="group cursor-pointer shadow-sm hover:shadow-lg transition-shadow duration-300 rounded-2xl overflow-hidden bg-white">
                             

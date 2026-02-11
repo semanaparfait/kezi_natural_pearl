@@ -5,7 +5,7 @@ export const authSlice = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation<AuthResponse, LoginCredentials>({
             query: (LoginCredentials) => ({
-                url: '/api/v1/Auth/login',
+                url: '/api/v1/auth/login',
                 method: 'POST',
                 body: LoginCredentials,
             }),
@@ -19,7 +19,7 @@ export const authSlice = baseApi.injectEndpoints({
         }),
         getCurrentUser: builder.query<AuthResponse, void>({
             query: () => ({
-                url: '/api/v1/user/me',
+                url: '/api/v1/user/profile',
                 method: 'GET',
             }),
             providesTags: ['User'],

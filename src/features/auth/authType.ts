@@ -20,11 +20,11 @@ export interface AuthResponse {
   phoneNumber: string;
   createdAt: string;
   role: string;
-  token: string;
+  access_token: string;
 }
 
 export interface LoginCredentials {
-  identifier: string;
+  email: string;
   password: string;
 }
 

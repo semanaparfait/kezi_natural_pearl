@@ -5,6 +5,7 @@ import { useGetCurrentUserQuery,useUpdateUserMutation,useDeleteUserMutation } fr
 
 
 import { useNavigate } from "react-router-dom";
+import { Pen } from "lucide-react";
 
 function Profile() {
   const { data: currentUser, isLoading } = useGetCurrentUserQuery(undefined)
@@ -62,7 +63,13 @@ function Profile() {
               setUpdateMsg("Failed to update profile.");
             }
           }}
+          
         >
+          <div className="relative w-fit" >
+          <label htmlFor="profile">Profile Picture</label>
+          <img src={currentUser?.profile || "https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"} alt={`${currentUser?.fullName}'s profile`} className="relative rounded-full w-20 h-20 object-cover border-4 border-white shadow-md" />
+          <Pen className="w-5 h-5 text-gray-500 cursor-pointer absolute bottom-2 right-2" />
+          </div>
           <Input
             label="Name"
             type="text"

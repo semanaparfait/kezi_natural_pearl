@@ -6,21 +6,31 @@ import {usePostCategoryMutation} from '@/features/category/categoryApi'
 function AddCategoryForm() {
     const [postCategory] = usePostCategoryMutation();
     const [formData, setFormData] = useState({
+        image: null as File | null,
         name: '',
         description: '',
     });
 
-  const createCategory = async (e: React.FormEvent) => {
+    const createCategory = async (e: React.FormEvent) => {
       e.preventDefault();
+
       try {
-          await postCategory(formData);
-          setFormData({ name: '', description: '' });
-          toast.success("Category added successfully");
+        const data = new FormData();
+        if (formData.image) data.append("image", formData.image);
+        data.append("name", formData.name);
+        data.append("description", formData.description);
+
+        await postCategory(data).unwrap();
+
+        toast.success("Category added successfully");
+        setFormData({ image: null, name: '', description: '' });
+
       } catch (err) {
-          console.error(err);
-          toast.error("Failed to add category");
+        console.error(err);
+        toast.error("Failed to add category");
       }
-  };
+    };
+
 
 
 
@@ -31,6 +41,14 @@ function AddCategoryForm() {
       </h2>
 
       <form className="flex flex-col gap-4" onSubmit={createCategory}>
+        <input
+          accept="image/*"
+          type="file"
+          required
+          onChange={e => setFormData({ ...formData, image: e.target.files ? e.target.files[0] : null })}
+ 
+        />
+
         <Input
           label="Category Name"
           placeholder="Enter category name"

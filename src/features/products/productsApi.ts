@@ -10,11 +10,11 @@ export const productsApi = baseApi.injectEndpoints({
         }),
         providesTags: ['Products'],
     }),
-    addProduct: builder.mutation<ProductTypeResponse, Partial<productsTypeRequest>>({
-        query: (body) => ({
+    addProduct: builder.mutation<ProductTypeResponse, FormData>({
+        query: (formData) => ({
             url: "/api/v1/product",
             method: "POST",
-            body,
+            body: formData,
         }),
         invalidatesTags: ['Products'],
     }),

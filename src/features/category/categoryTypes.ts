@@ -1,5 +1,5 @@
 export interface categoryType {
-  categoryId: number;
+  id: number;
   name: string;
   description: string;
   image: string;

@@ -30,12 +30,16 @@ const navs = [
                 </Link>
                 <div className="bg-[var(--primary)] text-white/90 rounded-3xl shadow-lg p-6 sm:p-10 flex flex-col md:flex-row md:justify-between md:items-center gap-6 md:gap-0">
                     <div className="flex items-center gap-4 md:gap-6 flex-1 min-w-0">
-                        
+                        <div>
                         <img
-                            src={currentUser?.profile}
-                            alt="user profile"
+                            src={currentUser?.profile || `https://ui-avatars.com/api/?name=${currentUser?.email.charAt(0).toUpperCase()}&background=3f5f50&color=FFFFFF&size=128`}
+                            alt={currentUser?.email || currentUser?.fullName}
                             className="rounded-full w-20 h-20 object-cover border-4 border-white shadow-md"
                         />
+                        <div className="hidden w-20 h-20 bg-[var(--gold-color)] rounded-full flex items-center justify-center text-white font-semibold">
+                            {currentUser?.email.charAt(0).toUpperCase()}
+                        </div>
+                        </div>
                         <div className="truncate">
                             <h1 className="text-xl sm:text-2xl font-bold truncate">{currentUser?.email}</h1>
                             <p className="text-sm sm:text-base opacity-80 truncate">{currentUser?.phoneNumber}</p>

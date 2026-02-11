@@ -15,6 +15,7 @@ import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Cart from "@/pages/Cart/Cart";
 import Blogs from "@/pages/Blogs/Blogs";
 import CheckOut from "@/pages/CheckOut/CheckOut";
+import ScrollToTop from "./components/ScrollToTop";
 function App() {
 
 
@@ -23,6 +24,7 @@ function App() {
 <BrowserRouter>
   <Toaster position="top-right" reverseOrder={false} />
   <Voice />
+  <ScrollToTop />
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/contact-us" element={<ContactUs />} />

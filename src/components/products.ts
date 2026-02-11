@@ -218,7 +218,7 @@ export const products: Product[] = [
     stock: 25,
     description: "Sugar-based scrub with a hint of cinnamon to plump and soften lips naturally.",
     image: [
-      "https://images.unsplash.com/photo-1598440494830-ec344449833f?q=80&w=600",
+      "https://i.pinimg.com/736x/28/fe/2e/28fe2e2a906ee557f765c8bccbfa251f.jpg",
       "https://images.unsplash.com/photo-1599387738121-89736f32890c?q=80&w=600",
       "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=600",
       "https://images.unsplash.com/photo-1624513652118-06c8b74685ae?q=80&w=600",
@@ -458,7 +458,7 @@ export const products: Product[] = [
     stock: 25,
     description: "Sugar-based scrub with a hint of cinnamon to plump and soften lips naturally.",
     image: [
-      "https://images.unsplash.com/photo-1598440494830-ec344449833f?q=80&w=600",
+      "https://i.pinimg.com/736x/28/fe/2e/28fe2e2a906ee557f765c8bccbfa251f.jpg",
       "https://images.unsplash.com/photo-1599387738121-89736f32890c?q=80&w=600",
       "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=600",
       "https://images.unsplash.com/photo-1624513652118-06c8b74685ae?q=80&w=600",

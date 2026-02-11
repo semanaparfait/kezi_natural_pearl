@@ -10,6 +10,7 @@ function Navbar() {
   const pathname = useLocation().pathname;
   const isHomePage = pathname === '/';
   const token = localStorage.getItem('token');
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
   // console.log('Current User:', currentUser);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -69,8 +70,13 @@ function Navbar() {
               <option value="fr">FR</option>
             </select>
           </div>
-          <Link to="/cart">
+          <Link to="/cart" className="relative">
           <ShoppingCart />
+          {cart.length > 0 && (
+            <span className="absolute top-[-0.75rem] right-[-0.75rem] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              {cart.length}
+            </span>
+          )}
           </Link>
           <div className="relative">
 {currentUser ? (

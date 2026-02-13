@@ -3,7 +3,7 @@ interface BaseProps {
 }
 
 interface InputProps extends BaseProps {
-  label?: string;
+   label?: React.ReactNode; 
   value: string;
   accept?: string;
   type?: "text" | "email" | "password" | "number" | "tel" | "file";

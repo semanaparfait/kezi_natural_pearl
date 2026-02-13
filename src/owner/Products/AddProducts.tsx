@@ -65,10 +65,10 @@ function AddProducts() {
         data.append('description', formData.description);
         data.append('categoryId', formData.categoryId);
         data.append('price', formData.price.toString());
-        data.append('salesPrice', formData.salesPrice.toString());
-        data.append('costPrice', formData.costPrice.toString());
+        // data.append('salesPrice', formData.salesPrice.toString());
+        // data.append('costPrice', formData.costPrice.toString());
         data.append('stockQuantity', formData.stockQuantity.toString());
-        data.append('weight', formData.weight.toString());
+        // data.append('weight', formData.weight.toString());
         data.append('ingredients', formData.ingredients);
 
         formData.pictures.forEach((file) => {
@@ -102,7 +102,7 @@ function AddProducts() {
 
             <form className="space-y-6" onSubmit={UploadProduct}>
                 <div className="bg-gray-50 p-6 rounded-xl border-2 border-dashed border-gray-200">
-                    <label className="block text-sm font-semibold text-gray-700 mb-4">Product Gallery</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-4">Product Gallery <span className="text-red-500">* Required</span></label>
                     
                     <div className="flex flex-wrap gap-4">
                         {formData.pictures.map((file, index) => (
@@ -137,13 +137,18 @@ function AddProducts() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Input
-                        label="Product Name"
-                        placeholder="e.g. Gold Plated Necklace"
-                        required
-                        value={formData.name}
-                        onChange={e => setFormData({ ...formData, name: e.target.value })}
-                    />
+                <Input
+                label={
+                    <span>
+                    Product Name <span className="text-red-500">* Required</span>
+                    </span>
+                }
+                placeholder="e.g. Gold Plated Necklace"
+                required
+                value={formData.name}
+                onChange={e => setFormData({ ...formData, name: e.target.value })}
+                />
+
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
@@ -161,7 +166,9 @@ function AddProducts() {
                     </div>
 
                     <Input
-                        label="Cost Price (RWF)"
+                        label={
+                            <span>Sales Price (RWF) <span className="text-red-500">* Required</span></span>
+                        }
                         type="number"
                         value={formData.costPrice.toString()}
                         onChange={e => setFormData({ ...formData, costPrice: Number(e.target.value) })}
@@ -200,7 +207,7 @@ function AddProducts() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Ingredients / Materials</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Ingredients / Materials <span className="text-red-500">* Required</span></label>
                     <textarea
                         rows={2}
                         className="w-full rounded-lg border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-[var(--primary)] outline-none"

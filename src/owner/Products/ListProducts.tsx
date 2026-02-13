@@ -1,7 +1,8 @@
-import { useGetProductsQuery } from "@/features/products/productsApi";
+import { useGetProductsQuery,useDeleteProductMutation } from "@/features/products/productsApi";
 
 function ListProducts() {
   const { data: products, isLoading, isError } = useGetProductsQuery();
+  const [deleteProduct] = useDeleteProductMutation();
 
   if (isLoading) return <div className="p-6 text-center">Loading products...</div>;
   if (isError) return <div className="p-6 text-center text-red-500">Error loading products.</div>;
@@ -61,7 +62,9 @@ function ListProducts() {
                 </td>
                 <td className="p-4 text-right">
                   <button className="text-blue-600 hover:underline mr-3 text-sm">Edit</button>
-                  <button className="text-red-500 hover:underline text-sm">Delete</button>
+                  <button className="text-red-500 hover:underline text-sm" onClick={() =>
+                    window.confirm(`Are you sure you want to delete "${product.name}"?`) &&
+                     deleteProduct(Number(product.id))}>Delete</button>
                 </td>
               </tr>
             ))}

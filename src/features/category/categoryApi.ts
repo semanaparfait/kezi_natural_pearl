@@ -10,7 +10,7 @@ export const categoryApi = baseApi.injectEndpoints({
             }),
             providesTags: ["Categories"],
         }),
-        postCategory: builder.mutation<{ success: boolean; data: categoryType }, FormData>({
+        postCategory: builder.mutation<categoryType, FormData>({
         query: (formData) => ({
             url: "/api/v1/category",
             method: "POST",
@@ -19,15 +19,15 @@ export const categoryApi = baseApi.injectEndpoints({
         invalidatesTags: ["Categories"],
         }),
         deleteCategory: builder.mutation<{ success: boolean; id: string }, string>({
-            query: (categoryId) => ({
-                url: `/api/v1/category/${categoryId}`,
+            query: (id) => ({
+                url: `/api/v1/category/${id}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Categories"],
         }),
-        editCategory: builder.mutation<{ success: boolean; data: categoryType }, Partial<categoryType> & { categoryId: string }>({
-            query: ({ categoryId, ...body }) => ({
-                url: `/api/v1/category/${categoryId}`,
+        editCategory: builder.mutation<{ success: boolean; data: categoryType }, Partial<categoryType> & { id: string }>({
+            query: ({ id, ...body }) => ({
+                url: `/api/v1/category/${id}`,
                 method: "PATCH",
                 body,
             }),

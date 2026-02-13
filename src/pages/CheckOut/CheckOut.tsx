@@ -9,7 +9,6 @@ function CheckOut() {
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedOption, setSelectedOption] = useState(1);
 
-    // Consolidated Address State
     const [country, setCountry] = useState("RW");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");

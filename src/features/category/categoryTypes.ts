@@ -1,6 +1,8 @@
 export interface categoryType {
-  id: number;
+  id: string;
+  picture: string;
   name: string;
-  description: string;
   image: string;
+  description: string;
 }
+

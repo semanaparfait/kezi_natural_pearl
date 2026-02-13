@@ -53,7 +53,7 @@ function Shop() {
 
       <section className="max-w-5xl mx-auto px-6 py-12">
         <div className="flex flex-col lg:flex-row gap-12">
-<aside className="lg:w-64 space-y-12 md:sticky top-24 self-start">
+    <aside className="lg:w-64 space-y-12 md:sticky top-24 self-start">
   <div>
     <h2 className="text-[11px] uppercase tracking-[0.25em] font-bold text-[var(--primary)] mb-8 flex items-center justify-between">
       Categories
@@ -220,10 +220,10 @@ function Shop() {
                 
                 <div className="flex items-baseline gap-2 mb-4">
                   <span className="text-sm font-bold text-gray-900">
-                    {product.price.toLocaleString()} 
+                    {product.price.toLocaleString()} RWF
                   </span>
                   <span className="text-[10px] text-gray-400 line-through">
-                    {product.oldPrice.toLocaleString()}
+                    {product.oldPrice.toLocaleString()} RWF
                   </span>
                 </div>
                 <div className="mt-auto flex items-center gap-2 pt-1">

@@ -126,7 +126,7 @@ function Cart() {
                 <span>{subtotal.toLocaleString()} RWF</span>
               </div>
               <div className="flex justify-between text-sm font-light text-white/70 italic">
-                <span>Shipping</span>
+                <span>Shipping Fees</span>
                 <span className="text-[var(--gold-color)] font-bold uppercase text-[10px] tracking-widest">{shipping === 0 ? 'Free' : `${shipping} RWF`}</span>
               </div>
               <div className="flex justify-between text-sm font-light text-white/70 italic">

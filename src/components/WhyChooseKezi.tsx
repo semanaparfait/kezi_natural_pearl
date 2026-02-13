@@ -75,7 +75,7 @@ function WhyChooseKezi() {
                <div className="flex items-center gap-8">
                   <div className="flex flex-col">
                     <span className="text-xl font-serif text-[var(--primary)]">5,000+</span>
-                    <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Monthly Rituals</span>
+                    <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Monthly Customers</span>
                   </div>
                   <div className="h-8 w-[1px] bg-[var(--bolder-gray)]"></div>
                   <div className="flex flex-col">

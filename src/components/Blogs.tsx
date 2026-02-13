@@ -36,7 +36,7 @@ function Blogs() {
                             <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold-color)] font-bold">The Journal</span>
                         </div>
                         <h1 className="font-serif text-4xl md:text-5xl text-[var(--primary)] italic leading-tight">
-                            Insight into <br /> Nature's Wisdom
+                            Insight into <br /> Our Blog
                         </h1>
                     </div>
                     <div className="md:text-right">

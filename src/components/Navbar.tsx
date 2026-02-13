@@ -28,6 +28,7 @@ function Navbar() {
   const handleDropdown = () => setDropdownOpen((prev) => !prev);
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('cart');
     window.location.reload();
   };
 

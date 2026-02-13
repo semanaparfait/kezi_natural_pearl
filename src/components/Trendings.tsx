@@ -1,8 +1,10 @@
-import { products } from '@/components/products'
+// import { products } from '@/components/products'
 import { Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
+import {useGetProductsQuery} from '@/features/products/productsApi'
 
 function Trendings() {
+  const { data: products, isLoading, error } = useGetProductsQuery()
   const sectionRef = useRef(null)
   const [show, setShow] = useState(false)
 
@@ -41,7 +43,7 @@ function Trendings() {
       {/* PRODUCTS GRID */}
       <div className="mx-auto mt-8 w-full max-w-6xl px-4 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
-          {products.slice(0, 4).map((product, i) => (
+          {products?.slice(0, 4).map((product, i) => (
             <Link
               to="/shop"
               key={product.id}
@@ -59,12 +61,12 @@ function Trendings() {
                 )} */}
 
                 <img 
-                  src={product.image instanceof Array ? product.image[0] : product.image} 
+                  src={product.images && product.images.length > 0 ? product.images[0] : product.images[0]} 
                   alt={product.name} 
                   className="object-contain group-hover:scale-110 transition-transform duration-500"
                 />
 
-                {!product.stock && (
+                {!product.stockQuantity && (
                   <div className="absolute inset-0 bg-white/40 flex items-center justify-center">
                     <div className="bg-[#f8d7da] text-[#721c24] text-[10px] font-bold px-4 py-2 uppercase tracking-widest shadow-sm rounded-full">
                       Out of Stock
@@ -79,13 +81,13 @@ function Trendings() {
                 </h3>
 
                 <div className="flex items-center justify-center gap-2">
-                  {product.oldPrice && (
+                  {product.price && (
                     <span className="text-gray-400 text-xs line-through">
-                      {product.oldPrice} 
+                      {product.price} RWF
                     </span>
                   )}
                   <span className="text-gray-800 text-[14px] font-semibold">
-                    {product.price} 
+                    {product.price} RWF 
                   </span>
                 </div>
               </div>

@@ -25,14 +25,15 @@ export const categoryApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Categories"],
         }),
-        editCategory: builder.mutation<{ success: boolean; data: categoryType }, Partial<categoryType> & { id: string }>({
-            query: ({ id, ...body }) => ({
-                url: `/api/v1/category/${id}`,
-                method: "PATCH",
-                body,
-            }),
-            invalidatesTags: ["Categories"],
+        editCategory: builder.mutation<categoryType, { id: string; formData: FormData }>({
+        query: ({ id, formData }) => ({
+            url: `/api/v1/category/${id}`,
+            method: "PATCH",
+            body: formData,
         }),
+        invalidatesTags: ["Categories"],
+        }),
+
     }),
 });
 

@@ -63,7 +63,7 @@ function Testimonies() {
         <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold-color)] font-bold mb-3 block">
           Voices of Kezi
         </span>
-        <h2 className="text-3xl md:text-4xl font-serif text-[var(--primary)] italic mb-4">
+        <h2 className="text-3xl md:text-4xl font-serif text-(--primary) italic mb-4">
           Loved by Our Customers
         </h2>
         <p className="text-sm text-gray-500 font-light leading-relaxed">
@@ -97,7 +97,7 @@ function Testimonies() {
                 />
               </div>
               <div className="space-y-2 flex-1">
-                <h4 className="font-semibold text-[var(--primary)] text-md leading-none">
+                <h4 className="font-semibold text-(--primary) text-md leading-none">
                   {testimonial.name}
                 </h4>
                 <p className="text-gray-600 font-light italic text-sm leading-relaxed">

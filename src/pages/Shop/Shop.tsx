@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail, X,User } from "lucide-react";
-import {products} from "@/components/products"
+// import {products} from "@/components/products"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import toast from "react-hot-toast";
@@ -8,26 +8,31 @@ import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import Button from "@/components/Button";
 import ReactPaginate from 'react-paginate';
 import { useNavigate } from "react-router-dom";
+import { useGetCategoriesQuery } from '@/features/category/categoryApi';
+import { useGetProductsQuery } from '@/features/products/productsApi';
 
 
-const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
 
 function Shop() {
   const navigate = useNavigate();
   const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(undefined);
+  const { data: categoriesData } = useGetCategoriesQuery(undefined);
+  const { data: products, isLoading: prodLoading } = useGetProductsQuery(undefined);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sort, setSort] = useState("asc");
   const [notifyEmail, setNotifyEmail] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 6;
-
-  const filtered = products.filter(p => selectedCategory === "All" || p.category === selectedCategory);
+  
+  const productsList = products ?? [];
+  // const categories = ["All", ...Array.from(new Set(productsList.map(p => p.category)))].filter(Boolean);
+  const filtered = productsList.filter(p => selectedCategory === "All" || p.category === selectedCategory);
   const sorted = [...filtered].sort((a, b) => sort === "asc" ? Number(a.price) - Number(b.price) : Number(b.price) - Number(a.price));
 
   const pageCount = Math.ceil(sorted.length / productsPerPage);
   const indexOfFirstProduct = currentPage * productsPerPage;
   const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
-  const currentProducts = sorted.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = sorted.reverse().slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handlePageChange = (event: { selected: number }) => {
     setCurrentPage(event.selected);
@@ -36,10 +41,10 @@ function Shop() {
 
   return (
     <div className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
-      <div className="bg-[var(--primary)] shadow-md"><Navbar /></div>
+      <div className="bg-(--primary) shadow-md"><Navbar /></div>
       <header className="relative py-20 px-6 overflow-hidden border-b border-[var(--bolder-gray)]">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-            <h1 className="text-5xl md:text-6xl font-serif text-[var(--primary)] mb-4 tracking-tight">Our Collection</h1>
+            <h1 className="text-5xl md:text-6xl font-serif text-(--primary) mb-4 tracking-tight">Our Collection</h1>
             <div className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.3em] text-[var(--gold-color)] font-bold">
                 <span>Natural</span> <span className="w-8 h-[1px] bg-[var(--gold-color)]"></span> 
                 <span>Organic</span> <span className="w-8 h-[1px] bg-[var(--gold-color)]"></span> 
@@ -55,24 +60,24 @@ function Shop() {
         <div className="flex flex-col lg:flex-row gap-12">
     <aside className="lg:w-64 space-y-12 md:sticky top-24 self-start">
   <div>
-    <h2 className="text-[11px] uppercase tracking-[0.25em] font-bold text-[var(--primary)] mb-8 flex items-center justify-between">
+    <h2 className="text-[11px] uppercase tracking-[0.25em] font-bold text-(--primary) mb-8 flex items-center justify-between">
       Categories
       <span className="h-[1px] w-12 bg-[var(--bolder-gray)]"></span>
     </h2>
     
     <div className="space-y-4">
-      {categories.map((cat) => (
+      {categoriesData?.map((category) => (
         <label 
-          key={cat} 
+          key={category.name} 
           className="group flex items-center justify-between cursor-pointer"
         >
           <div className="flex items-center gap-3">
             <div className="relative flex items-center justify-center">
               <input
                 type="checkbox"
-                checked={selectedCategory === cat}
-                onChange={() => setSelectedCategory(cat)}
-                className="peer appearance-none w-4 h-4 border border-[var(--bolder-gray)] rounded-sm bg-white checked:bg-[var(--primary)] checked:border-[var(--primary)] transition-all cursor-pointer"
+                checked={selectedCategory === category.name}
+                onChange={() => setSelectedCategory(category.name)}
+                className="peer appearance-none w-4 h-4 border border-[var(--bolder-gray)] rounded-sm bg-white checked:bg-(--primary) checked:border-(--primary) transition-all cursor-pointer"
               />
               <svg 
                 className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" 
@@ -81,19 +86,19 @@ function Shop() {
                 <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <span className={`text-sm transition-colors ${selectedCategory === cat ? 'text-black font-semibold' : 'text-gray-500 group-hover:text-[var(--primary)]'}`}>
-              {cat}
+            <span className={`text-sm transition-colors ${selectedCategory === category.name ? 'text-black font-semibold' : 'text-gray-500 group-hover:text-(--primary)'}`}>
+              {category.name}
             </span>
           </div>
           <span className="text-[10px] font-bold text-gray-300 group-hover:text-[var(--gold-color)]">
-            {products.filter(p => p.category === cat || cat === "All").length}
+            {productsList.filter(p => p.category === category.name || category.name === "All").length}
           </span>
         </label>
       ))}
     </div>
   </div>
   <div>
-    <h2 className="text-[11px] uppercase tracking-[0.25em] font-bold text-[var(--primary)] mb-8 flex items-center justify-between">
+    <h2 className="text-[11px] uppercase tracking-[0.25em] font-bold text-(--primary) mb-8 flex items-center justify-between">
       Price Range
       <span className="h-[1px] w-12 bg-[var(--bolder-gray)]"></span>
     </h2>
@@ -112,7 +117,7 @@ function Shop() {
           <div className="relative flex items-center justify-center mr-3">
             <input
               type="checkbox"
-              className="peer appearance-none w-4 h-4 border border-[var(--bolder-gray)] rounded-sm bg-white checked:bg-[var(--primary)] checked:border-[var(--primary)] transition-all cursor-pointer"
+              className="peer appearance-none w-4 h-4 border border-[var(--bolder-gray)] rounded-sm bg-white checked:bg-(--primary) checked:border-(--primary) transition-all cursor-pointer"
             />
             <svg 
               className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" 
@@ -121,7 +126,7 @@ function Shop() {
               <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <span className="text-sm text-gray-500 group-hover:text-[var(--primary)] transition-colors">
+          <span className="text-sm text-gray-500 group-hover:text-(--primary) transition-colors">
             {price.label}
           </span>
         </label>
@@ -131,11 +136,11 @@ function Shop() {
   <div className="relative p-6 bg-[var(--secondary-beige)] rounded-2xl overflow-hidden border border-[var(--bolder-gray)] group hover:border-[var(--gold-color)] transition-all duration-500">
     <div className="absolute -top-4 -right-4 w-12 h-12 bg-[var(--gold-color)] opacity-10 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
     
-    <h3 className="text-sm font-serif text-[var(--primary)] mb-3 italic">
+    <h3 className="text-sm font-serif text-(--primary) mb-3 italic">
       Natural Promise
     </h3>
     <p className="text-[11px] text-gray-500 leading-relaxed font-light">
-      Crafted with <span className="text-[var(--primary)] font-medium">100% artisanal</span> Rwandan methods. Zero synthetics, pure nature.
+      Crafted with <span className="text-(--primary) font-medium">100% artisanal</span> Rwandan methods. Zero synthetics, pure nature.
     </p>
     <div className="mt-4 flex gap-1.5">
         {[...Array(4)].map((_, i) => (
@@ -147,7 +152,7 @@ function Shop() {
     <div className="flex-1">
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--bolder-gray)]/50">
         <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">
-          <span className="text-[var(--primary)]">{sorted.length}</span> Curated Items
+          <span className="text-(--primary)">{sorted.length}</span> Curated Items
         </p>
         
         <div className="flex items-center gap-2">
@@ -155,7 +160,7 @@ function Shop() {
           <select
             value={sort}
             onChange={e => setSort(e.target.value)}
-            className="bg-transparent text-[10px] font-bold uppercase tracking-widest focus:outline-none cursor-pointer text-[var(--primary)]"
+            className="bg-transparent text-[10px] font-bold uppercase tracking-widest focus:outline-none cursor-pointer text-(--primary)"
           >
             <option value="asc">Price: Low - High</option>
             <option value="desc">Price: High - Low</option>
@@ -163,13 +168,14 @@ function Shop() {
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-12">
-        {currentProducts.map(product => {
-          const isOutOfStock = product.stock === 0;
+        {currentProducts.reverse().map(product => {
+          const isOutOfStock = product.stockQuantity === 0;
           return (
             <div
+              key={product.id}
               onClick={() => {
                 if (isLoading) return;
-                if (product.stock > 0) {
+                if (product.stockQuantity > 0) {
                   navigate(`/productdetails/${product.id}`);
                   return;
                 }
@@ -179,7 +185,7 @@ function Shop() {
                 }
                 toast.success("We will notify you when product is back ");
               }}
-              className={`group flex flex-col h-full cursor-pointer ${product.stock === 0 ? 'opacity-70' : ''}`}
+              className={`group flex flex-col h-full cursor-pointer ${product.stockQuantity === 0 ? 'opacity-70' : ''}`}
             >
 
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] transition-all duration-500 hover:shadow-md">
@@ -189,14 +195,14 @@ function Shop() {
                       Out of Stock
                     </span>
                   </div>
-                ) : product.stock < 5 && (
+                ) : product.stockQuantity < 5 && (
                   <div className="absolute top-2 left-2 z-10 bg-[var(--error-red)] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm flex items-center gap-1 shadow-sm">
                     <Zap size={8} fill="currentColor" /> LOW STOCK
                   </div>
                 )}
                 
                 <img
-                  src={typeof product.image === 'string' ? product.image : product.image[0]}
+                  src={typeof product.images === 'string' ? product.images : product.images[0]}
                   alt={product.name}
                   className={`w-full h-full object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
                 />
@@ -213,7 +219,7 @@ function Shop() {
                     </div>
                   </div>
 
-                  <h3 className="font-serif text-[15px] text-[var(--primary)] leading-tight line-clamp-1 group-hover:text-black transition-colors">
+                  <h3 className="font-serif text-[15px] text-(--primary) leading-tight line-clamp-1 group-hover:text-black transition-colors">
                     {product.name}
                   </h3>
                 </div>
@@ -223,7 +229,7 @@ function Shop() {
                     {product.price.toLocaleString()} RWF
                   </span>
                   <span className="text-[10px] text-gray-400 line-through">
-                    {product.oldPrice.toLocaleString()} RWF
+                    {product.price.toLocaleString()} RWF
                   </span>
                 </div>
                 <div className="mt-auto flex items-center gap-2 pt-1">
@@ -232,7 +238,7 @@ function Shop() {
                     className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
                       ${isOutOfStock 
                         ? 'bg-gray-100 text-gray-400 cursor-pointer' 
-                        : 'bg-[var(--primary)] text-white hover:bg-[var(--primary-color)]'}`}
+                        : 'bg-(--primary) text-white hover:bg-[var(--primary-color)]'}`}
                   >
                     
                       {isOutOfStock ? (<> Notify Me <Mail size={12} /> </>) : (<>Add to Cart <ShoppingBag size={12} /></>
@@ -240,7 +246,7 @@ function Shop() {
                   </button>
 
                   
-                  <button className="p-2 border border-[var(--bolder-gray)] text-[var(--primary)] rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
+                  <button className="p-2 border border-[var(--bolder-gray)] text-(--primary) rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
                     <Heart size={14} />
                   </button>
                 </div>
@@ -258,12 +264,12 @@ function Shop() {
             onPageChange={handlePageChange}
             containerClassName="flex items-center gap-2"
             pageClassName=""
-            pageLinkClassName="px-3 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all"
-            activeLinkClassName="bg-[var(--primary)] cursor-pointer  font-bold rounded-lg text-white border-[var(--primary)] "
+            pageLinkClassName="px-3 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-(--primary) hover:text-white transition-all"
+            activeLinkClassName="bg-(--primary) cursor-pointer  font-bold rounded-lg text-white border-(--primary) "
             previousClassName=""
-            previousLinkClassName="px-4 py-2 rounded-lg border  border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all disabled:opacity-50"
+            previousLinkClassName="px-4 py-2 rounded-lg border  border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-(--primary) hover:text-white transition-all disabled:opacity-50"
             nextClassName=""
-            nextLinkClassName="px-4 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-[var(--primary)] hover:text-white transition-all disabled:opacity-50"
+            nextLinkClassName="px-4 py-2 rounded-lg border border-[var(--bolder-gray)] text-[10px] font-bold text-gray-600 hover:bg-(--primary) hover:text-white transition-all disabled:opacity-50"
             disabledClassName="opacity-50 cursor-not-allowed"
           />
         </div>
@@ -273,7 +279,7 @@ function Shop() {
       {notifyEmail && (
         <div className="fixed inset-0 z-[100] w-full h-screen flex items-center justify-center p-6">
           <div 
-            className="absolute inset-0 bg-[var(--primary)]/30 backdrop-blur-md transition-opacity animate-in fade-in duration-500"
+            className="absolute inset-0 bg-(--primary)/30 backdrop-blur-md transition-opacity animate-in fade-in duration-500"
             onClick={() => setNotifyEmail("")}
           />
           
@@ -293,7 +299,7 @@ function Shop() {
                 <h1 className="text-[10px] font-bold text-[var(--gold-color)] uppercase tracking-[0.5em]">
                   Authentication Required
                 </h1>
-                <h2 className="text-2xl font-serif italic text-[var(--primary)]">
+                <h2 className="text-2xl font-serif italic text-(--primary)">
                   Join the Ritual
                 </h2>
               </div>
@@ -307,7 +313,7 @@ function Shop() {
               <Button 
                 onClick={() => window.location.href = '/account'}
                 variant="primary"
-                className="w-full py-4 rounded-full font-bold text-[10px] uppercase tracking-[0.3em] shadow-xl shadow-[var(--primary)]/20 active:scale-95 transition-all"
+                className="w-full py-4 rounded-full font-bold text-[10px] uppercase tracking-[0.3em] shadow-xl shadow-(--primary)/20 active:scale-95 transition-all"
               >
                 Login to Continue
               </Button>

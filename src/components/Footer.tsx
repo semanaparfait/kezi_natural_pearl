@@ -8,7 +8,7 @@ function Footer() {
   const [email, setEmail] = useState('')
 
   return (
-    <section className='bg-[var(--primary)] text-white'>
+    <section className='bg-(--primary) text-white'>
       <div className='mx-auto max-w-7xl px-6 py-12'>
         <div className='flex flex-wrap gap-12'>
           {/* Brand & Newsletter */}

@@ -8,7 +8,7 @@ const Billing = ({ setCurrentStep }: BillingProps) => {
   return (
     <div className="bg-white rounded-[2.5rem] p-6 md:p-10 shadow-sm border border-gray-100 space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
       <div className="border-b border-gray-50 pb-6">
-        <h3 className="text-2xl font-serif italic text-[var(--primary)]">Billing Information</h3>
+        <h3 className="text-2xl font-serif italic text-(--primary)">Billing Information</h3>
         <p className="text-sm text-gray-400 mt-1">Enter your details for the order invoice.</p>
       </div>
       <div className="flex items-center gap-2 text-sm ">
@@ -26,12 +26,12 @@ const Billing = ({ setCurrentStep }: BillingProps) => {
       <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
         <button 
           onClick={() => setCurrentStep(1)} 
-          className="text-gray-400 hover:text-[var(--primary)] text-xs font-bold uppercase tracking-widest"
+          className="text-gray-400 hover:text-(--primary) text-xs font-bold uppercase tracking-widest"
         >
           Back
         </button>
         <button 
-          className="px-12 py-4 rounded-full bg-[var(--primary)] text-white text-[10px] uppercase tracking-widest font-bold shadow-xl hover:scale-105 transition-all"
+          className="px-12 py-4 rounded-full bg-(--primary) text-white text-[10px] uppercase tracking-widest font-bold shadow-xl hover:scale-105 transition-all"
           onClick={() => setCurrentStep(3)}
         >
           Continue to Payment

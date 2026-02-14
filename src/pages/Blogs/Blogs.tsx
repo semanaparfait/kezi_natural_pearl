@@ -60,7 +60,7 @@ function Blogs() {
                 <h2 className="text-xl font-semibold mb-2">{blog.title.slice(0, 40)}...</h2>
                 <p className="text-gray-700">{blog.description.slice(0, 100)}...</p>
               </div>
-              <p className="text-[var(--primary)] flex items-center gap-1 pl-6 pb-6">Learn More <ArrowRight /></p>
+              <p className="text-(--primary) flex items-center gap-1 pl-6 pb-6">Learn More <ArrowRight /></p>
 
             </a>
           ))}

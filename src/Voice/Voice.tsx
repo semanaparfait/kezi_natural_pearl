@@ -85,7 +85,7 @@ function Voice() {
             {!isRecording && (
                 <button
                     onClick={startRecording}
-                    className="group relative flex items-center justify-center w-16 h-16 rounded-full bg-[var(--primary)] shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95"
+                    className="group relative flex items-center justify-center w-16 h-16 rounded-full bg-(--primary) shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95"
                 >
                     <span className="absolute inset-0 rounded-full bg-[var(--gold-color)] opacity-20 animate-ping"></span>
                     <FaMicrophone className="text-[var(--gold-color)] text-2xl z-10" />
@@ -121,7 +121,7 @@ function Voice() {
 
                         <button
                             onClick={handleSend}
-                            className="w-14 h-14 bg-[var(--primary)] text-white rounded-full flex items-center justify-center"
+                            className="w-14 h-14 bg-(--primary) text-white rounded-full flex items-center justify-center"
                         >
                             <Send size={18}/>
                         </button>

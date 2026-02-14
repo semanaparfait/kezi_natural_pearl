@@ -47,13 +47,13 @@ function Account1() {
               <div className="flex bg-gray-50 p-1 rounded-xl mb-1">
                 <button 
                   onClick={() => setAuthType("guest")}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${authType === 'guest' ? 'bg-white shadow-sm text-[var(--primary)]' : 'text-gray-400 hover:text-gray-600'}`}
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${authType === 'guest' ? 'bg-white shadow-sm text-(--primary)' : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   <ShoppingBag size={12} /> Guest
                 </button>
                 <button 
                   onClick={() => setAuthType("customer")}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${authType === 'customer' ? 'bg-white shadow-sm text-[var(--primary)]' : 'text-gray-400 hover:text-gray-600'}`}
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${authType === 'customer' ? 'bg-white shadow-sm text-(--primary)' : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   <User size={12} /> Customer
                 </button>
@@ -62,7 +62,7 @@ function Account1() {
               <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 {authType === 'customer' ? (
                   <div className="animate-in fade-in zoom-in-95 duration-500 space-y-1">
-                    <h1 className="text-3xl font-bold text-[var(--primary)] text-center ">
+                    <h1 className="text-3xl font-bold text-(--primary) text-center ">
                     {action === 'signup' ? 'Create Account' : 'Welcome Back'}
                 </h1>
                     <div className="flex justify-center mb-2">
@@ -70,14 +70,14 @@ function Account1() {
                         <button
                           type="button"
                           onClick={() => setAction('signup')}
-                          className={`px-4 py-1.5 rounded-full font-bold text-[8px] uppercase tracking-widest transition-all ${action === 'signup' ? 'bg-[var(--primary)] text-white shadow-sm' : 'text-gray-500 hover:text-[var(--primary)]'}`}
+                          className={`px-4 py-1.5 rounded-full font-bold text-[8px] uppercase tracking-widest transition-all ${action === 'signup' ? 'bg-(--primary) text-white shadow-sm' : 'text-gray-500 hover:text-(--primary)'}`}
                         >
                           Sign up
                         </button>
                         <button
                           type="button"
                           onClick={() => setAction('signin')}
-                          className={`px-4 py-1.5 rounded-full font-bold text-[8px] uppercase tracking-widest transition-all ${action === 'signin' ? 'bg-[var(--primary)] text-white shadow-md' : 'text-gray-500 hover:text-[var(--primary)]'}`}
+                          className={`px-4 py-1.5 rounded-full font-bold text-[8px] uppercase tracking-widest transition-all ${action === 'signin' ? 'bg-(--primary) text-white shadow-md' : 'text-gray-500 hover:text-(--primary)'}`}
                         >
                           Sign in
                         </button>

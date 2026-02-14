@@ -47,7 +47,7 @@ function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 1 }}
-     className={` top-0 z-50 w-full text-white fixed  ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'} ${scrolled ? 'bg-[var(--primary)]' : ''}`}>
+     className={` top-0 z-50 w-full text-white fixed  ${!isHomePage ? 'bg-(--primary) ' : 'absolute'} ${scrolled ? 'bg-(--primary)' : ''}`}>
       <nav className="flex items-center justify-between px-6 ">
         <motion.div
           initial={{ x: -100 }}
@@ -62,7 +62,7 @@ function Navbar() {
               <Link
                 to={link.link}
                 className={
-                  pathname === link.link ? 'text-[var(--primary)]  font-semibold' : ''
+                  pathname === link.link ? 'text-(--primary)  font-semibold' : ''
                 }
               >
                 {link.name}

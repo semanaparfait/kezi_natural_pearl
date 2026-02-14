@@ -83,7 +83,7 @@ function AddCategoryForm() {
               </button>
             </div>
           ) : (
-            <label className="w-20 h-20 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-white hover:border-[var(--primary)] transition text-gray-400 hover:text-[var(--primary)]">
+            <label className="w-20 h-20 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-white hover:border-(--primary) transition text-gray-400 hover:text-(--primary)">
               <UploadCloud size={24} />
               <span className="text-[10px] mt-1 font-medium">Click to upload</span>
               <input
@@ -115,7 +115,7 @@ function AddCategoryForm() {
 
         <button
           type="submit"
-          className="mt-2 px-6 py-2 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-dark)] transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-1 disabled:opacity-50"
+          className="mt-2 px-6 py-2 bg-(--primary) text-white rounded-lg hover:bg-[var(--primary-dark)] transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-(--primary) focus:ring-offset-1 disabled:opacity-50"
           disabled={isAdding}
         >
           {isAdding ? "Uploading..." : "Upload Category"}

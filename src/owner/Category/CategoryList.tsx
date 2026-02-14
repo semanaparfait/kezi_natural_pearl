@@ -95,7 +95,7 @@ function CategoryList() {
             key={category.id}
             className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
           >
-            <div className="w-14 h-14 rounded-full bg-[var(--primary)]/10 flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full bg-(--primary)/10 flex items-center justify-center">
               <img src={category.image} alt={category.name} className="w-13 h-13 object-cover rounded-full" />
             </div>
 
@@ -118,7 +118,7 @@ function CategoryList() {
                 className={`w-10 h-10 p-2 rounded-full cursor-pointer ${
                   deletingId === category.id
                     ? "text-gray-400 bg-gray-200 animate-pulse"
-                    : "text-white bg-[var(--primary)] hover:text-red-700"
+                    : "text-white bg-(--primary) hover:text-red-700"
                 }`}
               />
             </div>

@@ -44,7 +44,7 @@ function Cart() {
       <div className="max-w-7xl mx-auto px-6 pt-12">
         <button 
           onClick={() => window.history.back()}
-          className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all"
+          className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-400 hover:text-(--primary) transition-all"
         >
           <MoveLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
           Back to Shop
@@ -52,7 +52,7 @@ function Cart() {
         
         <div className="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--bolder-gray)]/30 pb-8">
           <div>
-            <h1 className="text-4xl md:text-5xl font-serif text-[var(--primary)] italic">Shopping Bag</h1>
+            <h1 className="text-4xl md:text-5xl font-serif text-(--primary) italic">Shopping Bag</h1>
             <p className="text-[11px] text-gray-400 uppercase tracking-widest mt-2">
               Reviewing items for <span className="text-[var(--gold-color)] font-bold">{currentUser?.fullName || currentUser?.email}</span>
             </p>
@@ -80,20 +80,20 @@ function Cart() {
                   <div className="flex-1 flex flex-wrap items-center justify-between w-full">
                     <div className="flex flex-col space-y-2 text-center sm:text-left">
                       <span className="text-[9px] font-black uppercase tracking-widest text-[var(--gold-color)]">{item.category}</span>
-                      <h3 className="text-xl font-serif text-[var(--primary)] italic leading-tight">{item.name}</h3>
+                      <h3 className="text-xl font-serif text-(--primary) italic leading-tight">{item.name}</h3>
                       <div className="flex items-center justify-center gap-4 bg-[var(--secondary-cream-white)] rounded-md px-4 py-2 border border-[var(--bolder-gray)]/20">
-                        <button onClick={() => decrement(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">
+                        <button onClick={() => decrement(item.id)} className="text-(--primary) hover:text-[var(--gold-color)] transition-colors">
                           <Minus size={14}/>
                         </button>
                         <span className="w-8 text-center text-sm font-bold tabular-nums">{item.quantity}</span>
-                        <button onClick={() => increment(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">
+                        <button onClick={() => increment(item.id)} className="text-(--primary) hover:text-[var(--gold-color)] transition-colors">
                           <Plus size={14}/>
                         </button>
                       </div>
                     </div>
 
                     <div className="text-right flex flex-col items-end gap-4 min-w-[100px]">
-                      <p className="font-serif text-lg text-[var(--primary)]">{(item.price * item.quantity).toLocaleString()} RWF</p>
+                      <p className="font-serif text-lg text-(--primary)">{(item.price * item.quantity).toLocaleString()} RWF</p>
                       <button onClick={() => removeItem(item.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-all">
                         <Trash2 size={16} />
                       </button>
@@ -117,7 +117,7 @@ function Cart() {
         </div>
 
         <div className="lg:col-span-4">
-          <div className="bg-[var(--primary)] text-white p-10 rounded-[2.5rem] shadow-2xl shadow-[var(--primary)]/20 sticky top-32">
+          <div className="bg-(--primary) text-white p-10 rounded-[2.5rem] shadow-2xl shadow-(--primary)/20 sticky top-32">
             <h2 className="text-2xl font-serif italic mb-8 border-b border-white/10 pb-4">Order Summary</h2>
             
             <div className="space-y-4">
@@ -143,7 +143,7 @@ function Cart() {
 
               <div className="pt-8 flex flex-col space-y-4">
                 <Link to='/checkout'
-                 className="w-full py-5 bg-[var(--gold-color)] text-center rounded-md text-[var(--primary)] hover:bg-[var(--gold-color)] hover:text-white transition-all duration-500 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl">
+                 className="w-full py-5 bg-[var(--gold-color)] text-center rounded-md text-(--primary) hover:bg-[var(--gold-color)] hover:text-white transition-all duration-500 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl">
                   Proceed to Checkout
                 </Link >
                 <Link to="/shop" className="w-full border py-5 rounded-md border-white text-center text-[9px] uppercase tracking-[0.3em] text-white/40 hover:text-[var(--gold-color)] transition-colors font-bold">

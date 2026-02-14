@@ -100,7 +100,7 @@ const handleAddToCart = () => {
                             key={i}
                             onClick={() => setSelectedImage(img)}
                             className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition
-                            ${selectedImage === img ? "border-[var(--primary)]" : "border-gray-200 opacity-60"}`}
+                            ${selectedImage === img ? "border-(--primary)" : "border-gray-200 opacity-60"}`}
                             >
                             <img src={img} className="w-full h-full object-cover"/>
                             </button>
@@ -115,7 +115,7 @@ const handleAddToCart = () => {
                         ? "text-[var(--error-red)]" 
                         : remaining <= 5 
                             ? "text-[var(--error-red)]" 
-                            : "text-[var(--primary)]"
+                            : "text-(--primary)"
                     }`}
                     >
                     <Zap size={14} fill="currentColor" />
@@ -124,7 +124,7 @@ const handleAddToCart = () => {
                         : `Only ${remaining} Item${remaining > 1 ? 's' : ''} Left!`
                     }
                     </div>
-                            <h1 className="text-3xl font-serif text-[var(--primary)]">{product.name}</h1>
+                            <h1 className="text-3xl font-serif text-(--primary)">{product.name}</h1>
                             <div className="flex items-center gap-4 py-1">
                                 <span className="text-2xl font-semibold text-[var(--gold-color)]">{(product.price * count).toLocaleString()} RWF</span>
                                 <span className="text-gray-400 line-through text-sm">{product.oldPrice} RWF</span>
@@ -153,7 +153,7 @@ const handleAddToCart = () => {
                         <Button className={`h-12 flex-1 rounded-full text-[11px] uppercase tracking-widest font-bold shadow-md
                         ${outOfStock 
                             ? "bg-yellow-500 cursor-not-allowed text-white" 
-                            : "bg-[var(--primary)] hover:brightness-110 text-white"
+                            : "bg-(--primary) hover:brightness-110 text-white"
                         }`}
                         disabled={outOfStock}
                         onClick={handleAddToCart}
@@ -164,7 +164,7 @@ const handleAddToCart = () => {
                         </p>
                         </Button>
 
-                            <button className="h-12 w-12 flex items-center justify-center border border-[var(--bolder-gray)] rounded-full hover:bg-red-50 text-[var(--primary)] bg-white">
+                            <button className="h-12 w-12 flex items-center justify-center border border-[var(--bolder-gray)] rounded-full hover:bg-red-50 text-(--primary) bg-white">
                                 <Heart size={20} />
                             </button>
                         </div>
@@ -177,7 +177,7 @@ const handleAddToCart = () => {
                                 {['details', 'additional','shipping','ingredients','reviews'].map(t => (
                                     <button key={t} onClick={() => setActiveDetailTab(t as any)}
                                         className={`text-[12px] uppercase font-bold pb-2 tracking-widest border-b-2 transition-all
-                                        ${activeDetailTab === t ? 'border-[var(--gold-color)] text-[var(--primary)]' : 'border-transparent text-gray-400'}`}>
+                                        ${activeDetailTab === t ? 'border-[var(--gold-color)] text-(--primary)' : 'border-transparent text-gray-400'}`}>
                                         {t}
                                     </button>
                                 ))}
@@ -254,7 +254,7 @@ const handleAddToCart = () => {
                 </div>
                 <div className="py-16">
                     <div className="flex items-center justify-between mb-8">
-                        <h3 className="text-xl font-serif text-[var(--primary)] uppercase tracking-wider">Related Products</h3>
+                        <h3 className="text-xl font-serif text-(--primary) uppercase tracking-wider">Related Products</h3>
                         <div className="h-[1px] flex-1 mx-6 bg-[var(--bolder-gray)] opacity-50" />
                         <button className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline">View All</button>
                     </div>
@@ -265,10 +265,10 @@ const handleAddToCart = () => {
                                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] mb-3">
                                     <img src={product.img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={product.name} />
                                     <button className="absolute bottom-3 right-3 p-2 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <ShoppingBag size={16} className="text-[var(--primary)]" />
+                                        <ShoppingBag size={16} className="text-(--primary)" />
                                     </button>
                                 </div>
-                                <h4 className="text-sm font-serif text-[var(--primary)]">{product.name}</h4>
+                                <h4 className="text-sm font-serif text-(--primary)">{product.name}</h4>
                                 <p className="text-xs text-[var(--gold-color)] font-bold">{product.price}</p>
                             </div>
                         ))}

@@ -74,7 +74,7 @@ function WhyChooseKezi() {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="absolute bottom-8 -right-4 bg-[var(--primary)] text-white p-6 rounded-2xl shadow-xl hidden md:block"
+                className="absolute bottom-8 -right-4 bg-(--primary) text-white p-6 rounded-2xl shadow-xl hidden md:block"
               >
                 <p className="text-3xl font-serif italic mb-1">100%</p>
                 <p className="text-[9px] uppercase tracking-[0.2em] font-bold opacity-80">
@@ -100,7 +100,7 @@ function WhyChooseKezi() {
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-5xl font-serif text-[var(--primary)] italic leading-tight">
+              <h2 className="text-4xl md:text-5xl font-serif text-(--primary) italic leading-tight">
                 Why Choose Kezi.
               </h2>
             </motion.div>
@@ -117,7 +117,7 @@ function WhyChooseKezi() {
                   </span>
 
                   <div className="space-y-2">
-                    <h3 className="text-lg font-serif text-[var(--primary)] flex items-center gap-3 group-hover:text-[var(--gold-color)] transition-colors">
+                    <h3 className="text-lg font-serif text-(--primary) flex items-center gap-3 group-hover:text-[var(--gold-color)] transition-colors">
                       <span className="text-[var(--gold-color)]">{reason.icon}</span>
                       {reason.title}
                     </h3>
@@ -135,7 +135,7 @@ function WhyChooseKezi() {
             >
               <div className="flex items-center gap-8">
                 <div className="flex flex-col">
-                  <span className="text-xl font-serif text-[var(--primary)]">5,000+</span>
+                  <span className="text-xl font-serif text-(--primary)">5,000+</span>
                   <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">
                     Monthly Customers
                   </span>
@@ -144,7 +144,7 @@ function WhyChooseKezi() {
                 <div className="h-8 w-[1px] bg-[var(--bolder-gray)]"></div>
 
                 <div className="flex flex-col">
-                  <span className="text-xl font-serif text-[var(--primary)]">4.9/5</span>
+                  <span className="text-xl font-serif text-(--primary)">4.9/5</span>
                   <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">
                     User Rating
                   </span>

@@ -60,7 +60,7 @@ function Category() {
           Our Collections
         </span>
 
-        <h1 className='font-serif text-4xl md:text-5xl text-[var(--primary)] mb-4 italic'>
+        <h1 className='font-serif text-4xl md:text-5xl text-(--primary) mb-4 italic'>
           Shop By Category
         </h1>
 

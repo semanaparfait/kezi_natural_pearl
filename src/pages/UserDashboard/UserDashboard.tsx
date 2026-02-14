@@ -24,11 +24,11 @@ const navs = [
     return (
         <section className="min-h-screen bg-gray-50 py-6 px-2 sm:px-6">
             <div className=" md:max-w-6xl mx-auto">
-                <Link to="/" className="flex items-center gap-2 text-[var(--primary)] hover:underline mb-6 transition-colors duration-200">
+                <Link to="/" className="flex items-center gap-2 text-(--primary) hover:underline mb-6 transition-colors duration-200">
                     <ArrowLeft className="w-5 h-5" />
                     <span className="font-medium">Back to home</span>
                 </Link>
-                <div className="bg-[var(--primary)] text-white/90 rounded-3xl shadow-lg p-6 sm:p-10 flex flex-col md:flex-row md:justify-between md:items-center gap-6 md:gap-0">
+                <div className="bg-(--primary) text-white/90 rounded-3xl shadow-lg p-6 sm:p-10 flex flex-col md:flex-row md:justify-between md:items-center gap-6 md:gap-0">
                     <div className="flex items-center gap-4 md:gap-6 flex-1 min-w-0">
                         <div>
                         <img
@@ -72,8 +72,8 @@ const navs = [
                     key={index}
                     className={`inline-flex items-center gap-3 px-5 py-3 cursor-pointer
                     ${activeNav === nav.name
-                        ? 'bg-[var(--primary)] text-white font-semibold rounded-2xl'
-                        : 'text-gray-600 hover:text-[var(--primary)] transition-colors duration-200'
+                        ? 'bg-(--primary) text-white font-semibold rounded-2xl'
+                        : 'text-gray-600 hover:text-(--primary) transition-colors duration-200'
                     }`}
                 >
                     <nav.icon className="w-5 h-5" />

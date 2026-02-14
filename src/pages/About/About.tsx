@@ -52,7 +52,7 @@ function About() {
                <span className="h-[1px] w-8 bg-[var(--gold-color)]"></span>
                <span className="text-[10px] uppercase tracking-[0.3em] text-[var(--gold-color)] font-bold">The Heritage</span>
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl text-[var(--primary)] italic">A Legacy Crafted by Nature</h2>
+            <h2 className="font-serif text-4xl md:text-5xl text-(--primary) italic">A Legacy Crafted by Nature</h2>
             <p className="text-gray-600 font-light leading-relaxed italic">
               Our journey began with a simple observation: nature already holds the secrets to radiance. Founded in 2020, Kezi Natural Pearl was built to bridge the gap between traditional wisdom and modern luxury. 
               <br /><br />
@@ -63,7 +63,7 @@ function About() {
             <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[var(--bolder-gray)]/30">
               {rates.map((rate, index) => (
                 <div key={index} className="text-left group">
-                  <h3 className="font-serif text-2xl text-[var(--primary)] group-hover:text-[var(--gold-color)] transition-colors">{rate.counts}</h3>
+                  <h3 className="font-serif text-2xl text-(--primary) group-hover:text-[var(--gold-color)] transition-colors">{rate.counts}</h3>
                   <p className="text-[8px] uppercase tracking-widest text-gray-400 font-bold mt-1">{rate.title}</p>
                 </div>
               ))}
@@ -73,7 +73,7 @@ function About() {
       </div>
 
       {/* --- mission we aim --- */}
-      <div className="bg-[var(--primary)] py-10 ">
+      <div className="bg-(--primary) py-10 ">
         <div className=" px-6  flex flex-wrap gap-4  items-center justify-evenly">
 
           <div className=" text-white space-y-8  ">
@@ -119,7 +119,7 @@ function About() {
                 <span className="h-[1px] w-12 bg-[var(--gold-color)] opacity-40"></span>
               </div>
               
-              <h2 className="font-serif text-4xl md:text-5xl text-[var(--primary)] italic leading-tight">
+              <h2 className="font-serif text-4xl md:text-5xl text-(--primary) italic leading-tight">
                 A Future Rooted in <br />
                 <span className="text-[var(--gold-color)]">Artisanal Luxury.</span>
               </h2>
@@ -130,7 +130,7 @@ function About() {
             </div>
 
             <div className="pt-4">
-              <button className="group flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.3em] text-[var(--primary)] border-b border-[var(--gold-color)] pb-2 hover:gap-6 transition-all">
+              <button className="group flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.3em] text-(--primary) border-b border-[var(--gold-color)] pb-2 hover:gap-6 transition-all">
                 Explore Our Future <ArrowRight size={14} className="group-hover:translate-x-1" />
               </button>
             </div>
@@ -141,7 +141,7 @@ function About() {
       <div className="py-32 px-6 hidden">
         <div className="max-w-5xl mx-auto flex flex-col items-center text-center space-y-12">
            <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold-color)] font-bold">Future Horizon</span>
-           <h2 className="font-serif text-5xl text-[var(--primary)] italic leading-tight">To be the global signature of <br /> Rwandan Artisanal Luxury.</h2>
+           <h2 className="font-serif text-5xl text-(--primary) italic leading-tight">To be the global signature of <br /> Rwandan Artisanal Luxury.</h2>
            <div className="w-16 h-[1px] bg-[var(--gold-color)]"></div>
            <p className="text-gray-500 font-light italic leading-relaxed max-w-2xl">
              We envision a world where beauty is no longer defined by synthetic speed, but by the slow, intentional rhythm of nature. Our vision is to cultivate a global family that values purity over production.

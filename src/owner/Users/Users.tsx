@@ -138,7 +138,7 @@ function Users() {
                             className="w-10 h-10 rounded-full object-cover"
                           />
                         ) : (
-                          <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center font-semibold text-white">
+                          <div className="w-10 h-10 rounded-full bg-(--primary) flex items-center justify-center font-semibold text-white">
                             {user.email?.charAt(0).toUpperCase()}
                           </div>
                         )}

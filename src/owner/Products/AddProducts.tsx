@@ -122,7 +122,7 @@ function AddProducts() {
                             </div>
                         ))}
 
-                        <label className="w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-white hover:border-[var(--primary)] transition text-gray-400 hover:text-[var(--primary)]">
+                        <label className="w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-white hover:border-(--primary) transition text-gray-400 hover:text-(--primary)">
                             <UploadCloud size={24} />
                             <span className="text-[10px] mt-1 font-medium">Upload</span>
                             <input 
@@ -154,7 +154,7 @@ function AddProducts() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                         <select
                             required
-                            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[var(--primary)] transition"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-(--primary) transition"
                             value={formData.categoryId}
                             onChange={e => setFormData({ ...formData, categoryId: e.target.value })}
                         >
@@ -200,7 +200,7 @@ function AddProducts() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                     <textarea
                         rows={3}
-                        className="w-full rounded-lg border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-[var(--primary)] outline-none"
+                        className="w-full rounded-lg border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-(--primary) outline-none"
                         value={formData.description}
                         onChange={e => setFormData({ ...formData, description: e.target.value })}
                     />
@@ -210,7 +210,7 @@ function AddProducts() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Ingredients / Materials <span className="text-red-500">* Required</span></label>
                     <textarea
                         rows={2}
-                        className="w-full rounded-lg border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-[var(--primary)] outline-none"
+                        className="w-full rounded-lg border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-(--primary) outline-none"
                         value={formData.ingredients}
                         onChange={e => setFormData({ ...formData, ingredients: e.target.value })}
                     />
@@ -220,7 +220,7 @@ function AddProducts() {
                     <Button 
                         type="submit"
                         disabled={isAdding} 
-                        className="w-full md:w-auto px-12 py-3 rounded-xl bg-[var(--primary)] text-white font-bold shadow-lg"
+                        className="w-full md:w-auto px-12 py-3 rounded-xl bg-(--primary) text-white font-bold shadow-lg"
                     >
                         {isAdding ? "Uploading..." : "Upload Product"}
                     </Button>

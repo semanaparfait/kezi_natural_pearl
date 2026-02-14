@@ -34,7 +34,7 @@ function Dashboard() {
   return (
     <main className="flex flex-col xl:flex-row gap-8 p-4 md:p-0">
       <section className="flex-1 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <div className="relative overflow-hidden bg-[var(--primary)] rounded-[2.5rem] p-8 md:p-12 shadow-xl">
+        <div className="relative overflow-hidden bg-(--primary) rounded-[2.5rem] p-8 md:p-12 shadow-xl">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none"></div>
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
@@ -43,7 +43,7 @@ function Dashboard() {
               </h1>
               <p className="text-white/60 text-sm font-light max-w-md">Your collection is flourishing. Here is your overview for today.</p>
             </div>
-            <button className="w-fit px-8 py-3 bg-white text-[var(--primary)] rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[var(--gold-color)] hover:text-white transition-all shadow-lg active:scale-95">
+            <button className="w-fit px-8 py-3 bg-white text-(--primary) rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[var(--gold-color)] hover:text-white transition-all shadow-lg active:scale-95">
               Live Boutique
             </button>
           </div>
@@ -54,14 +54,14 @@ function Dashboard() {
               <stat.icon className="absolute -right-2 -bottom-2 w-16 h-16 text-gray-50 group-hover:text-[var(--gold-color)]/10 transition-colors" />
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-4">
-                  <div className="p-3 bg-gray-50 rounded-2xl text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white transition-all">
+                  <div className="p-3 bg-gray-50 rounded-2xl text-(--primary) group-hover:bg-(--primary) group-hover:text-white transition-all">
                     <stat.icon size={18} />
                   </div>
                   <span className="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-lg">{stat.trend}</span>
                 </div>
                 <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">{stat.title}</p>
                 <div className="flex items-baseline gap-1 mt-1">
-                  <span className="text-xl font-serif font-bold text-[var(--primary)]">{stat.value}</span>
+                  <span className="text-xl font-serif font-bold text-(--primary)">{stat.value}</span>
                   <span className="text-[9px] text-gray-400 font-medium uppercase">{stat.unit}</span>
                 </div>
               </div>
@@ -71,7 +71,7 @@ function Dashboard() {
         <div className="grid grid-cols-1 gap-8">
           <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8 shadow-sm">
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
-              <h3 className="font-serif italic text-xl text-[var(--primary)]">Recent Additions</h3>
+              <h3 className="font-serif italic text-xl text-(--primary)">Recent Additions</h3>
               <button className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline flex items-center gap-1">
                 View Inventory <ArrowUpRight size={14} />
               </button>
@@ -128,7 +128,7 @@ function Dashboard() {
           </div>
           <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8 shadow-sm">
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
-              <h3 className="font-serif italic text-xl text-[var(--primary)]">Recent Registrations</h3>
+              <h3 className="font-serif italic text-xl text-(--primary)">Recent Registrations</h3>
               <button className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline">CRM Portal</button>
             </div>
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
@@ -168,7 +168,7 @@ function Dashboard() {
                             className="w-10 h-10 rounded-full object-cover"
                           />
                         ) : (
-                          <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center font-semibold text-white">
+                          <div className="w-10 h-10 rounded-full bg-(--primary) flex items-center justify-center font-semibold text-white">
                             {user.email?.charAt(0).toUpperCase()}
                           </div>
                         )}
@@ -240,11 +240,11 @@ function Dashboard() {
  <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden">
       <div className="flex items-center gap-3 mb-6">
         <CalendarIcon size={18} className="text-[var(--gold-color)]" />
-        <h4 className="font-serif italic text-lg text-[var(--primary)]">Operational Schedule</h4>
+        <h4 className="font-serif italic text-lg text-(--primary)">Operational Schedule</h4>
       </div>
       <div className="flex gap-4">
         {/* Date Block */}
-        <div className="bg-[var(--primary)] text-white p-4 rounded-3xl text-center min-w-[70px] shadow-lg shadow-[var(--primary)]/20">
+        <div className="bg-(--primary) text-white p-4 rounded-3xl text-center min-w-[70px] shadow-lg shadow-(--primary)/20">
           <p className="text-[10px] uppercase font-bold opacity-70">{month}</p>
           <p className="text-2xl font-bold font-serif">{day}</p>
           <p className="text-[9px] uppercase font-bold mt-1">Today</p>
@@ -254,11 +254,11 @@ function Dashboard() {
         <div className="flex-1 space-y-3">
           <div className="p-3 bg-gray-50 rounded-2xl border-l-4 border-[var(--gold-color)]">
             <p className="text-[10px] font-bold text-gray-400 uppercase">10:00 AM</p>
-            <p className="text-xs font-bold text-[var(--primary)]">Inventory Audit</p>
+            <p className="text-xs font-bold text-(--primary)">Inventory Audit</p>
           </div>
           <div className="p-3 bg-gray-50 rounded-2xl border-l-4 border-blue-200">
             <p className="text-[10px] font-bold text-gray-400 uppercase">03:00 PM</p>
-            <p className="text-xs font-bold text-[var(--primary)] opacity-50 line-through">Supplier Meet</p>
+            <p className="text-xs font-bold text-(--primary) opacity-50 line-through">Supplier Meet</p>
           </div>
         </div>
       </div>

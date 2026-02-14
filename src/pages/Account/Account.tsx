@@ -85,7 +85,7 @@ function Account() {
                 type="button"
                 onClick={() => setAction('signup')}
                 aria-pressed={action === 'signup'}
-                className={`px-8 py-2.5 rounded-full font-medium text-sm transition-all ${action === 'signup' ? 'bg-[var(--primary)] text-white shadow-md' : 'text-gray-600 hover:text-[var(--primary)]'}`}
+                className={`px-8 py-2.5 rounded-full font-medium text-sm transition-all ${action === 'signup' ? 'bg-(--primary) text-white shadow-md' : 'text-gray-600 hover:text-(--primary)'}`}
               >
                 Sign up
               </button>
@@ -93,13 +93,13 @@ function Account() {
                 type="button"
                 onClick={() => setAction('signin')}
                 aria-pressed={action === 'signin'}
-                className={`px-8 py-2.5 rounded-full font-medium text-sm transition-all ${action === 'signin' ? 'bg-[var(--primary)] text-white shadow-md' : 'text-gray-600 hover:text-[var(--primary)]'}`}
+                className={`px-8 py-2.5 rounded-full font-medium text-sm transition-all ${action === 'signin' ? 'bg-(--primary) text-white shadow-md' : 'text-gray-600 hover:text-(--primary)'}`}
               >
                 Sign in
               </button>
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-[var(--primary)] text-center mb-6">
+          <h1 className="text-3xl font-bold text-(--primary) text-center mb-6">
             {action === 'signup' ? 'Create Account' : 'Welcome Back'}
           </h1>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -133,7 +133,7 @@ function Account() {
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
             {action === 'signin' && (
-            <p className="text-sm text-right text-[var(--primary)] cursor-pointer">Forgot your password?</p>
+            <p className="text-sm text-right text-(--primary) cursor-pointer">Forgot your password?</p>
               )}
 
               <Button 

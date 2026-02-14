@@ -14,13 +14,13 @@ function Category() {
                 </div>
                 <div className="inline-flex rounded-md border border-gray-200 bg-white shadow-sm">
                     <button
-                        className={`px-4 py-2 text-sm font-medium rounded-l-md ${activeTab === "view" ? "bg-[var(--primary)] text-white" : "text-gray-800"}`}
+                        className={`px-4 py-2 text-sm font-medium rounded-l-md ${activeTab === "view" ? "bg-(--primary) text-white" : "text-gray-800"}`}
                         onClick={() => setActiveTab("view")}
                     >
                         View Categories
                     </button>
                     <button
-                        className={`px-4 py-2 text-sm font-medium rounded-r-md ${activeTab === "add" ? "bg-[var(--primary)] text-white" : "text-gray-800"}`}
+                        className={`px-4 py-2 text-sm font-medium rounded-r-md ${activeTab === "add" ? "bg-(--primary) text-white" : "text-gray-800"}`}
                         onClick={() => setActiveTab("add")}
                     >
                         Add Category

@@ -45,11 +45,11 @@ function CheckOut() {
         <section className="min-h-screen bg-gray-50/30 pb-20">
             {/* Header */}
             <div className="max-w-7xl mx-auto pt-10 px-6 md:px-10">
-                <button onClick={handleBack} className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all">
+                <button onClick={handleBack} className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-400 hover:text-(--primary) transition-all">
                     <MoveLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
                     {currentStep === 1 ? "Back to cart" : `Back to ${steps[currentStep - 2].title}`}
                 </button>
-                <h1 className="text-4xl md:text-5xl font-serif text-[var(--primary)] italic pt-5">Checkout</h1>
+                <h1 className="text-4xl md:text-5xl font-serif text-(--primary) italic pt-5">Checkout</h1>
             </div>
 
             <div className="max-w-7xl mx-auto md:px-6 md:px-10 mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -63,12 +63,12 @@ function CheckOut() {
                             return (
                                 <div key={step.id} className="flex flex-col items-center relative z-10">
                                     <div className={`w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all duration-500 border-2
-                                        ${isActive ? "bg-[var(--primary)] border-[var(--primary)] text-white shadow-lg" 
+                                        ${isActive ? "bg-(--primary) border-(--primary) text-white shadow-lg" 
                                         : isCompleted ? "bg-[var(--gold-color)] border-[var(--gold-color)] text-white" 
                                         : "bg-white border-gray-200 text-gray-300"}`}>
                                         {isCompleted ? <Check size={18} /> : <span className="text-xs">{step.id}</span>}
                                     </div>
-                                    <h2 className={`mt-3 text-[9px] uppercase tracking-[0.2em] font-black transition-colors ${isActive ? "text-[var(--primary)]" : "text-gray-400"}`}>
+                                    <h2 className={`mt-3 text-[9px] uppercase tracking-[0.2em] font-black transition-colors ${isActive ? "text-(--primary)" : "text-gray-400"}`}>
                                         {step.title}
                                     </h2>
                                     {idx !== steps.length - 1 && (
@@ -85,7 +85,7 @@ function CheckOut() {
                     {currentStep === 1 && (
                         <div className="bg-white rounded-[2.5rem] p-6 md:p-12 shadow-sm border border-gray-100 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="border-b border-gray-50 pb-6">
-                                <h3 className="text-2xl font-serif italic text-[var(--primary)]">Shipping Method</h3>
+                                <h3 className="text-2xl font-serif italic text-(--primary)">Shipping Method</h3>
                                 <p className="text-sm text-gray-400 mt-1">Select your preferred delivery method.</p>
                             </div>
 
@@ -93,16 +93,16 @@ function CheckOut() {
                                 {shippingOptions.map((option) => (
                                     <div key={option.id} onClick={() => setSelectedOption(option.id)}
                                         className={`relative border-2 rounded-3xl p-6 cursor-pointer transition-all duration-300 flex flex-col gap-4 ${
-                                            selectedOption === option.id ? 'border-[var(--primary)] bg-[var(--secondary-cream-white)] shadow-md' : 'border-gray-50 hover:bg-gray-50'
+                                            selectedOption === option.id ? 'border-(--primary) bg-[var(--secondary-cream-white)] shadow-md' : 'border-gray-50 hover:bg-gray-50'
                                         }`}>
                                         <div className="flex justify-between items-start">
-                                            <div className={`p-3 rounded-2xl ${selectedOption === option.id ? 'bg-white text-[var(--primary)]' : 'bg-gray-100'}`}>
+                                            <div className={`p-3 rounded-2xl ${selectedOption === option.id ? 'bg-white text-(--primary)' : 'bg-gray-100'}`}>
                                                 {option.icon}
                                             </div>
                                             {option.price && <span className="text-[10px] font-black text-[var(--gold-color)] uppercase tracking-widest">{option.price}</span>}
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-lg text-[var(--primary)]">{option.title}</h3>
+                                            <h3 className="font-bold text-lg text-(--primary)">{option.title}</h3>
                                             <p className="text-xs text-gray-500">{option.description}</p>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@ function CheckOut() {
 
                             {selectedOption === 1 && (
                                 <div className="animate-in fade-in slide-in-from-top-2 duration-500 bg-gray-50/50 p-6 md:p-8 rounded-[2.5rem] border border-gray-100 space-y-6">
-                                    <h4 className="font-serif italic text-lg text-[var(--primary)] border-b border-gray-200 pb-2">Delivery Details</h4>
+                                    <h4 className="font-serif italic text-lg text-(--primary) border-b border-gray-200 pb-2">Delivery Details</h4>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <div className="space-y-1">
                                             <label className="text-[10px] uppercase font-bold text-gray-400 ml-1">Country</label>
@@ -153,12 +153,12 @@ function CheckOut() {
                             )}
                             {selectedOption === 2 && (
                                 <div className="animate-in fade-in slide-in-from-top-2 duration-500 bg-gray-50/50 p-6 md:p-8 rounded-[2.5rem] border border-gray-100 space-y-6">
-                                    <h4 className="font-serif italic text-lg text-[var(--primary)] border-b border-gray-200 pb-2">Store Pickup</h4>
+                                    <h4 className="font-serif italic text-lg text-(--primary) border-b border-gray-200 pb-2">Store Pickup</h4>
                                     <p className="text-sm text-gray-500">You can pick up your order from our store located at:</p>
                                     <div className="flex items-center gap-3 bg-white p-4 rounded-2xl border border-gray-100">
                                         <MapPin size={20} className="text-[var(--gold-color)]" />
                                         <div>
-                                            <p className="font-bold text-[var(--primary)]">Kezi Natural Pearl</p>
+                                            <p className="font-bold text-(--primary)">Kezi Natural Pearl</p>
                                             <p className="text-xs text-gray-500">123 Wellness Ave, Kigali</p>
                                         </div>
                                     </div>
@@ -166,8 +166,8 @@ function CheckOut() {
                             )}
                             
                             <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
-                                <button onClick={handleBack} className="text-gray-400 hover:text-[var(--primary)] text-xs font-bold uppercase tracking-widest">Cancel</button>
-                                <button onClick={() => setCurrentStep(2)} className="px-12 py-4 rounded-full bg-[var(--primary)] text-white text-[10px] uppercase tracking-widest font-bold shadow-xl hover:scale-105 active:scale-95 transition-all">
+                                <button onClick={handleBack} className="text-gray-400 hover:text-(--primary) text-xs font-bold uppercase tracking-widest">Cancel</button>
+                                <button onClick={() => setCurrentStep(2)} className="px-12 py-4 rounded-full bg-(--primary) text-white text-[10px] uppercase tracking-widest font-bold shadow-xl hover:scale-105 active:scale-95 transition-all">
                                     Continue to Billing
                                 </button>
                             </div>
@@ -181,23 +181,23 @@ function CheckOut() {
                 {/* Right Column: Order Summary */}
                 <div className="lg:col-span-4">
                     <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-xl sticky top-10">
-                        <h2 className="text-2xl font-serif italic text-[var(--primary)] mb-8">Summary</h2>
+                        <h2 className="text-2xl font-serif italic text-(--primary) mb-8">Summary</h2>
                         <div className="flex gap-4 items-center border-b border-gray-50 pb-8 mb-8">
                             <div className="w-16 h-16 bg-gray-50 rounded-2xl overflow-hidden border border-gray-100">
                                 <img src="https://i.pinimg.com/1200x/35/7e/ec/357eec5d843c708a7ef5b736966c1047.jpg" className="w-full h-full object-cover" alt="Product" />
                             </div>
                             <div>
-                                <p className="text-sm font-black text-[var(--primary)] uppercase tracking-tight">Rosehip Serum</p>
+                                <p className="text-sm font-black text-(--primary) uppercase tracking-tight">Rosehip Serum</p>
                                 <p className="text-xs text-gray-400 italic">Qty: 1</p>
                             </div>
                         </div>
                         <div className="space-y-4 text-sm mb-8">
-                            <div className="flex justify-between"><span>Subtotal</span><span className="font-bold text-[var(--primary)]">1,000 RWF</span></div>
+                            <div className="flex justify-between"><span>Subtotal</span><span className="font-bold text-(--primary)">1,000 RWF</span></div>
                             <div className="flex justify-between items-center italic text-gray-500">
                                 <span className="flex items-center gap-2"><Truck size={14}/> Shipping</span>
                                 <span className="text-[var(--gold-color)] font-black text-[10px] bg-[var(--gold-color)]/10 px-2 py-1 rounded">Free</span>
                             </div>
-                            <div className="flex justify-between font-serif italic text-[var(--primary)] pt-6 border-t text-2xl">
+                            <div className="flex justify-between font-serif italic text-(--primary) pt-6 border-t text-2xl">
                                 <span>Total</span><span className="font-bold not-italic">1,000 RWF</span>
                             </div>
                         </div>

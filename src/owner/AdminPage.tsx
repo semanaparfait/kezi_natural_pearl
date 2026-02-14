@@ -120,9 +120,9 @@ function AdminPage() {
             <img
               src={currentUser?.profile}
               alt="user profile"
-              className="rounded-full w-10 h-10 object-cover border-4 border-[var(--primary)] shadow-md"
+              className="rounded-full w-10 h-10 object-cover border-4 border-(--primary) shadow-md"
               />
-              <div className="w-8 h-8 rounded-full bg-[var(--primary)] text-white hidden items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-(--primary) text-white hidden items-center justify-center">
                 {( currentUser?.fullName?.slice(0, 1) || currentUser?.email?.slice(0, 1) || "U").toUpperCase()}
 
               </div>
@@ -136,7 +136,7 @@ function AdminPage() {
 
             {/* Mobile Profile */}
             <button className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition">
-              <div className="w-8 h-8 rounded-full bg-[var(--primary)] text-white flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-(--primary) text-white flex items-center justify-center">
             {(currentUser?.fullName?.slice(0, 1) || currentUser?.email?.slice(0, 1) || "U").toUpperCase()}
 
               </div>

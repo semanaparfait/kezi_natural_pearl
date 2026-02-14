@@ -11,7 +11,7 @@ function ListProducts() {
     <section className="p-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <input type="search" placeholder="Search products..." className="border border-gray-300 rounded-lg px-4 py-2 w-full max-w-xs" />
-        <button className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:opacity-90 transition hidden">
+        <button className="bg-(--primary) text-white px-4 py-2 rounded-lg hover:opacity-90 transition hidden">
           + Add New Product
         </button>
       </div>

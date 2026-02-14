@@ -18,7 +18,7 @@ const variantClasses: Record<ButtonVariant, string> = {
 		"bg-[var(--gold-color)] cursor-pointer text-white hover:bg-emerald-700 focus-visible:outline-emerald-600",
 	secondary:
 		"bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 focus-visible:outline-gray-500",
-	third: "bg-[var(--primary)] text-white hover:bg-gray-800 focus-visible:outline-gray-900",
+	third: "bg-(--primary) text-white hover:bg-gray-800 focus-visible:outline-gray-900",
 	
 	ghost:
 		"bg-transparent text-emerald-700 hover:bg-emerald-50 focus-visible:outline-emerald-600",

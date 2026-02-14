@@ -70,7 +70,7 @@ function Blogs() {
               </span>
             </div>
 
-            <h1 className="font-serif text-4xl md:text-5xl text-[var(--primary)] italic leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl text-(--primary) italic leading-tight">
               Insight into <br /> Our Blog
             </h1>
           </div>
@@ -116,7 +116,7 @@ function Blogs() {
                 </div>
 
                 {/* TITLE */}
-                <h2 className="font-serif text-lg text-[var(--primary)] italic leading-snug group-hover:text-[var(--gold-color)] transition-colors">
+                <h2 className="font-serif text-lg text-(--primary) italic leading-snug group-hover:text-[var(--gold-color)] transition-colors">
                   {post.title}
                 </h2>
 
@@ -127,7 +127,7 @@ function Blogs() {
 
                 {/* LINK */}
                 <div className="mt-auto pt-3">
-                  <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[var(--primary)] group-hover:text-[var(--gold-color)] transition">
+                  <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-(--primary) group-hover:text-[var(--gold-color)] transition">
                     Read Article
                     <ArrowUpRight
                       size={16}
@@ -148,7 +148,7 @@ function Blogs() {
           viewport={{ once: true }}
           className="mt-16 flex justify-center"
         >
-          <button className="px-10 py-3 rounded-full border border-[var(--primary)] text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white transition-all duration-300">
+          <button className="px-10 py-3 rounded-full border border-(--primary) text-[11px] font-bold uppercase tracking-[0.2em] text-(--primary) hover:bg-(--primary) hover:text-white transition-all duration-300">
             Explore All Stories
           </button>
         </motion.div>

@@ -50,14 +50,14 @@ function FQA() {
             <HelpCircle size={20} />
             <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Support Center</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-[var(--primary)] italic leading-tight">
+          <h1 className="text-4xl md:text-5xl font-serif text-(--primary) italic leading-tight">
             Frequently Asked Questions
           </h1>
           <p className="text-gray-500 font-light leading-relaxed max-w-md">
             Skincare can be complex, so we’ve gathered the most common questions to help guide you on your journey to healthy, beautiful skin. 
           </p>
           <div className="pt-4">
-            <button className="text-[11px] font-bold uppercase tracking-widest text-[var(--primary)] border-b-2 border-[var(--gold-color)] pb-1 hover:text-[var(--gold-color)] transition-all">
+            <button className="text-[11px] font-bold uppercase tracking-widest text-(--primary) border-b-2 border-[var(--gold-color)] pb-1 hover:text-[var(--gold-color)] transition-all">
               Still need help? Contact us
             </button>
           </div>
@@ -70,8 +70,8 @@ function FQA() {
                 key={index}
                 className={`border rounded-2xl transition-all duration-700 ease-out transform overflow-hidden
                   ${isOpen 
-                    ? "border-[var(--gold-color)] bg-white shadow-xl shadow-[var(--primary)]/5" 
-                    : "border-[var(--bolder-gray)] bg-transparent hover:border-[var(--primary)]"}
+                    ? "border-[var(--gold-color)] bg-white shadow-xl shadow-(--primary)/5" 
+                    : "border-[var(--bolder-gray)] bg-transparent hover:border-(--primary)"}
                   ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
                 `}
                 style={{ transitionDelay: `${index * 150}ms` }} 
@@ -80,10 +80,10 @@ function FQA() {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full flex items-center justify-between py-4 px-8 text-left"
                 >
-                  <span className={`font-serif text-lg transition-colors ${isOpen ? "text-[var(--primary)]" : "text-gray-700"}`}>
+                  <span className={`font-serif text-lg transition-colors ${isOpen ? "text-(--primary)" : "text-gray-700"}`}>
                     {faq.question}
                   </span>
-                  <div className={`p-2 rounded-full transition-all ${isOpen ? "bg-[var(--primary)] text-white rotate-180" : "bg-gray-100 text-[var(--primary)]"}`}>
+                  <div className={`p-2 rounded-full transition-all ${isOpen ? "bg-(--primary) text-white rotate-180" : "bg-gray-100 text-(--primary)"}`}>
                     {isOpen ? <Minus size={16} /> : <Plus size={16} />}
                   </div>
                 </button>

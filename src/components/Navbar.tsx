@@ -5,12 +5,14 @@ import logo from '@/assets/logo-Kezi (1).svg';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useState,useEffect } from 'react';
 import {motion} from 'framer-motion'
+import {useGetCartItemsQuery} from '@/features/cart/cartApi'
 
 function Navbar() {
   const pathname = useLocation().pathname;
+  const { data: cartItems } = useGetCartItemsQuery(undefined);
   const isHomePage = pathname === '/';
   const token = localStorage.getItem('token');
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const cart = cartItems?.items || [];
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
   // console.log('Current User:', currentUser);
   const [dropdownOpen, setDropdownOpen] = useState(false);

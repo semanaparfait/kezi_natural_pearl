@@ -1,0 +1,39 @@
+
+.aside-container {
+  /* width: 64px;  */
+  transition: width 0.3s ease;
+  overflow: hidden; 
+}
+
+.aside-container:hover {
+  width: 200px; 
+}
+
+.aside-container .item-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1rem;
+  transition: all 0.3s ease;
+  width: 64px; 
+  overflow: hidden;
+}
+
+
+.aside-container:hover .item-btn {
+  width: 100%; 
+}
+
+
+.aside-container .item-btn span {
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, margin 0.3s ease;
+  margin-left: 0;
+}
+
+
+.aside-container:hover .item-btn span {
+  opacity: 1;
+  margin-left: 0.5rem; 
+}

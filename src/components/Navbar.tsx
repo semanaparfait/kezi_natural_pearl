@@ -5,6 +5,7 @@ import logo from '@/assets/logo-Kezi (1).svg';
 import '@/components/Navbar.css';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useState,useEffect } from 'react';
+import {motion} from 'framer-motion'
 
 function Navbar() {
   const pathname = useLocation().pathname;
@@ -43,11 +44,19 @@ function Navbar() {
   }, []);
 
   return (
-    <header className={` top-0 z-50 w-full text-white fixed  ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'} ${scrolled ? 'bg-[var(--primary)]' : ''}`}>
-      <nav className="flex items-center justify-between px-4 ">
-        <div>
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 1 }}
+     className={` top-0 z-50 w-full text-white fixed  ${!isHomePage ? 'bg-[var(--primary)] ' : 'absolute'} ${scrolled ? 'bg-[var(--primary)]' : ''}`}>
+      <nav className="flex items-center justify-between px-6 ">
+        <motion.div
+          initial={{ x: -100 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 1 }}
+        >
           <img src={logo} alt="KEZI Logo" className="w-16 h-16 brightness-0 invert" />
-        </div>
+        </motion.div>
         <ul className="md:flex hidden gap-4 px-10 py-2 bg-transparent bg-white/10  rounded-full ">
           {Links.map((link) => (
             <li key={link.name}>
@@ -160,7 +169,7 @@ function Navbar() {
           </div>
         </div>
       </nav>
-    </header>
+    </motion.header>
   );
 }
 

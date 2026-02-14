@@ -16,6 +16,7 @@ import Cart from "@/pages/Cart/Cart";
 import Blogs from "@/pages/Blogs/Blogs";
 import CheckOut from "@/pages/CheckOut/CheckOut";
 import ScrollToTop from "./components/ScrollToTop";
+import Account1 from '@/pages/Account/Account1'
 function App() {
 
 
@@ -29,6 +30,7 @@ function App() {
     <Route path="/" element={<Home />} />
     <Route path="/contact-us" element={<ContactUs />} />
     <Route path="/account" element={<Account />} />
+    <Route path="/account1" element={<Account1 />} />
     <Route path="/about" element={<About />} />
     <Route path="/shop" element={<Shop />} />
     <Route path="/verify-email" element={<VerifyEmail />} />

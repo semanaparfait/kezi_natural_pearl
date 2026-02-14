@@ -1,24 +1,8 @@
 import { Star } from "lucide-react"
-import { useRef, useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import type{ Variants } from "framer-motion"
 
 function Testimonies() {
-  const sectionRef = useRef(null)
-  const [show, setShow] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShow(true)
-        }
-      },
-      { threshold: 0.2 } // trigger when 20% visible
-    )
-
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
-
   const testimonials = [
     {
       name: "Sarah Johnson",
@@ -43,13 +27,39 @@ function Testimonies() {
     },
   ]
 
-  return (
-    <section ref={sectionRef} className="py-24 bg-[var(--secondary-cream-white)] overflow-hidden">
 
+  const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  }
+
+  const card: Variants = {
+    hidden: { opacity: 0, y: 60 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1] 
+      }
+    }
+  }
+
+  return (
+    <section className="py-24 bg-[var(--secondary-cream-white)] overflow-hidden">
       {/* HEADER */}
-      <div className={`text-center max-w-2xl mx-auto mb-20 transition-all duration-700 ease-out transform
-        ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-      `}>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="text-center max-w-2xl mx-auto mb-20"
+      >
         <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold-color)] font-bold mb-3 block">
           Voices of Kezi
         </span>
@@ -59,70 +69,72 @@ function Testimonies() {
         <p className="text-sm text-gray-500 font-light leading-relaxed">
           See how our artisanal soaps have helped people feel confident and refreshed in their natural skin.
         </p>
-      </div>
+      </motion.div>
 
       {/* TESTIMONIAL CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {testimonials.map((testimonial, index) => (
-          <div
-            key={index}
-            className={`group relative bg-white p-8 rounded-2xl shadow border border-[var(--bolder-gray)]
-              transition-all duration-700 ease-out transform
-              hover:border-[var(--gold-color)]/50 hover:-translate-y-2
-              ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}
-            `}
-            style={{ transitionDelay: `${index * 200}ms` }} // staggered animation
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-10"
+      >
+        {testimonials.map((testimonial, i) => (
+          <motion.div
+            key={i}
+            variants={card}
+            whileHover={{ y: -5 }}
+            className="group relative bg-white p-8 rounded-2xl shadow border border-[var(--bolder-gray)]
+              hover:border-[var(--gold-color)]/50 transition-all duration-500 flex flex-col"
           >
-            <div className="flex flex-row-reverse gap-3.5 items-center justify-center">
-              <div className="flex items-center flex-col gap-1 justify-center">
-                <h4 className="font-semibold text-[var(--primary)] text-md leading-none mb-1">
+            {/* IMAGE + CONTENT */}
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              <div className="w-24 h-24 overflow-hidden rounded-md flex-shrink-0">
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="space-y-2 flex-1">
+                <h4 className="font-semibold text-[var(--primary)] text-md leading-none">
                   {testimonial.name}
                 </h4>
-                <p className="text-gray-600 font-light italic text-sm leading-relaxed mb-8 min-h-[80px]">
+                <p className="text-gray-600 font-light italic text-sm leading-relaxed">
                   "{testimonial.text}"
                 </p>
               </div>
-
-              <div className="flex items-center gap-4 pt-6">
-                <div className="w-20 h-25 overflow-hidden">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover rounded-md transition-all duration-700"
-                  />
-                </div>
-              </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* FOOTER */}
+            <div className="flex items-center justify-between mt-4">
               <div className="flex gap-1">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={12}
-                    className="fill-[var(--gold-color)] text-[var(--gold-color)]"
-                  />
+                  <Star key={i} size={14} className="fill-[var(--gold-color)] text-[var(--gold-color)]" />
                 ))}
               </div>
               <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
                 {testimonial.role}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* FOOTER LINE */}
-      <div className={`mt-16 flex justify-center items-center gap-4 opacity-50 transition-all duration-700 ease-out transform
-        ${show ? "opacity-50 translate-y-0" : "opacity-0 translate-y-10"}
-      `}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 0.5, y: 0 }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
+        className="mt-16 flex justify-center items-center gap-4"
+      >
         <div className="h-[1px] w-12 bg-gray-300"></div>
         <span className="text-[9px] font-bold tracking-widest uppercase text-gray-400">
           Join 10,000+ Glowing Customers
         </span>
         <div className="h-[1px] w-12 bg-gray-300"></div>
-      </div>
-
+      </motion.div>
     </section>
   )
 }

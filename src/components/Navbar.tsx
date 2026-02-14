@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Globe, ShoppingCart, ChevronDown, Package, LayoutDashboard, LogOut,  CircleUser } from 'lucide-react';
 import logo from '@/assets/logo-Kezi (1).svg';
-import '@/components/Navbar.css';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useState,useEffect } from 'react';
 import {motion} from 'framer-motion'
@@ -22,7 +21,7 @@ function Navbar() {
     { name: 'Home', link: '/' },
     { name: 'Shop', link: '/shop' },
     { name: 'About', link: '/about' },
-    { name: 'Blogs', link: '/blogs' },
+    { name: 'Community', link: '/blogs' },
     { name: 'Contact Us', link: '/contact-us' },
   ];
 

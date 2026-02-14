@@ -11,13 +11,21 @@ import {useGetProductByIdQuery,useGetProductsQuery} from '@/features/products/pr
 
 
 function ProductDetails() {
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const { data: products, error, isLoading } = useGetProductByIdQuery(String(id));
-    const { data: allProducts } = useGetProductsQuery(undefined);
-    const [count, setCount] = useState(1);
-    const [selectedImage, setSelectedImage] = useState(products?.images[0]);
-    const [activeDetailTab, setActiveDetailTab] = useState< 'shipping' | 'ingredients' | 'reviews'>('ingredients');
+const navigate = useNavigate();
+const { id } = useParams();
+
+const { data: products, error, isLoading } = useGetProductByIdQuery(String(id));
+const { data: allProducts } = useGetProductsQuery(undefined);
+
+const [count, setCount] = useState(1);
+const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
+const [activeDetailTab, setActiveDetailTab] = useState<'shipping' | 'ingredients' | 'reviews'>('ingredients');
+
+useEffect(() => {
+  if (products?.images?.length) {
+    setSelectedImage(products.images[0]);
+  }
+}, [products]);
 
 if (isLoading) {
   return <p>Loading product...</p>;
@@ -30,11 +38,7 @@ if (error || !products) {
     </div>
   );
 }
-useEffect(() => {
-  if (products?.images?.length) {
-    setSelectedImage(products.images[0]);
-  }
-}, [products]);
+
 
 
 const relatedProducts = allProducts?.filter(p => p.category === products.category && p.id !== products.id).slice(0, 8);

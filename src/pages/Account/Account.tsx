@@ -54,6 +54,9 @@ function Account() {
       if(response.access_token) {
         localStorage.setItem('token', response.access_token);
       }
+      if(response.refresh_token) {
+        localStorage.setItem('refreshToken', response.refresh_token);
+      }
       if (response.user) {
         localStorage.setItem('user', JSON.stringify(response.user));
       }

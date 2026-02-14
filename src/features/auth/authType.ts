@@ -21,6 +21,7 @@ export interface AuthResponse {
   createdAt: string;
   role: string;
   access_token: string;
+  refresh_token: string;
 }
 
 export interface LoginCredentials {

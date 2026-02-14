@@ -40,7 +40,15 @@ export const authSlice = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['User'],
             }),
-
+            refreshToken: builder.mutation<AuthResponse, string>({
+            query: (refreshToken) => ({
+                url: '/api/v1/auth/refresh',
+                method: 'POST',
+                body: {
+                refresh_token: refreshToken,
+                },
+            }),
+            }),
         deleteUser: builder.mutation<void, { password: string }>({
             query: ({ password }) => ({
                 url: '/api/v1/user/me',

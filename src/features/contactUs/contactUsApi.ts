@@ -4,10 +4,10 @@ import type{ ContactUsForm } from '@/features/contactUs/contactUsType'
 export const contactUsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         submitContactForm: builder.mutation<void, ContactUsForm>({
-            query: (formData) => ({
-                url: '/api/v1/contactUs',
+            query: (form) => ({
+                url: '/api/v1/public-contact',
                 method: 'POST',
-                body: formData,
+                body: form,
             }),
         }),
         getContactedMessages: builder.query<ContactUsForm[], void>({

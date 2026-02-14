@@ -6,7 +6,7 @@ import {useNavigate } from "react-router-dom";
 
 function Account1() {
     const Navigate = useNavigate();
-  const [authType, setAuthType] = useState("customer");
+  const [authType, setAuthType] = useState("guest");
   const [action, setAction] = useState<'signup' | 'signin'>('signin');
 
   return (
@@ -37,14 +37,14 @@ function Account1() {
             <div className="w-12 h-[1px] bg-[var(--gold-color)]"></div>
           </div>
         </div>
-        <div className="flex items-center justify-center p-4 md:p-8 backdrop-blur-sm lg:backdrop-blur-none bg-black/10 lg:bg-transparent overflow-y-auto scrollbar-hide">
-          <div className="w-full max-w-sm space-y-4 animate-in fade-in slide-in-from-right-6 duration-700">
-            <div className="space-y-1.5 text-center">
-              <h1 className="text-3xl md:text-4xl font-serif italic text-white drop-shadow-md">Identify Yourself</h1>
-              <p className="text-xs text-white/80 font-light">Choose how you would like to proceed.</p>
+        <div className="flex  items-center justify-center p-4 md:p-8 backdrop-blur-sm lg:backdrop-blur-none bg-black/10 lg:bg-transparent overflow-y-auto scrollbar-hide">
+          <div className="w-full  max-w-md space-y-4 animate-in fade-in slide-in-from-right-6 duration-700">
+            <div className=" bg-white flex flex-col  space-y-3 justify-center md:h-screen rounded-2xl p-6 md:p-6 shadow-2xl border border-white/20">
+            <div className="space-y-2 text-center mb-3">
+              <h1 className="text-3xl md:text-4xl font-serif italic drop-shadow-md">Identify Yourself</h1>
+              <p className="text-xs  font-light">Choose how you would like to proceed.</p>
             </div>
-            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl border border-white/20">
-              <div className="flex bg-gray-50 p-1 rounded-xl mb-1">
+              <div className="flex bg-gray-50 p-1 rounded-xl mb-5">
                 <button 
                   onClick={() => setAuthType("guest")}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${authType === 'guest' ? 'bg-white shadow-sm text-(--primary)' : 'text-gray-400 hover:text-gray-600'}`}
@@ -61,7 +61,7 @@ function Account1() {
 
               <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 {authType === 'customer' ? (
-                  <div className="animate-in fade-in zoom-in-95 duration-500 space-y-1">
+                  <div className="animate-in fade-in zoom-in-95 duration-500 space-y-5">
                     <h1 className="text-3xl font-bold text-(--primary) text-center ">
                     {action === 'signup' ? 'Create Account' : 'Welcome Back'}
                 </h1>

@@ -8,6 +8,7 @@ import {useParams} from "react-router-dom";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import {useGetProductByIdQuery,useGetProductsQuery} from '@/features/products/productsApi'
+import { useAddToCartMutation } from '@/features/cart/cartApi';
 
 
 function ProductDetails() {
@@ -16,6 +17,7 @@ const { id } = useParams();
 
 const { data: products, error, isLoading } = useGetProductByIdQuery(String(id));
 const { data: allProducts } = useGetProductsQuery(undefined);
+const [addToCart] = useAddToCartMutation();
 
 const [count, setCount] = useState(1);
 const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
@@ -54,29 +56,29 @@ const relatedProducts = allProducts?.filter(p => p.category === products.categor
     // console.log("outOfStock:", outOfStock);
 
 
-const handleAddToCart = () => {
+const handleAddToCart = async () => {
     if (!products) return;
-    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const index = existingCart.findIndex((item: any) => item.id === products.id);
-
-    if (index >= 0) {
-        existingCart[index].quantity += count;
-        if (existingCart[index].quantity > stock) {
-            existingCart[index].quantity = stock;
-        }
-    } else {
-        existingCart.push({
-            id: products.id,
-            name: products.name,
-            price: products.price,
-            quantity: count,
-            image: products.images[0],
-            category: products.category
-        });
+    try {
+        await addToCart({
+            productId: products.id,
+            quantity: count
+        }).unwrap();
+        toast.success(`${products.name} added to cart!`);
+    } catch (error) {
+        toast.error("Failed to add to cart");
     }
-    localStorage.setItem("cart", JSON.stringify(existingCart));
+};
 
-    toast.success(`${products.name} added to cart!`);
+const handleAddRelatedToCart = async (product: any) => {
+    try {
+        await addToCart({
+            productId: product.id,
+            quantity: 1
+        }).unwrap();
+        toast.success(`${product.name} added to cart!`);
+    } catch (error) {
+        toast.error("Failed to add to cart");
+    }
 };
 
 
@@ -235,15 +237,22 @@ const handleAddToCart = () => {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         {relatedProducts?.map((product) => (
                             <div key={product.id} 
-                            onClick={() => navigate(`/productdetails/${product.id}`)}
-                            className="group cursor-pointer">
-                                <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] mb-3">
+                            className="group">
+                                <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] mb-3 cursor-pointer"
+                                onClick={() => navigate(`/productdetails/${product.id}`)}>
                                     <img src={product.images[0]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={product.name} />
-                                    <button className="absolute bottom-3 right-3 p-2 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleAddRelatedToCart(product);
+                                    }}
+                                    className="absolute bottom-3 right-3 p-2 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[var(--gold-color)] hover:text-white">
                                         <ShoppingBag size={16} className="text-(--primary)" />
                                     </button>
                                 </div>
-                                <h4 className="text-sm font-serif text-(--primary)">{product.name}</h4>
+                                <h4 
+                                onClick={() => navigate(`/productdetails/${product.id}`)}
+                                className="text-sm font-serif text-(--primary) cursor-pointer hover:underline">{product.name}</h4>
                                 <p className="text-xs text-[var(--gold-color)] font-bold">{product.price} RWF</p>
                             </div>
                         ))}

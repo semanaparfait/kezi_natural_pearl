@@ -17,7 +17,7 @@ function Shop() {
   const navigate = useNavigate();
   const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(undefined);
   const { data: categoriesData } = useGetCategoriesQuery(undefined);
-  const { data: products, isLoading: prodLoading } = useGetProductsQuery(undefined);
+  const { data: products } = useGetProductsQuery(undefined);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sort, setSort] = useState("asc");
   const [notifyEmail, setNotifyEmail] = useState("");

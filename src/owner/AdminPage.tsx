@@ -52,7 +52,7 @@ function AdminPage() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed md:static z-40 h-full w-64 bg-white border-r
+          fixed md:static z-40 h-full w-64 bg-white 
           transform transition-transform duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0

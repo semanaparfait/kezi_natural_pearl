@@ -15,7 +15,7 @@ function ProductDetails() {
 const navigate = useNavigate();
 const { id } = useParams();
 
-const { data: products, error, isLoading } = useGetProductByIdQuery(String(id));
+const { data: products, error, isLoading , refetch } = useGetProductByIdQuery(String(id));
 const { data: allProducts } = useGetProductsQuery(undefined);
 const [addToCart] = useAddToCartMutation();
 
@@ -29,17 +29,33 @@ useEffect(() => {
   }
 }, [products]);
 
-if (isLoading) {
-  return <p>Loading product...</p>;
-}
 
-if (error || !products) {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h2 className="text-2xl font-semibold">Product not found.</h2>
-    </div>
-  );
-}
+  if (isLoading) {
+    return (
+      <section className="min-h-screen bg-[var(--secondary-cream-white)] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary)] mx-auto"></div>
+          <p className="mt-4 text-gray-500">Loading your cart...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !products) {
+    return (
+      <section className="min-h-screen bg-[var(--secondary-cream-white)] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500">Failed to load cart items</p>
+          <button
+            onClick={() => refetch()}
+            className="mt-4 px-6 py-2 bg-[var(--primary)] text-white rounded-full"
+          >
+            Retry
+          </button>
+        </div>
+      </section>
+    );
+  }
 
 
 

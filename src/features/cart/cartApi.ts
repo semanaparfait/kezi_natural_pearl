@@ -1,5 +1,5 @@
 import {baseApi} from '@/services/baseApi'
-import type{ CartItem } from '@/features/cart/cartType';
+import type{ CartItem, CartItemResponse } from '@/features/cart/cartType';
 
 export const cartApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -9,15 +9,22 @@ export const cartApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body: item,
             }),
+            invalidatesTags: ['Cart'],
         }),
-        removeFromCart: build.mutation<{ success: boolean }, string>({
-            query: (id) => ({
-                url: `/cart/${id}`,
+            removeFromCart: build.mutation<{ success: boolean }, string>({
+            query: (productId) => ({
+                url: '/api/v1/cart',
                 method: 'DELETE',
+                body: {
+                items: [productId]  
+                }
             }),
-        }),
-        getCartItems: build.query<CartItem[], void>({
-            query: () => '/cart',
+            invalidatesTags: ['Cart'],
+            }),
+
+        getCartItems: build.query<CartItemResponse, void>({
+            query: () => '/api/v1/cart',
+            providesTags: ['Cart'],
         }),
     }),
 });

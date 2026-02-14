@@ -59,7 +59,7 @@ function AdminPage() {
         `}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between p-4 md:p-6 border-b">
+        <div className="flex items-center justify-between p-4 md:p-6 ">
             <Link to="/">
           <img src={logo} alt="Kezi Logo" className="w-20 md:w-24" />
             </Link>

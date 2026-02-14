@@ -1,8 +1,18 @@
 import { useState, useEffect } from "react";
-import { DollarSign, Users, ShoppingCart, Package, ArrowUpRight, TrendingUp } from "lucide-react";
-
+import { DollarSign, Users, ShoppingCart, Package, ArrowUpRight, TrendingUp,  Mail,
+  Phone,  CheckCircle,
+  XCircle, } from "lucide-react";
+import { useGetCurrentUserQuery } from '@/features/auth/authApi';
+import { useGetUsersQuery } from '@/features/users/usersApi';
+import {useGetProductsQuery} from '@/features/products/productsApi';
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
+  const navigate = useNavigate();
   const [greeting, setGreeting] = useState("");
+  const { data: currentUser } = useGetCurrentUserQuery(undefined);
+  const { data: usersData = [], isLoading, isError, refetch } =
+    useGetUsersQuery(undefined);
+  const { data: products } = useGetProductsQuery(undefined);
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -26,8 +36,8 @@ function Dashboard() {
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2">
-            <h1 className="text-4xl md:text-5xl font-serif italic text-white leading-tight">
-              {greeting}, <span className="text-[var(--gold-color)]">Semana</span>
+            <h1 className="text-3xl md:text-4xl font-serif italic text-white leading-tight">
+              {greeting}, <span className="text-[var(--gold-color)]">{currentUser?.fullName || currentUser?.email}</span>
             </h1>
             <p className="text-white/60 text-sm font-light max-w-md">
               Your artisanal collection is performing beautifully today. Here is the morning overview.
@@ -42,7 +52,7 @@ function Dashboard() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, i) => (
+        {stats.map((stat) => (
           <div 
             key={stat.title} 
             className="group bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-[var(--primary)]/5 transition-all duration-500 relative overflow-hidden"
@@ -76,16 +86,184 @@ function Dashboard() {
         ))}
       </div>
 
-      {/* Placeholder for Recent Activity */}
+
       <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8">
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
-          <h3 className="font-serif italic text-xl text-[var(--primary)]">Recent Acquisitions</h3>
-          <button className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline flex items-center gap-1">
-            View All Orders <ArrowUpRight size={14} />
+          <h3 className="font-serif italic text-xl text-[var(--primary)]">Recent  Products</h3>
+          <button
+
+           className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline flex items-center gap-1">
+            View All Products <ArrowUpRight size={14} />
           </button>
         </div>
-        <div className="py-12 text-center">
-            <p className="text-gray-300 italic font-serif">Awaiting the next artisanal request...</p>
+              <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-gray-200">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-gray-100 border-b border-gray-200">
+              <th className="p-4 font-semibold text-gray-600">Product</th>
+              <th className="p-4 font-semibold text-gray-600">Price</th>
+              <th className="p-4 font-semibold text-gray-600">Stock</th>
+              <th className="p-4 font-semibold text-gray-600">Status</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {products?.slice(-5).reverse().map((product) => (
+              <tr key={product.id} className="border-b border-gray-100 hover:bg-gray-50 transition">
+                <td className="p-4">
+                  <div className="flex items-center gap-3">
+                    <img 
+                      src={product.images[0]} 
+                      alt={product.name} 
+                      className="w-12 h-12 rounded-lg object-cover bg-gray-200"
+                    />
+                    <div>
+                      <p className="font-medium text-gray-800">{product.name}</p>
+                      <p className="text-xs text-gray-500 truncate max-w-[200px]">{product.description.slice(0, 70)}...</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="p-4 font-medium text-gray-700">
+                  {product.price.toLocaleString()} RWF
+                </td>
+                <td className="p-4 text-gray-600">
+                  {product.stockQuantity} pcs
+                </td>
+                <td className="p-4">
+                  {product.stockQuantity > 0 ? (
+                    <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">
+                      In Stock
+                    </span>
+                  ) : (
+                    <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full font-medium">
+                      Out of Stock
+                    </span>
+                  )}
+                </td>
+
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      </div>
+
+            <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8">
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
+          <h3 className="font-serif italic text-xl text-[var(--primary)]">Recent  Products</h3>
+          <button
+
+           className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline flex items-center gap-1">
+            View All Products <ArrowUpRight size={14} />
+          </button>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full ">
+              <thead className="bg-gray-50 border-b">
+                <tr>
+                  {[
+                    "User",
+                    "Contact",
+                    "Role",
+                    "Status",
+                    "Verified",
+                  ].map(h => (
+                    <th
+                      key={h}
+                      className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody className="divide-y">
+                {usersData.slice(-5).reverse().map((user, index) => (
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-50 transition"
+                  >
+                    {/* User */}
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        {user.profile ? (
+                          <img
+                            src={user.profile}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center font-semibold text-white">
+                            {user.email?.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {user.fullName}
+                          </p>
+                          <p className="text-sm text-gray-500">{user.email}</p>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Contact */}
+                    <td className="px-6 py-4 text-sm text-gray-600 space-y-1">
+                      <div className="flex items-center gap-2">
+                        <Mail size={14} />
+                        {user.email}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone size={14} />
+                        {user.phoneNumber ?? "—"}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
+                          user.status === "active"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {user.status === "active" ? (
+                          <CheckCircle size={12} />
+                        ) : (
+                          <XCircle size={12} />
+                        )}
+                        {user.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
+                          user.emailVerifiedAt
+                            ? "bg-green-100 text-green-700"
+                            : "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {user.emailVerifiedAt ? (
+                          <CheckCircle size={12} />
+                        ) : (
+                          <XCircle size={12} />
+                        )}
+                        {user.emailVerifiedAt ? "Verified" : "Unverified"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </td>
+
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Footer */}
+          <div className="px-6 py-4 border-t text-sm text-gray-600">
+            Showing {usersData.length} users
+          </div>
         </div>
       </div>
 

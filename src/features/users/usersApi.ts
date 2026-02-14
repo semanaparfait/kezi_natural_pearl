@@ -5,14 +5,14 @@ export const usersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getUsers: builder.query<Users[], void>({
             query: () => ({
-                url: '/api/v1/user',
+                url: '/api/v1/user/all',
                 method: 'GET',
             }),
             providesTags: ['Users'],
         }),
         updateRole: builder.mutation<void, { email: string; role: string }>({
             query: ({ email, role }) => ({
-                url: `/api/v1/user`,
+                url: `/api/v1/user/update-role`,
                 method: 'PATCH',
                 body: {email, role },
             }),

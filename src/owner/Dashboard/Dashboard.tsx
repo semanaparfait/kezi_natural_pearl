@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { DollarSign, Users, ShoppingCart, Package, ArrowUpRight, TrendingUp, Mail, Phone, CheckCircle, XCircle, Calendar as CalendarIcon, AlertCircle } from "lucide-react";
+import { DollarSign, Users, ShoppingCart, Package, ArrowUpRight, Mail, Phone, CheckCircle, XCircle, Calendar as CalendarIcon, AlertCircle } from "lucide-react";
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useGetUsersQuery } from '@/features/users/usersApi';
 import { useGetProductsQuery } from '@/features/products/productsApi';
-import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  const navigate = useNavigate();
+
   const [greeting, setGreeting] = useState("");
   const { data: currentUser } = useGetCurrentUserQuery(undefined);
   const { data: usersData = [] } = useGetUsersQuery(undefined);

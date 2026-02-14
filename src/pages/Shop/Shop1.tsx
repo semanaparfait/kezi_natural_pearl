@@ -1,9 +1,7 @@
 import { useState, useMemo } from "react";
-import { ShoppingBag, Heart, ArrowUpDown, Zap, Mail, X, User, Search, RotateCcw } from "lucide-react";
+import { Heart, ArrowUpDown, X, User, Search, RotateCcw, Check } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import toast from "react-hot-toast";
-import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import Button from "@/components/Button";
 import ReactPaginate from 'react-paginate';
 import { useNavigate } from "react-router-dom";
@@ -12,8 +10,7 @@ import { useGetProductsQuery } from '@/features/products/productsApi';
 
 function Shop() {
   const navigate = useNavigate();
-  const { data: currentUser } = useGetCurrentUserQuery(undefined);
-  const { data: categoriesData, isLoading: catLoading } = useGetCategoriesQuery(undefined);
+  const { data: categoriesData } = useGetCategoriesQuery(undefined);
   const { data: products, isLoading: prodLoading } = useGetProductsQuery(undefined);
 
   // States
@@ -31,7 +28,7 @@ function Shop() {
     if (!products) return [];
     
     return products.filter(p => {
-      const matchesCategory = selectedCategory === "All" || p?.category === selectedCategory;
+      const matchesCategory = selectedCategory === "All" || p?.name === selectedCategory;
       const matchesSearch = p?.name.toLowerCase().includes(searchQuery.toLowerCase());
       
       let matchesPrice = true;
@@ -57,7 +54,7 @@ function Shop() {
     (currentPage + 1) * productsPerPage
   );
 
-  const handlePageChange = ({ selected }) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
     window.scrollTo({ top: 400, behavior: 'smooth' });
   };
@@ -212,7 +209,7 @@ function Shop() {
                           </div>
                         )}
                         <img
-                          src={product.images?.[0] || product.image}
+                          src={product.images?.[0]}
                           alt={product.name}
                           className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${isOutOfStock && 'grayscale'}`}
                         />
@@ -223,7 +220,7 @@ function Shop() {
 
                       <div className="mt-6 px-2 space-y-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-[9px] uppercase font-black tracking-widest text-[var(--gold-color)]">{product.category}</span>
+                          <span className="text-[9px] uppercase font-black tracking-widest text-[var(--gold-color)]">{selectedCategory}</span>
                           {product.stockQuantity < 5 && !isOutOfStock && <span className="text-[8px] font-bold text-red-500 animate-pulse uppercase">Rare</span>}
                         </div>
                         <h3 className="font-serif text-lg text-[var(--primary)] leading-tight group-hover:text-black transition-colors">{product.name}</h3>

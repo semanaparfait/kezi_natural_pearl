@@ -25,7 +25,14 @@ export const productsApi = baseApi.injectEndpoints({
         }),
         invalidatesTags: ['Products'],
     }),
+    getProductById: builder.query<ProductTypeResponse, string>({
+        query: (id) => ({
+            url: `/api/v1/product/${id}`,
+            method: "GET",
+        }),
+        providesTags: (_result, _error, id) => [{ type: 'Products', id }],
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useAddProductMutation, useDeleteProductMutation } = productsApi;
+export const { useGetProductsQuery, useAddProductMutation, useDeleteProductMutation, useGetProductByIdQuery } = productsApi;

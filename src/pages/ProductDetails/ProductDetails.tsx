@@ -1,39 +1,49 @@
 import { Facebook, Heart, Instagram, Twitter, ChevronRight,  Minus, Plus, Zap, ShoppingBag } from "lucide-react";
 import Button from "@/components/Button";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {useParams} from "react-router-dom";
-import {products} from '@/components/products'
+// import {products} from '@/components/products'
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import {useGetProductByIdQuery,useGetProductsQuery} from '@/features/products/productsApi'
 
 
 function ProductDetails() {
-    const { id } = useParams(); 
-    const product = products.find(p => p.id === Number(id));
-
-    if (!product) {
-        return (<div className="min-h-screen flex items-center justify-center">
-            <h2 className="text-2xl font-semibold">Product not found.</h2>
-        </div>
-        );
-    }
-
-    const relatedProducts = [
-        { id: 1, name: "Charcoal Detox", price: "1,200 RWF", img: "https://i.pinimg.com/736x/47/51/3e/47513e1567c15cee9f3c3d9d2842f413.jpg" },
-        { id: 2, name: "Lavender Mist", price: "2,500 RWF", img: "https://i.pinimg.com/736x/62/d2/26/62d2268fcfae76758a799a43fa1428a6.jpg" },
-        { id: 3, name: "Shea Glow", price: "1,800 RWF", img: "https://i.pinimg.com/736x/09/0a/71/090a71baf8ff308245d6596d09e5e27d.jpg" },
-        { id: 4, name: "Honey Scrub", price: "1,500 RWF", img: "https://i.pinimg.com/1200x/c3/a3/d2/c3a3d2a770550aedf72e94c04b8cb867.jpg" },
-        { id: 5, name: "Charcoal Detox", price: "1,200 RWF", img: "https://i.pinimg.com/736x/68/8d/b3/688db3abdc40f6d4111f72b0c34e38a3.jpg" },
-        { id: 6, name: "Lavender Mist", price: "2,500 RWF", img: "https://i.pinimg.com/736x/b3/21/27/b32127d45739c03aadd8b26627e99dd2.jpg" },
-        { id: 7, name: "Shea Glow", price: "1,800 RWF", img: "https://i.pinimg.com/1200x/77/d1/a4/77d1a4ffe947be52e12ab5e80d6a63e3.jpg" },
-        { id: 8, name: "Honey Scrub", price: "1,500 RWF", img: "https://i.pinimg.com/736x/61/d5/e4/61d5e42bea1c48ddf2f2df77e38e57f0.jpg" },
-    ];
-
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const { data: products, error, isLoading } = useGetProductByIdQuery(String(id));
+    const { data: allProducts } = useGetProductsQuery(undefined);
     const [count, setCount] = useState(1);
-    const [selectedImage, setSelectedImage] = useState(product.image[0]);
-    const [activeDetailTab, setActiveDetailTab] = useState<'details' | 'additional' | 'shipping' | 'ingredients' | 'reviews'>('details');
-    const stock = Number(product?.stock || 0);
+    const [selectedImage, setSelectedImage] = useState(products?.images[0]);
+    const [activeDetailTab, setActiveDetailTab] = useState< 'shipping' | 'ingredients' | 'reviews'>('ingredients');
+
+if (isLoading) {
+  return <p>Loading product...</p>;
+}
+
+if (error || !products) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <h2 className="text-2xl font-semibold">Product not found.</h2>
+    </div>
+  );
+}
+useEffect(() => {
+  if (products?.images?.length) {
+    setSelectedImage(products.images[0]);
+  }
+}, [products]);
+
+
+const relatedProducts = allProducts?.filter(p => p.category === products.category && p.id !== products.id).slice(0, 8);
+
+
+// console.log(products);
+
+
+    const stock = Number(products?.stockQuantity || 0);
     const remaining = Math.max(stock - count, 0);
     const outOfStock = stock === 0;
     // console.log("stock:", stock);
@@ -41,9 +51,9 @@ function ProductDetails() {
 
 
 const handleAddToCart = () => {
-    if (!product) return;
+    if (!products) return;
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const index = existingCart.findIndex((item: any) => item.id === product.id);
+    const index = existingCart.findIndex((item: any) => item.id === products.id);
 
     if (index >= 0) {
         existingCart[index].quantity += count;
@@ -52,17 +62,17 @@ const handleAddToCart = () => {
         }
     } else {
         existingCart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
+            id: products.id,
+            name: products.name,
+            price: products.price,
             quantity: count,
-            image: product.image[0],
-            category: product.category
+            image: products.images[0],
+            category: products.category
         });
     }
     localStorage.setItem("cart", JSON.stringify(existingCart));
 
-    toast.success(`${product.name} added to cart!`);
+    toast.success(`${products.name} added to cart!`);
 };
 
 
@@ -83,7 +93,7 @@ const handleAddToCart = () => {
                 <div className="relative text-center text-white z-10">
                     <h2 className="text-xl md:text-2xl font-serif tracking-widest uppercase mb-1">Face Care</h2>
                     <div className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-tighter opacity-80">
-                        <span>Shop</span> <ChevronRight size={10} /> <span className="font-bold text-[var(--accent-color)]">Organic Soaps</span>
+                        <span>Shop</span> <ChevronRight size={10} /> <span className="font-bold text-[var(--accent-color)]">{products?.category}</span>
                     </div>
                 </div>
             </div>
@@ -95,7 +105,7 @@ const handleAddToCart = () => {
                             <img className="w-full h-full object-cover" src={selectedImage} alt="Product" />
                         </div>
                         <div className="flex gap-2">
-                        {(Array.isArray(product.image) ? product.image : [product.image]).map((img, i) => (
+                        {(Array.isArray(products.images) ? products.images : [products.images]).map((img, i) => (
                             <button
                             key={i}
                             onClick={() => setSelectedImage(img)}
@@ -124,15 +134,15 @@ const handleAddToCart = () => {
                         : `Only ${remaining} Item${remaining > 1 ? 's' : ''} Left!`
                     }
                     </div>
-                            <h1 className="text-3xl font-serif text-(--primary)">{product.name}</h1>
+                            <h1 className="text-3xl font-serif text-(--primary)">{products.name}</h1>
                             <div className="flex items-center gap-4 py-1">
-                                <span className="text-2xl font-semibold text-[var(--gold-color)]">{(product.price * count).toLocaleString()} RWF</span>
-                                <span className="text-gray-400 line-through text-sm">{product.oldPrice} RWF</span>
+                                <span className="text-2xl font-semibold text-[var(--gold-color)]">{(products.price * count).toLocaleString()} RWF</span>
+                                <span className="text-gray-400 line-through text-sm">{products.price} RWF</span>
                             </div>
                         </div>
 
                         <p className="text-gray-500 text-sm leading-relaxed italic">
-                            {product.description}
+                            {products.description}
                         </p>
 
                         <div className="flex items-center gap-3 pt-4">
@@ -174,7 +184,7 @@ const handleAddToCart = () => {
 
                         <div className="pt-8 space-y-4">
                             <div className="flex gap-6 border-b border-[var(--bolder-gray)]">
-                                {['details', 'additional','shipping','ingredients','reviews'].map(t => (
+                                {['shipping','ingredients','reviews'].map(t => (
                                     <button key={t} onClick={() => setActiveDetailTab(t as any)}
                                         className={`text-[12px] uppercase font-bold pb-2 tracking-widest border-b-2 transition-all
                                         ${activeDetailTab === t ? 'border-[var(--gold-color)] text-(--primary)' : 'border-transparent text-gray-400'}`}>
@@ -183,37 +193,7 @@ const handleAddToCart = () => {
                                 ))}
                             </div>
                             <p className="text-sm text-gray-500 leading-5">
-                        {activeDetailTab === 'details' && (
-                        <div className="space-y-3 text-gray-700">
-                            <p>
-                            Our signature formula is handcrafted using cold-pressed organic oils and
-                            carefully selected natural botanicals to deeply nourish and protect your skin.
-                            </p>
 
-                            <ul className="list-disc pl-5 space-y-1">
-                            <li>Rich in antioxidants to help fight free radicals</li>
-                            <li>Deeply moisturizes and restores dry or damaged skin</li>
-                            <li>Gentle and safe for daily use on all skin types</li>
-                            <li>Eco-friendly, cruelty-free, and sustainably made</li>
-                            </ul>
-                        </div>
-                        )}
-
-                            {activeDetailTab === 'additional' && (
-                            <div className="space-y-3 text-gray-700">
-                                <p>
-                                Designed for everyday skincare routines, this product is suitable for both
-                                men and women and can be used on face and body.
-                                </p>
-
-                                <ul className="list-disc pl-5 space-y-1">
-                                <li>Weight: 120g</li>
-                                <li>Shelf Life: 12 months</li>
-                                <li>Skin Type: Normal, Dry, Sensitive</li>
-                                <li>Storage: Keep in a cool, dry place</li>
-                                </ul>
-                            </div>
-                            )}
 
                             {activeDetailTab === 'shipping' && (
                             <div className="space-y-3 text-gray-700">
@@ -232,18 +212,7 @@ const handleAddToCart = () => {
 
                             {activeDetailTab === 'ingredients' && (
                             <div className="space-y-3 text-gray-700">
-                                <p>
-                                Made with 100% natural and skin-loving ingredients carefully blended for
-                                maximum effectiveness.
-                                </p>
-
-                                <ul className="list-disc pl-5 space-y-1">
-                                <li>Cocoa Butter – deeply nourishes and softens skin</li>
-                                <li>Coconut Oil – locks in moisture and adds natural glow</li>
-                                <li>Olive Oil – rich in vitamins and antioxidants</li>
-                                <li>Essential Oils – provide a calming natural fragrance</li>
-                                <li>Natural Fragrances – free from harsh chemicals</li>
-                                </ul>
+                                <p>{products.ingredients}</p>
                             </div>
                             )}
 
@@ -260,16 +229,18 @@ const handleAddToCart = () => {
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {relatedProducts.map((product) => (
-                            <div key={product.id} className="group cursor-pointer">
+                        {relatedProducts?.map((product) => (
+                            <div key={product.id} 
+                            onClick={() => navigate(`/productdetails/${product.id}`)}
+                            className="group cursor-pointer">
                                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] mb-3">
-                                    <img src={product.img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={product.name} />
+                                    <img src={product.images[0]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={product.name} />
                                     <button className="absolute bottom-3 right-3 p-2 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
                                         <ShoppingBag size={16} className="text-(--primary)" />
                                     </button>
                                 </div>
                                 <h4 className="text-sm font-serif text-(--primary)">{product.name}</h4>
-                                <p className="text-xs text-[var(--gold-color)] font-bold">{product.price}</p>
+                                <p className="text-xs text-[var(--gold-color)] font-bold">{product.price} RWF</p>
                             </div>
                         ))}
                         <Button  className="col-span-2 md:col-span-4 mx-auto mt-4">

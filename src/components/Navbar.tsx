@@ -9,14 +9,14 @@ import {useGetCartItemsQuery} from '@/features/cart/cartApi'
 
 function Navbar() {
   const pathname = useLocation().pathname;
-  const { data: cartItems } = useGetCartItemsQuery(undefined);
-  const isHomePage = pathname === '/';
-  const token = localStorage.getItem('token');
-  const cart = cartItems?.items || [];
-  const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
-  // console.log('Current User:', currentUser);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isHomePage = pathname === '/';
+  const token = localStorage.getItem('token');
+  const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
+  const { data: cartItems } = useGetCartItemsQuery(undefined, {skip: !token,});
+  const cart = cartItems?.items || [];
+  // console.log('Current User:', currentUser);
 
 
   const Links = [
@@ -43,6 +43,8 @@ function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  
 
   return (
     <motion.header

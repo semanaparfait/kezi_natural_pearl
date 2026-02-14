@@ -214,7 +214,7 @@ const handleAddRelatedToCart = async (product: any) => {
                                     </button>
                                 ))}
                             </div>
-                            <p className="text-sm text-gray-500 leading-5">
+                            {/* <p className="text-sm text-gray-500 leading-5"> */}
 
 
                             {activeDetailTab === 'shipping' && (
@@ -239,7 +239,7 @@ const handleAddRelatedToCart = async (product: any) => {
                             )}
 
 
-                            </p>
+                            {/* </p> */}
                         </div>
                     </div>
                 </div>

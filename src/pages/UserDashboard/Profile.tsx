@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
+import { Pen, ShieldAlert, Calendar, Mail, Phone, User, CheckCircle2, XCircle } from "lucide-react";
 import Button from "@/components/Button"
 import Input from "@/components/Input"
-import { useGetCurrentUserQuery,useUpdateUserMutation,useDeleteUserMutation } from "@/features/auth/authApi"
-
-
-import { useNavigate } from "react-router-dom";
-import { Pen } from "lucide-react";
+import { toast } from "react-hot-toast";
+import { useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation } from "@/features/auth/authApi"
 
 function Profile() {
   const { data: currentUser, isLoading } = useGetCurrentUserQuery(undefined)
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
-  // const [updateUser, { isLoading: isUpdating, isSuccess: updateSuccess, error: updateError }] = useUpdateUserMutation();
   const [deleteUser, { isLoading: isDeletingUser }] = useDeleteUserMutation();
+  
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
@@ -30,91 +29,99 @@ function Profile() {
       setPhone(currentUser.phoneNumber ?? "")
       setMemberSince(
         currentUser.createdAt
-          ? new Date(currentUser.createdAt).toLocaleDateString()
+          ? new Date(currentUser.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
           : ""
       )
     }
   }, [currentUser])
 
+  const handleDeleteAccount = async () => {
+    if (!window.confirm("Are you sure you want to delete your account? This action is irreversible.")) return;
+    try {
+      await deleteUser({ password: deletePassword }).unwrap();
+      localStorage.removeItem('token');
+      navigate('/');
+    } catch (err) {
+      setDeleteError("Incorrect password. Please try again.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+
   if (isLoading) {
     return (
-      <section className="p-6 bg-gray-100 rounded-lg md:max-w-6xl mx-auto">
-        <p className="text-gray-500">Loading profile...</p>
+      <section className="flex items-center justify-center   uppercase tracking-[0.3em] text-xs">
+        Syncing Rituals...
       </section>
     )
   }
 
   return (
-    <section className="p-6 bg-gray-100 rounded-lg shadow-md md:max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">
-        My Profile {name || email}
-      </h1>
-
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            setUpdateMsg("");
-            try {
-              await updateUser({ fullName: name, email, phoneNumber: phone }).unwrap();
-              setUpdateMsg("Profile updated successfully.");
-            } catch (err) {
-              setUpdateMsg("Failed to update profile.");
-            }
-          }}
-          
-        >
-          <div className="relative w-fit" >
-          <label htmlFor="profile">Profile Picture</label>
-          <img src={currentUser?.profile || "https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"} alt={`${currentUser?.fullName}'s profile`} className="relative rounded-full w-20 h-20 object-cover border-4 border-white shadow-md" />
-          <Pen className="w-5 h-5 text-gray-500 cursor-pointer absolute bottom-2 right-2" />
+    <section className="  p-6 md:p-10 font-sans text-gray-800 flex items-center justify-center relative">
+      <div className="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-6 h-fit md:h-[85vh]">
+        <div className="md:col-span-4 bg-white/90 backdrop-blur-xl border border-[var(--bolder-gray)] rounded-[32px] p-8 flex flex-col items-center justify-center text-center space-y-6 shadow-xl">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[var(--gold-color)]/20 blur-2xl rounded-full group-hover:bg-[var(--gold-color)]/40 transition-all duration-500" />
+            <img 
+              src={currentUser?.profile || "https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"} 
+              alt="Profile" 
+              className="relative w-32 h-32 rounded-full object-cover border-2 border-[var(--gold-color)]/60 shadow-2xl"
+            />
+            <button className="absolute bottom-1 right-1 bg-[var(--primary)] p-2 rounded-full border border-white/20 hover:scale-110 transition-transform">
+              <Pen size={14} className="text-white" />
+            </button>
           </div>
-          <Input
-            label="Name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            
-          />
+          
+          <div>
+            <h1 className="text-2xl font-serif italic text-[var(--primary)]">{name || "Your Name"}</h1>
+            <p className="text-[var(--gold-color)]/70 text-[10px] uppercase tracking-[0.2em] mt-1">Customer Member</p>
+          </div>
 
-          <Input
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            
-          />
-
-          <Input
-            label="Phone Number"
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            
-          />
-
-          <Input
-            label="Member Since"
-            type="text"
-            value={memberSince}
-            onChange={() => {}}
-          />
-
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={isUpdating}
-          >
-            {isUpdating ? "Updating..." : "Update Profile"}
-          </Button>
-          {updateMsg && (
-            <p className={updateMsg.includes("success") ? "text-green-600" : "text-red-600"}>{updateMsg}</p>
-          )}
-        </form>
-      </div>
-
-      <div className="mt-10 border border-red-300 bg-red-50 rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 shadow-md">
+          <div className="w-full pt-6 space-y-4 border-t border-[var(--bolder-gray)]/60">
+            <div className="flex items-center gap-3 text-xs text-gray-500">
+              <Calendar size={14} className="text-[var(--gold-color)]" /> <span>Joined {memberSince}</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-500">
+              <Mail size={14} className="text-[var(--gold-color)]" /> <span>{email}</span>
+            </div>
+          </div>
+        </div>
+        <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 ">
+          <div className="md:col-span-2 bg-white/90 backdrop-blur-md border border-[var(--bolder-gray)] rounded-[32px] p-8 shadow-xl">
+            <h2 className="text-lg font-serif italic mb-6 text-[var(--primary)]">Personal Details</h2>
+            <form
+              className="grid grid-cols-1 md:grid-cols-2 gap-5"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setUpdateMsg("");
+                try {
+                  await updateUser({ fullName: name, email, phoneNumber: phone }).unwrap();
+                  toast.success("Profile updated successfully.");
+                } catch (err) {
+                  toast.error("Failed to update profile.");
+                }
+              }}
+            >
+              <div className="space-y-4">
+                <Input label="Full Name" value={name} onChange={(e) => setName(e.target.value)}  />
+                <Input label="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}  />
+              </div>
+              <div className="space-y-4 flex flex-col justify-between">
+                <Input label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)}  />
+                <Button variant="primary" type="submit" disabled={isUpdating} className="w-full bg-[var(--primary)] hover:bg-[var(--primary)]/90 rounded-xl py-3 font-bold text-[10px] uppercase tracking-widest transition-all">
+                  {isUpdating ? "Updating..." : "Save Changes"}
+                </Button>
+              </div>
+            </form>
+            {updateMsg && (
+              <div className={`mt-4 flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold ${updateMsg.includes("success") ? "text-[var(--primary)]" : "text-red-500"}`}>
+                {updateMsg.includes("success") ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
+                {updateMsg}
+              </div>
+            )}
+          </div>
+      <div className="mt-10 border w-full border-red-300 bg-red-50 rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 shadow-md">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 text-red-600 mr-0 sm:mr-6">
           <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z" />
@@ -135,69 +142,10 @@ function Profile() {
         </div>
       </div>
 
-      {/* Delete confirmation modal */}
-      {showDeleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-sm mx-2 relative">
-            <button
-              className="absolute top-2 right-2 text-gray-400 hover:text-gray-700"
-              onClick={() => {
-                setShowDeleteModal(false);
-                setDeletePassword("");
-                setDeleteError("");
-              }}
-              aria-label="Close"
-            >
-              &times;
-            </button>
-            <h2 className="text-lg font-bold text-red-700 mb-2">Confirm Account Deletion</h2>
-            <p className="text-sm text-gray-700 mb-4">Please enter your password to confirm account deletion. This action cannot be undone.</p>
-            <input
-              type="password"
-              className="w-full border border-gray-300 rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-red-300"
-              placeholder="Password"
-              value={deletePassword}
-              onChange={e => setDeletePassword(e.target.value)}
-              disabled={isDeleting}
-            />
-            {deleteError && <p className="text-sm text-red-600 mb-2">{deleteError}</p>}
-            <div className="flex gap-2 mt-2">
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setShowDeleteModal(false);
-                  setDeletePassword("");
-                  setDeleteError("");
-                }}
-                disabled={isDeleting}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="danger"
-                onClick={async () => {
-                  setIsDeleting(true);
-                  setDeleteError("");
-                  try {
-                    await deleteUser({ password: deletePassword }).unwrap();
-                    setShowDeleteModal(false);
-                    setDeletePassword("");
-                    setIsDeleting(false);
-                    localStorage.clear();
-                    navigate("/");
-                  } catch (err: any) {
-                    setDeleteError(err?.data?.message || "Incorrect password. Please try again.");
-                    setIsDeleting(false);
-                  }
-                }}
-                disabled={!deletePassword || isDeleting || isDeletingUser}
-              >
-                {isDeleting || isDeletingUser ? "Deleting..." : "Confirm Delete"}
-              </Button>
-            </div>
-          </div>
         </div>
-      )}
+      </div>
+
+ 
     </section>
   )
 }

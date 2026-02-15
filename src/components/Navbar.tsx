@@ -124,7 +124,7 @@ function Navbar() {
               My Orders
             </Link>
             <Link 
-              to="/owner/dashboard" 
+              to="/userDashboard" 
               className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
               onClick={() => setDropdownOpen(false)}
             >
@@ -133,7 +133,7 @@ function Navbar() {
             </Link>
                       <Link 
               to="/userDashboard" 
-              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+              className="flex hidden items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
               onClick={() => setDropdownOpen(false)}
             >
               <LayoutDashboard className="w-4 h-4" />

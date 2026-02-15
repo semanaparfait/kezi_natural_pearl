@@ -92,7 +92,7 @@ function Navbar() {
           )}
           </Link>
           <div className="relative">
-{currentUser ? (
+  {currentUser ? (
   <>
     <div
       className="flex items-center gap-2 bg-black/20 md:px-5 px-2 py-2 rounded-full cursor-pointer"
@@ -164,7 +164,7 @@ function Navbar() {
     )}
   </>
 ) : (
-  <Link to="/account">
+  <Link to="/account2">
     <button className='text-black bg-white rounded-md px-3 py-2'>Sign Up</button>
   </Link>
 )}

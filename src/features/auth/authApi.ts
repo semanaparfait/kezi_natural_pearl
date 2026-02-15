@@ -26,7 +26,7 @@ export const authSlice = baseApi.injectEndpoints({
         }),
         updateUser: builder.mutation< AuthResponse, Partial<RegisterData>>({
             query: (data) => ({
-                url: '/api/v1/user/me',
+                url: '/api/v1/user/update',
                 method: 'PATCH',
                 body: data,
             }),

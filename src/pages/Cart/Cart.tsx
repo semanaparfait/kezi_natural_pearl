@@ -208,7 +208,7 @@ function Cart() {
                   {shipping === 0 ? 'Free' : `${shipping} RWF`}
                 </span>
               </div>
-              <div className="flex justify-between text-sm font-light text-white/70 italic">
+              <div className="flex justify-between text-sm font-light text-white/70 italic hidden">
                 <span>Estimated Tax (5%)</span>
                 <span>{Math.floor(subtotal * 0.05).toLocaleString()} RWF</span>
               </div>

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { MoveLeft, Check, ShieldCheck, Truck, MapPin, LocateFixed } from "lucide-react";
 import Input from "@/components/Input";
 import { Country, State, City } from "country-state-city";
-import Billing from "@/pages/CheckOut/Billing";
 import Payment from "@/pages/CheckOut/Payment";
 
 function CheckOut() {
@@ -22,8 +21,7 @@ function CheckOut() {
 
     const steps = [
         { id: 1, title: "Shipping" },
-        { id: 2, title: "Billing" },
-        { id: 3, title: "Payment" },
+        { id: 2, title: "Payment" },
     ];
 
     const shippingOptions = [
@@ -56,23 +54,23 @@ function CheckOut() {
                 
                 <div className="lg:col-span-8 space-y-10">
                     {/* Progress Tracker */}
-                    <div className="flex items-center justify-between max-w-2xl mx-auto mb-16 relative px-4">
+                    <div className="flex items-center justify-center gap-8 md:gap-16 max-w-xl mx-auto mb-16 relative px-4">
                         {steps.map((step, idx) => {
                             const isCompleted = currentStep > step.id;
                             const isActive = currentStep === step.id;
                             return (
-                                <div key={step.id} className="flex flex-col items-center relative z-10">
-                                    <div className={`w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all duration-500 border-2
-                                        ${isActive ? "bg-(--primary) border-(--primary) text-white shadow-lg" 
-                                        : isCompleted ? "bg-[var(--gold-color)] border-[var(--gold-color)] text-white" 
-                                        : "bg-white border-gray-200 text-gray-300"}`}>
-                                        {isCompleted ? <Check size={18} /> : <span className="text-xs">{step.id}</span>}
+                                <div key={step.id} className="flex flex-col items-center relative">
+                                    <div className={`w-12 h-12 flex items-center justify-center rounded-full font-bold transition-all duration-500 border-2 shadow-md
+                                        ${isActive ? "bg-(--primary) border-(--primary) text-white shadow-[var(--primary)]/20" 
+                                        : isCompleted ? "bg-[var(--gold-color)] border-[var(--gold-color)] text-white shadow-[var(--gold-color)]/20" 
+                                        : "bg-white border-gray-300 text-gray-400"}`}>
+                                        {isCompleted ? <Check size={20} /> : <span className="text-sm">{idx + 1}</span>}
                                     </div>
-                                    <h2 className={`mt-3 text-[9px] uppercase tracking-[0.2em] font-black transition-colors ${isActive ? "text-(--primary)" : "text-gray-400"}`}>
+                                    <h2 className={`mt-4 text-[10px] uppercase tracking-[0.25em] font-black transition-colors whitespace-nowrap ${isActive ? "text-(--primary)" : "text-gray-400"}`}>
                                         {step.title}
                                     </h2>
                                     {idx !== steps.length - 1 && (
-                                        <div className="absolute top-5 left-full w-full h-[1px] bg-gray-200 -z-10 min-w-[80px] md:min-w-[150px]">
+                                        <div className="absolute top-6 left-[calc(100%+0.5rem)] w-[4rem] md:w-[8rem] h-[2px] bg-gray-200">
                                             <div className={`h-full bg-[var(--gold-color)] transition-all duration-700 ${isCompleted ? "w-full" : "w-0"}`} />
                                         </div>
                                     )}
@@ -168,14 +166,14 @@ function CheckOut() {
                             <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
                                 <button onClick={handleBack} className="text-gray-400 hover:text-(--primary) text-xs font-bold uppercase tracking-widest">Cancel</button>
                                 <button onClick={() => setCurrentStep(2)} className="px-12 py-4 rounded-full bg-(--primary) text-white text-[10px] uppercase tracking-widest font-bold shadow-xl hover:scale-105 active:scale-95 transition-all">
-                                    Continue to Billing
+                                    Continue to Payment
                                 </button>
                             </div>
                         </div>
                     )}
 
-                    {currentStep === 2 && <Billing setCurrentStep={setCurrentStep} />}
-                    {currentStep === 3 && <Payment setCurrentStep={setCurrentStep} />}
+
+                    {currentStep === 2 && <Payment setCurrentStep={setCurrentStep} />}
                 </div>
 
                 {/* Right Column: Order Summary */}

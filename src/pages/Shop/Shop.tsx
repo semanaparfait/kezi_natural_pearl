@@ -167,7 +167,7 @@ function Shop() {
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-12">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12">
         {currentProducts.reverse().map(product => {
           const isOutOfStock = product.stockQuantity === 0;
           return (
@@ -234,7 +234,8 @@ function Shop() {
                 </div>
                 <div className="mt-auto flex items-center gap-2 pt-1">
                   <button 
-                    
+
+    
                     className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
                       ${isOutOfStock 
                         ? 'bg-gray-100 text-gray-400 cursor-pointer' 

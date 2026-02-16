@@ -4,19 +4,15 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useGetCartItemsQuery, useAddToCartMutation, useRemoveFromCartMutation } from '@/features/cart/cartApi';
-import {useGetProductByIdQuery} from '@/features/products/productsApi'
 
 function Cart() {
   const token = localStorage.getItem('token');
   const [cart, setCart] = useState<any[]>([]);
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
   const { data: cartItems, isLoading, error, refetch } = useGetCartItemsQuery(undefined);
-  const { data: products } = useGetProductByIdQuery(undefined);
   const [updateCartItem] = useAddToCartMutation();
   const [removeCartItem] = useRemoveFromCartMutation();
 
-
-console.log('products:', products);
   useEffect(() => {
     if (cartItems?.items) {
       setCart(cartItems.items);
@@ -152,7 +148,7 @@ console.log('products:', products);
 
                   <div className="flex-1 flex flex-wrap items-center justify-between w-full">
                     <div className="flex flex-col space-y-2 text-center sm:text-left">
-                      <h2 className="text-sm text-green-600">{products?.stockQuantity}</h2>
+                      <h2 className="text-sm text-green-600">{item?.stockQuantity ?? ""}</h2>
                       <h3 className="text-xl font-serif text-[var(--primary)] italic leading-tight">{item.product}</h3>
                       <div className="flex items-center justify-center gap-4 bg-[var(--secondary-cream-white)] rounded-md px-4 py-2 border border-[var(--bolder-gray)]/20">
                         <button onClick={() => decrement(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">

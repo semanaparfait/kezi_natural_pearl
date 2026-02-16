@@ -49,11 +49,10 @@ export const authSlice = baseApi.injectEndpoints({
                 },
             }),
             }),
-        deleteUser: builder.mutation<void, { password: string }>({
-            query: ({ password }) => ({
-                url: '/api/v1/user/me',
-                method: 'DELETE',
-                body: { password },
+        deleteUser: builder.mutation<any, string>({
+            query: () => ({
+                url: '/api/v1/user/delete',
+                method: 'DELETE',           
             }),
             invalidatesTags: ['User'],
         }),

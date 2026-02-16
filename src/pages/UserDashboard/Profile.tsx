@@ -1,26 +1,63 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { Pen, ShieldAlert, Calendar, Mail, Phone, User, CheckCircle2, XCircle } from "lucide-react";
+import { Pen, Calendar, Mail,  CheckCircle2} from "lucide-react";
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import { toast } from "react-hot-toast";
 import { useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation } from "@/features/auth/authApi"
 
 function Profile() {
+  const navigate = useNavigate();
   const { data: currentUser, isLoading } = useGetCurrentUserQuery(undefined)
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
-  const [deleteUser, { isLoading: isDeletingUser }] = useDeleteUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
   
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [memberSince, setMemberSince] = useState("")
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deletePassword, setDeletePassword] = useState("");
-  const [deleteError, setDeleteError] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+
+
   const [updateMsg, setUpdateMsg] = useState("");
-  const navigate = useNavigate();
+
+const handleUpdateUser = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!currentUser) {
+    toast.error("User data not loaded yet.");
+    return;
+  }
+
+  try {
+    const updatedData: any = {};
+    const normalize = (value: string) => value.trim();
+
+    if (normalize(name) !== normalize(currentUser.fullName ?? "")) {
+      updatedData.fullName = normalize(name);
+    }
+
+    if (normalize(email) !== normalize(currentUser.email ?? "")) {
+      updatedData.email = normalize(email);
+    }
+
+    if (normalize(phone) !== normalize(currentUser.phoneNumber ?? "")) {
+      updatedData.phoneNumber = normalize(phone);
+    }
+
+    if (Object.keys(updatedData).length === 0) {
+      toast("No changes made");
+      return;
+    }
+
+    await updateUser(updatedData).unwrap();
+    toast.success("Profile updated successfully.");
+  } catch (err) {
+    toast.error("Failed to update profile.");
+  }
+};
+
+
+
 
   useEffect(() => {
     if (currentUser) {
@@ -36,16 +73,8 @@ function Profile() {
   }, [currentUser])
 
   const handleDeleteAccount = async () => {
-    if (!window.confirm("Are you sure you want to delete your account? This action is irreversible.")) return;
-    try {
-      await deleteUser({ password: deletePassword }).unwrap();
-      localStorage.removeItem('token');
-      navigate('/');
-    } catch (err) {
-      setDeleteError("Incorrect password. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
+    if (!window.confirm("Are you sure you want to delete your account? ")) return;
+
   };
 
 
@@ -92,16 +121,7 @@ function Profile() {
             <h2 className="text-lg font-serif italic mb-6 text-[var(--primary)]">Personal Details</h2>
             <form
               className="grid grid-cols-1 md:grid-cols-2 gap-5"
-              onSubmit={async (e) => {
-                e.preventDefault();
-                setUpdateMsg("");
-                try {
-                  await updateUser({ fullName: name, email, phoneNumber: phone }).unwrap();
-                  toast.success("Profile updated successfully.");
-                } catch (err) {
-                  toast.error("Failed to update profile.");
-                }
-              }}
+              onSubmit={handleUpdateUser}
             >
               <div className="space-y-4">
                 <Input label="Full Name" value={name} onChange={(e) => setName(e.target.value)}  />
@@ -114,12 +134,6 @@ function Profile() {
                 </Button>
               </div>
             </form>
-            {updateMsg && (
-              <div className={`mt-4 flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold ${updateMsg.includes("success") ? "text-[var(--primary)]" : "text-red-500"}`}>
-                {updateMsg.includes("success") ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
-                {updateMsg}
-              </div>
-            )}
           </div>
       <div className="mt-10 border w-full border-red-300 bg-red-50 rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 shadow-md">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 text-red-600 mr-0 sm:mr-6">
@@ -134,7 +148,7 @@ function Profile() {
           </p>
           <Button
             variant="danger"
-            onClick={() => setShowDeleteModal(true)}
+            onClick={handleDeleteAccount}
             className="w-full sm:w-auto"
           >
             Delete Account

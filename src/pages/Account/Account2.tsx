@@ -102,7 +102,8 @@ function Account2() {
           password: formData.password,
         }).unwrap();
           
-        toast.success('Account created successfully! Please log in.');
+        toast.success('Account created successfully! Please verify your email.');
+        localStorage.setItem('pendingEmail', formData.email);
         navigate("/verify-email");
       } catch (err: any) {
         console.error('Signup error:', err);

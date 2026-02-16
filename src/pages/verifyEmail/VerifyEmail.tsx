@@ -1,11 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useVerifyEmailQuery } from "@/features/verifyEmail/verifyEmailApi";
+import { useResendEmailMutation } from '@/features/ResendEmail/ResendEmail';
+import toast from "react-hot-toast";
+import { Mail } from "lucide-react";
 
 function VerifyEmail() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [resendAttempts, setResendAttempts] = useState(0);
+  const [resendCountdown, setResendCountdown] = useState(0);
 
   const {
     data,
@@ -17,9 +23,17 @@ function VerifyEmail() {
     { skip: !token }
   );
 
+  const [resendEmail, { isLoading: isResending }] = useResendEmailMutation();
+
+  useEffect(() => {
+    const email = localStorage.getItem("pendingEmail") || "";
+    setUserEmail(email);
+  }, []);
+
   useEffect(() => {
     if (isSuccess && data?.token) {
       localStorage.setItem("token", data.token);
+      localStorage.removeItem("pendingEmail");
 
       const timer = setTimeout(() => {
         navigate("/");
@@ -28,6 +42,31 @@ function VerifyEmail() {
       return () => clearTimeout(timer);
     }
   }, [isSuccess, data, navigate]);
+
+  useEffect(() => {
+    if (resendCountdown > 0) {
+      const timer = setTimeout(() => setResendCountdown(resendCountdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCountdown]);
+
+  const handleResendEmail = async () => {
+    if (!userEmail) {
+      toast.error("Email not found. Please sign up again.");
+      return;
+    }
+
+    try {
+      await resendEmail({ email: userEmail, token: token ?? "" }).unwrap();
+      toast.success("Verification email sent! Check your inbox.");
+      setResendAttempts(resendAttempts + 1);
+      setResendCountdown(60);
+    } catch (err: any) {
+      console.error("Resend error:", err);
+      const errorMsg = err?.data?.message || "Failed to resend email";
+      toast.error(errorMsg);
+    }
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -51,6 +90,15 @@ function VerifyEmail() {
         <h1 className="text-3xl font-bold text-gray-800 mb-3">
           Email Confirmation
         </h1>
+        {userEmail && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <Mail className="w-4 h-4 text-[var(--primary-color)]" />
+              <p className="text-sm text-gray-700 font-medium">Verification email sent to:</p>
+            </div>
+            <p className="text-[var(--primary-color)] font-semibold break-all text-center">{userEmail}</p>
+          </div>
+        )}
         {!token && (
           <p className="text-gray-600 mb-4 leading-relaxed">
             We’ve sent a confirmation link to your email address.
@@ -71,24 +119,37 @@ function VerifyEmail() {
           </p>
         )}
 
-        {/* Error */}
         {error && (
           <p className="text-red-600 mb-4 leading-relaxed">
             Verification failed. The link may be expired or already used.
           </p>
         )}
-
-        {/* Footer action */}
         {!isSuccess && (
-          <p className="text-sm text-gray-500 border-t pt-4">
-            Didn’t receive the email?
-            <a
-              href="/resend-confirmation"
-              className="ml-1 font-medium text-yellow-600 hover:underline"
+          <div className="border-t pt-4">
+            <p className="text-sm text-gray-600 mb-3">
+              Didn't receive the email?
+            </p>
+            <button
+              onClick={handleResendEmail}
+              disabled={isResending || resendCountdown > 0}
+              className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
+                resendCountdown > 0 || isResending
+                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                  : 'bg-[var(--primary-color)] text-white hover:bg-[var(--primary-color-hover)]'
+              }`}
             >
-              Resend confirmation
-            </a>
-          </p>
+              {isResending
+                ? 'Sending...'
+                : resendCountdown > 0
+                ? `Resend in ${resendCountdown}s`
+                : 'Resend Confirmation Email'}
+            </button>
+            {resendAttempts > 0 && (
+              <p className="text-xs text-gray-500 mt-2">
+                Email resent {resendAttempts} time{resendAttempts > 1 ? 's' : ''}
+              </p>
+            )}
+          </div>
         )}
       </div>
     </section>

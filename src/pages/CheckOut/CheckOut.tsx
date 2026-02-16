@@ -3,10 +3,12 @@ import { MoveLeft, Check, ShieldCheck, Truck, MapPin, LocateFixed } from "lucide
 import Input from "@/components/Input";
 import { Country, State, City } from "country-state-city";
 import Payment from "@/pages/CheckOut/Payment";
+import {useGetCartItemsQuery} from '@/features/cart/cartApi'
 
 function CheckOut() {
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedOption, setSelectedOption] = useState(1);
+    const { data: cartData } = useGetCartItemsQuery();
 
     const [country, setCountry] = useState("RW");
     const [state, setState] = useState("");
@@ -60,8 +62,8 @@ function CheckOut() {
                             const isActive = currentStep === step.id;
                             return (
                                 <div key={step.id} className="flex flex-col items-center relative">
-                                    <div className={`w-12 h-12 flex items-center justify-center rounded-full font-bold transition-all duration-500 border-2 shadow-md
-                                        ${isActive ? "bg-(--primary) border-(--primary) text-white shadow-[var(--primary)]/20" 
+                                    <div className={`w-12 h-12 flex items-center justify-center  rounded-full font-bold transition-all duration-500 border-2 shadow-md
+                                        ${isActive ? "bg-[var(--primary)] border-[var(--primary)] text-white shadow-[var(--primary)]/20" 
                                         : isCompleted ? "bg-[var(--gold-color)] border-[var(--gold-color)] text-white shadow-[var(--gold-color)]/20" 
                                         : "bg-white border-gray-300 text-gray-400"}`}>
                                         {isCompleted ? <Check size={20} /> : <span className="text-sm">{idx + 1}</span>}
@@ -70,7 +72,7 @@ function CheckOut() {
                                         {step.title}
                                     </h2>
                                     {idx !== steps.length - 1 && (
-                                        <div className="absolute top-6 left-[calc(100%+0.5rem)] w-[4rem] md:w-[8rem] h-[2px] bg-gray-200">
+                                        <div className="absolute  top-6 left-[calc(100%+0.5rem)] w-[4rem]  h-[2px] bg-gray-300">
                                             <div className={`h-full bg-[var(--gold-color)] transition-all duration-700 ${isCompleted ? "w-full" : "w-0"}`} />
                                         </div>
                                     )}
@@ -180,25 +182,47 @@ function CheckOut() {
                 <div className="lg:col-span-4">
                     <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-xl sticky top-10">
                         <h2 className="text-2xl font-serif italic text-(--primary) mb-8">Summary</h2>
-                        <div className="flex gap-4 items-center border-b border-gray-50 pb-8 mb-8">
-                            <div className="w-16 h-16 bg-gray-50 rounded-2xl overflow-hidden border border-gray-100">
-                                <img src="https://i.pinimg.com/1200x/35/7e/ec/357eec5d843c708a7ef5b736966c1047.jpg" className="w-full h-full object-cover" alt="Product" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-black text-(--primary) uppercase tracking-tight">Rosehip Serum</p>
-                                <p className="text-xs text-gray-400 italic">Qty: 1</p>
-                            </div>
+                        
+                        <div className="space-y-4 mb-8 max-h-[300px] overflow-y-auto">
+                            {cartData?.items && cartData.items.length > 0 ? (
+                                cartData.items.map((item) => (
+                                    <div key={item.id} className="flex gap-4 items-center pb-4 border-b border-gray-50 last:border-0">
+                                        <div className="w-16 h-16 bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shrink-0">
+                                            <img src={item.image} className="w-full h-full object-cover" alt={item.product} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-black text-(--primary) uppercase tracking-tight truncate">{item.product}</p>
+                                            <p className="text-xs text-gray-400 italic">Qty: {item.quantity}</p>
+                                            <p className="text-xs font-bold text-gray-600 mt-1">{item.totalPrice.toLocaleString()} RWF</p>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-sm text-gray-400 italic text-center py-4">Your cart is empty</p>
+                            )}
                         </div>
-                        <div className="space-y-4 text-sm mb-8">
-                            <div className="flex justify-between"><span>Subtotal</span><span className="font-bold text-(--primary)">1,000 RWF</span></div>
+                        
+                        <div className="space-y-4 text-sm mb-8 pt-4 border-t border-gray-100">
+                            <div className="flex justify-between">
+                                <span>Subtotal</span>
+                                <span className="font-bold text-(--primary)">
+                                    {cartData?.items ? cartData.items.reduce((sum, item) => sum + item.totalPrice, 0).toLocaleString() : 0} RWF
+                                </span>
+                            </div>
                             <div className="flex justify-between items-center italic text-gray-500">
                                 <span className="flex items-center gap-2"><Truck size={14}/> Shipping</span>
-                                <span className="text-[var(--gold-color)] font-black text-[10px] bg-[var(--gold-color)]/10 px-2 py-1 rounded">Free</span>
+                                <span className="text-[var(--gold-color)] font-black text-[10px] bg-[var(--gold-color)]/10 px-2 py-1 rounded">
+                                    {selectedOption === 1 ? 'Free' : 'Free'}
+                                </span>
                             </div>
                             <div className="flex justify-between font-serif italic text-(--primary) pt-6 border-t text-2xl">
-                                <span>Total</span><span className="font-bold not-italic">1,000 RWF</span>
+                                <span>Total</span>
+                                <span className="font-bold not-italic">
+                                    {cartData?.items ? cartData.items.reduce((sum, item) => sum + item.totalPrice, 0).toLocaleString() : 0} RWF
+                                </span>
                             </div>
                         </div>
+                        
                         <div className="p-5 bg-gray-50 rounded-[2rem] flex items-center gap-4">
                             <ShieldCheck size={24} className="text-[var(--gold-color)]" />
                             <p className="text-[9px] uppercase tracking-widest font-black text-gray-400">Secure Checkout Guaranteed</p>

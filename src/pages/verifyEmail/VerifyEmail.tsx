@@ -5,7 +5,6 @@ import { useVerifyEmailQuery } from "@/features/verifyEmail/verifyEmailApi";
 function VerifyEmail() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const id = searchParams.get("id");
   const navigate = useNavigate();
 
   const {
@@ -14,7 +13,7 @@ function VerifyEmail() {
     isSuccess,
     isLoading,
   } = useVerifyEmailQuery(
-    { id:id ?? "", token: token ?? "" },
+    { token: token ?? "" },
     { skip: !token }
   );
 

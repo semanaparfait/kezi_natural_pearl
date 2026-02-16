@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MoveLeft, User, ShoppingBag, Eye, Mail, Check, AlertCircle } from "lucide-react";
+import { MoveLeft, User, ShoppingBag, Eye, Mail, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
@@ -133,9 +133,6 @@ function Account2() {
       toast.error(errorMsg);
     }
   };
-
-
-  const isSubmitting = action === 'signup' ? isRegisterLoading : isLoginLoading;
 
   return (
 

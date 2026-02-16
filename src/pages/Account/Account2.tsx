@@ -8,7 +8,7 @@ import {useLoginMutation,useRegisterMutation} from '@/features/auth/authApi'
 function Account2() {
   const navigate = useNavigate();
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
-    const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
+  const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
   const [authType, setAuthType] = useState("customer");
   const [action, setAction] = useState<'signup' | 'signin'>('signin');
   const [formData,setFormData] = useState({
@@ -66,6 +66,8 @@ function Account2() {
     }
   };
 
+
+  const isSubmitting = action === 'signup' ? isRegisterLoading : isLoginLoading;
 
   return (
 
@@ -153,8 +155,9 @@ function Account2() {
                   
                   <Button 
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full py-3 bg-emerald-900 text-white font-bold text-[9px] uppercase tracking-widest rounded-lg shadow-lg">
-                    {action === 'signup' ? 'Create Account' : 'Login'}
+                    {isSubmitting ? 'Please wait...' : action === 'signup' ? 'Create Account' : 'Login'}
                   </Button>
                 </form>
               </div>

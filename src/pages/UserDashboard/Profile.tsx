@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom";
-import { Pen, Calendar, Mail,  CheckCircle2} from "lucide-react";
+import { Pen, Calendar, Mail } from "lucide-react";
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import { toast } from "react-hot-toast";
-import { useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation } from "@/features/auth/authApi"
+import { useGetCurrentUserQuery, useUpdateUserMutation } from "@/features/auth/authApi"
 
 function Profile() {
-  const navigate = useNavigate();
   const { data: currentUser, isLoading } = useGetCurrentUserQuery(undefined)
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
-  const [deleteUser] = useDeleteUserMutation();
   
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [memberSince, setMemberSince] = useState("")
-
-
-  const [updateMsg, setUpdateMsg] = useState("");
 
 const handleUpdateUser = async (e: React.FormEvent) => {
   e.preventDefault();

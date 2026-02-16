@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useGetCartItemsQuery, useAddToCartMutation, useRemoveFromCartMutation } from '@/features/cart/cartApi';
+import {useGetProductByIdQuery} from '@/features/products/productsApi'
 
 function Cart() {
   const token = localStorage.getItem('token');
+  const [cart, setCart] = useState<any[]>([]);
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
   const { data: cartItems, isLoading, error, refetch } = useGetCartItemsQuery(undefined);
+  const { data: products } = useGetProductByIdQuery(undefined);
   const [updateCartItem] = useAddToCartMutation();
   const [removeCartItem] = useRemoveFromCartMutation();
 
 
-  const [cart, setCart] = useState<any[]>([]);
-
+console.log('products:', products);
   useEffect(() => {
     if (cartItems?.items) {
       setCart(cartItems.items);
@@ -136,8 +138,8 @@ function Cart() {
         <div className="lg:col-span-8 space-y-8">
           {cart.map(item => (
             <div key={item.id} className="bg-white rounded-[2rem] shadow-sm border border-[var(--bolder-gray)]/30 overflow-hidden">
-              <div className="p-8 space-y-8">
-                <div className="flex flex-col sm:flex-row gap-8 items-center py-4 border-b border-gray-50 last:border-0">
+              <div className="px-5 py-4 space-y-2">
+                <div className="flex flex-col  sm:flex-row gap-8 items-center  border-b border-gray-50 last:border-0">
                   <div className="relative group shrink-0">
                     <div className="w-32 h-32 rounded-2xl overflow-hidden border border-[var(--bolder-gray)]/20">
                       <img
@@ -150,6 +152,7 @@ function Cart() {
 
                   <div className="flex-1 flex flex-wrap items-center justify-between w-full">
                     <div className="flex flex-col space-y-2 text-center sm:text-left">
+                      <h2 className="text-sm text-green-600">{products?.stockQuantity}</h2>
                       <h3 className="text-xl font-serif text-[var(--primary)] italic leading-tight">{item.product}</h3>
                       <div className="flex items-center justify-center gap-4 bg-[var(--secondary-cream-white)] rounded-md px-4 py-2 border border-[var(--bolder-gray)]/20">
                         <button onClick={() => decrement(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">

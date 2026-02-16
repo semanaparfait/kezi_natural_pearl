@@ -14,6 +14,8 @@ interface PaymentMethod {
   isDefault: boolean;
 }
 
+type PaymentMethodForm = Omit<PaymentMethod, "id">;
+
 function PaymentMethods() {
   const [payments, setPayments] = useState<PaymentMethod[]>([
     {
@@ -32,13 +34,13 @@ function PaymentMethods() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [updateMsg, setUpdateMsg] = useState("");
   const [showCVV, setShowCVV] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<PaymentMethodForm>({
     cardholderName: "",
     cardNumber: "",
     expiryMonth: "",
     expiryYear: "",
     cvv: "",
-    cardType: "visa" as const,
+    cardType: "visa",
     isDefault: false,
   });
 
@@ -122,7 +124,15 @@ function PaymentMethods() {
   };
 
   const handleEdit = (payment: PaymentMethod) => {
-    setFormData(payment);
+    setFormData({
+      cardholderName: payment.cardholderName,
+      cardNumber: payment.cardNumber,
+      expiryMonth: payment.expiryMonth,
+      expiryYear: payment.expiryYear,
+      cvv: payment.cvv,
+      cardType: payment.cardType,
+      isDefault: payment.isDefault,
+    });
     setEditingId(payment.id);
     setShowForm(true);
   };
@@ -225,7 +235,7 @@ function PaymentMethods() {
                     <input
                       type={showCVV ? "text" : "password"}
                       placeholder="123"
-                      maxLength="4"
+                      maxLength={4}
                       value={formData.cvv}
                       onChange={(e) => handleInputChange("cvv", e.target.value)}
                       className="w-full px-4 py-2.5 border border-[var(--bolder-gray)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 transition-all"

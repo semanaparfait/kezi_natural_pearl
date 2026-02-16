@@ -57,7 +57,7 @@ function VerifyEmail() {
     }
 
     try {
-      await resendEmail({ email: userEmail, token: token ?? "" }).unwrap();
+      await resendEmail({ email: userEmail }).unwrap();
       toast.success("Verification email sent! Check your inbox.");
       setResendAttempts(resendAttempts + 1);
       setResendCountdown(60);

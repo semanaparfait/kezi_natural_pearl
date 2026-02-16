@@ -1,24 +1,98 @@
 import { useState } from "react";
-import { MoveLeft, User, ShoppingBag,Eye } from "lucide-react";
+import { MoveLeft, User, ShoppingBag, Eye, Mail, Check, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import toast from "react-hot-toast";
 import {useLoginMutation,useRegisterMutation} from '@/features/auth/authApi'
+
 function Account2() {
   const navigate = useNavigate();
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
   const [authType, setAuthType] = useState("customer");
-  const [action, setAction] = useState<'signup' | 'signin'>('signin');
-  const [formData,setFormData] = useState({
+  const [action, setAction] = useState<'signup' | 'signin' | 'forgotPassword'>('signin');
+  const [forgotPasswordStep, setForgotPasswordStep] = useState<'email' | 'verify' | 'reset'>('email');
+  const [formData, setFormData] = useState({
     email: '',
     phoneNumber: '',
     password: '',
-  })  
+    newPassword: '',
+    confirmPassword: '',
+  });
+  const [verificationCode, setVerificationCode] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);  
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (action === 'forgotPassword') {
+      if (forgotPasswordStep === 'email') {
+        // Send verification email
+        setIsVerifying(true);
+        try {
+          // Mock API call - replace with actual endpoint
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          toast.success('Verification code sent to your email!');
+          setForgotPasswordStep('verify');
+        } catch (err) {
+          toast.error('Failed to send verification code');
+        } finally {
+          setIsVerifying(false);
+        }
+        return;
+      }
+      
+      if (forgotPasswordStep === 'verify') {
+        // Verify code
+        setIsVerifying(true);
+        try {
+          // Mock verification - replace with actual endpoint
+          if (!verificationCode || verificationCode.length < 4) {
+            toast.error('Please enter a valid verification code');
+            setIsVerifying(false);
+            return;
+          }
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          toast.success('Email verified successfully!');
+          setForgotPasswordStep('reset');
+        } catch (err) {
+          toast.error('Invalid verification code');
+        } finally {
+          setIsVerifying(false);
+        }
+        return;
+      }
+      
+      if (forgotPasswordStep === 'reset') {
+        // Reset password
+        if (formData.newPassword !== formData.confirmPassword) {
+          toast.error('Passwords do not match');
+          return;
+        }
+        if (formData.newPassword.length < 6) {
+          toast.error('Password must be at least 6 characters');
+          return;
+        }
+        
+        setIsResettingPassword(true);
+        try {
+          // Mock API call - replace with actual endpoint
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          toast.success('Password reset successfully!');
+          setAction('signin');
+          setForgotPasswordStep('email');
+          setFormData({ email: '', phoneNumber: '', password: '', newPassword: '', confirmPassword: '' });
+          setVerificationCode('');
+        } catch (err) {
+          toast.error('Failed to reset password');
+        } finally {
+          setIsResettingPassword(false);
+        }
+        return;
+      }
+    }
 
     if (action === 'signup') {
       try {
@@ -30,13 +104,6 @@ function Account2() {
           
         toast.success('Account created successfully! Please log in.');
         navigate("/verify-email");
-
-        // setAction('signin');
-        // setFormData({
-        //   email: formData.email,
-        //   password: '',
-        //   phoneNumber: ''
-        // });
       } catch (err: any) {
         console.error('Signup error:', err);
         const errorMsg = err?.data?.message || 'Signup failed';
@@ -44,6 +111,7 @@ function Account2() {
       }
       return;
     }
+    
     try {
       const response = await login({
          email: formData.email,
@@ -127,39 +195,153 @@ function Account2() {
 
             {authType === 'customer' ? (
               <div className="space-y-4">
-                <div className="flex justify-center gap-1 bg-gray-50 w-fit mx-auto p-1 rounded-full border border-gray-400">
-                  <button onClick={() => setAction('signin')} className={`px-4 py-1.5 rounded-full text-[8px] font-bold uppercase ${action === 'signin' ? 'bg-emerald-900 text-white' : 'text-gray-400'}`}>Sign In</button>
-                  <button onClick={() => setAction('signup')} className={`px-4 py-1.5 rounded-full text-[8px] font-bold uppercase ${action === 'signup' ? 'bg-emerald-900 text-white' : 'text-gray-400'}`}>Sign Up</button>
-                </div>
+                {action === 'forgotPassword' ? (
+                  // Forgot Password Form
+                  <div className="space-y-4">
+                    <button 
+                      onClick={() => {
+                        setAction('signin');
+                        setForgotPasswordStep('email');
+                        setVerificationCode('');
+                      }}
+                      className="text-[9px] font-bold uppercase tracking-widest text-emerald-900 hover:text-emerald-700 mb-4"
+                    >
+                      ← Back to Sign In
+                    </button>
 
-                <form className="space-y-3" onSubmit={handleSubmit}>
-                  <Input
-                   label="Email"
-                   type="email"
-                   placeholder="email@example.com"
-                    fullWidth 
-                   value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}/>
-                  {action === 'signup' && 
-                  <Input label="Phone" 
-                  type="tel" placeholder="+250..."
-                   fullWidth  value={formData.phoneNumber} 
-                   onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})} />}
-                  <Input label="Password"
-                   type="password"
-                    placeholder="••••••••"
-                     fullWidth 
-                      rightIcon={<Eye size={17}  />} 
-                      value={formData.password}
-                       onChange={(e) => setFormData({...formData, password: e.target.value})} />
-                  
-                  <Button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 bg-emerald-900 text-white font-bold text-[9px] uppercase tracking-widest rounded-lg shadow-lg">
-                    {isSubmitting ? 'Please wait...' : action === 'signup' ? 'Create Account' : 'Login'}
-                  </Button>
-                </form>
+                    {forgotPasswordStep === 'email' && (
+                      <form className="space-y-4" onSubmit={handleSubmit}>
+                        <div>
+                          <h4 className="text-lg font-serif italic text-gray-900 mb-3">Reset Your Password</h4>
+                          <p className="text-xs text-gray-500 mb-4 hidden">Enter your email to receive a verification code</p>
+                        </div>
+                        <Input
+                          label="Email Address"
+                          type="email"
+                          placeholder="email@example.com"
+                          fullWidth
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        />
+                        <Button
+                          type="submit"
+                          disabled={isVerifying}
+                          className="w-full py-3 bg-emerald-900 text-white font-bold text-[9px] uppercase tracking-widest rounded-lg shadow-lg"
+                        >
+                          {isVerifying ? 'Sending...' : 'Send Verification Code'}
+                        </Button>
+                      </form>
+                    )}
+
+                    {forgotPasswordStep === 'verify' && (
+                      <form className="space-y-4" onSubmit={handleSubmit}>
+                        <div>
+                          <h4 className="text-lg font-serif italic text-gray-900 mb-2">Verify Your Email</h4>
+                          <p className="text-xs text-gray-500 mb-4">A verification code has been sent to {formData.email}</p>
+                        </div>
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex gap-2 mb-3">
+                          <Mail size={16} className="text-blue-600 shrink-0 mt-0.5" />
+                          <p className="text-[9px] text-blue-600 font-bold">Check your email inbox and spam folder</p>
+                        </div>
+                        <Input
+                          label="Verification Code"
+                          type="text"
+                          placeholder="Enter 4-6 digit code"
+                          fullWidth
+                          value={verificationCode}
+                          onChange={(e) => setVerificationCode(e.target.value)}
+                        />
+                        <Button
+                          type="submit"
+                          disabled={isVerifying}
+                          className="w-full py-3 bg-emerald-900 text-white font-bold text-[9px] uppercase tracking-widest rounded-lg shadow-lg"
+                        >
+                          {isVerifying ? 'Verifying...' : 'Verify Code'}
+                        </Button>
+                      </form>
+                    )}
+
+                    {forgotPasswordStep === 'reset' && (
+                      <form className="space-y-4" onSubmit={handleSubmit}>
+                        <div>
+                          <h4 className="text-lg font-serif italic text-gray-900 mb-2">Create New Password</h4>
+                          <div className="flex items-center gap-2 text-green-600 text-[9px] font-bold mb-4">
+                            <Check size={14} /> Email verified successfully
+                          </div>
+                        </div>
+                        <Input
+                          label="New Password"
+                          type="password"
+                          placeholder="••••••••"
+                          fullWidth
+                          rightIcon={<Eye size={17} />}
+                          value={formData.newPassword}
+                          onChange={(e) => setFormData({...formData, newPassword: e.target.value})}
+                        />
+                        <Input
+                          label="Confirm Password"
+                          type="password"
+                          placeholder="••••••••"
+                          fullWidth
+                          rightIcon={<Eye size={17} />}
+                          value={formData.confirmPassword}
+                          onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                        />
+                        <Button
+                          type="submit"
+                          disabled={isResettingPassword}
+                          className="w-full py-3 bg-emerald-900 text-white font-bold text-[9px] uppercase tracking-widest rounded-lg shadow-lg"
+                        >
+                          {isResettingPassword ? 'Resetting...' : 'Reset Password'}
+                        </Button>
+                      </form>
+                    )}
+                  </div>
+                ) : (
+                  // Sign In / Sign Up Form
+                  <>
+                    <div className="flex justify-center gap-1 bg-gray-50 w-fit mx-auto p-1 rounded-full border border-gray-400">
+                      <button onClick={() => setAction('signin')} className={`px-4 py-1.5 rounded-full text-[8px] font-bold uppercase ${action === 'signin' ? 'bg-emerald-900 text-white' : 'text-gray-400'}`}>Sign In</button>
+                      <button onClick={() => setAction('signup')} className={`px-4 py-1.5 rounded-full text-[8px] font-bold uppercase ${action === 'signup' ? 'bg-emerald-900 text-white' : 'text-gray-400'}`}>Sign Up</button>
+                    </div>
+
+                    <form className="space-y-3" onSubmit={handleSubmit}>
+                      <Input
+                       label="Email"
+                       type="email"
+                       placeholder="email@example.com"
+                        fullWidth 
+                       value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}/>
+                      {action === 'signup' && 
+                      <Input label="Phone" 
+                      type="tel" placeholder="+250..."
+                       fullWidth  value={formData.phoneNumber} 
+                       onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})} />}
+                      <Input label="Password"
+                       type="password"
+                        placeholder="••••••••"
+                         fullWidth 
+                          rightIcon={<Eye size={17}  />} 
+                          value={formData.password}
+                           onChange={(e) => setFormData({...formData, password: e.target.value})} />
+                        {action === 'signin' && (
+                        <button 
+                          type="button"
+                          onClick={() => setAction('forgotPassword')}
+                          className="text-sm text-(--primary) cursor-pointer hover:underline text-right w-full">
+                          Forgot your password?
+                        </button>
+                        )}
+                      <Button 
+                      type="submit"
+                      disabled={isLoginLoading || isRegisterLoading}
+                      className="w-full py-3 bg-emerald-900 text-white font-bold text-[9px] uppercase tracking-widest rounded-lg shadow-lg">
+                        {isLoginLoading || isRegisterLoading ? 'Please wait...' : action === 'signup' ? 'Create Account' : 'Login'}
+                      </Button>
+                    </form>
+                  </>
+                )}
               </div>
             ) : (
               <div className="text-center py-4 space-y-4">

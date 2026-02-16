@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useVerifyEmailQuery } from "@/features/verifyEmail/verifyEmailApi"; 
+import { useNavigate } from "react-router-dom";
+import { useVerifyEmailQuery } from "@/features/verifyEmail/verifyEmailApi";
+import { useParams } from "react-router-dom"; 
 
 function VerifySuccess() {
+  const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token") ?? "";
-  const id = searchParams.get("id") ?? "";
   const { data, isLoading, isError, isSuccess } = useVerifyEmailQuery(
-    { id,token }, 
+    { token: token! }, 
     { skip: !token } 
   );
 

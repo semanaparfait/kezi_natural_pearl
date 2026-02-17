@@ -95,8 +95,20 @@ function CategoryList() {
             key={category.id}
             className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
           >
-            <div className="w-20 h-20 rounded-full bg-(--primary)/10 flex items-center justify-center">
-              <img src={category.image} alt={category.name} className="w-20 h-20 object-cover rounded-full" />
+            <div className="flex-shrink-0">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--primary)]/20 to-[var(--gold-color)]/10 flex items-center justify-center border-2 border-[var(--primary)]/20 shadow-md overflow-hidden group hover:shadow-lg transition-all duration-300">
+                {category.image ? (
+                  <img 
+                    src={category.image} 
+                    alt={category.name} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" 
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--primary)] to-[var(--gold-color)] text-white text-xs font-bold">
+                    {category.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div>
@@ -161,8 +173,9 @@ function CategoryList() {
                 value={editFormData.name}
                 onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
               />
-              <Input
-                label="Description"
+              <textarea
+                rows={5}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-(--primary) focus:outline-none text-sm"
                 placeholder="Category Description"
                 value={editFormData.description}
                 onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}

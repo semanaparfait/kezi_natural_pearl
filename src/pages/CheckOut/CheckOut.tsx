@@ -14,7 +14,7 @@ function CheckOut() {
     const [showNewAddressForm, setShowNewAddressForm] = useState(false);
 
     const { data: cartData } = useGetCartItemsQuery();
-    const { data: getAddresses, isLoading: isLoadingAddresses } = useGetAddressesQuery();
+    const { data: getAddresses } = useGetAddressesQuery();
     const [addAddress, { isLoading: isSending }] = useAddAddressMutation();
     const [deleteAddress, { isLoading: isDeleting }] = useDeleteAddressMutation();
 

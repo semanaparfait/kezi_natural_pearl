@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://kezi-pearl-production.up.railway.app',
-  // credentials: "include", 
+  credentials: "include", 
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
     if (token) {

@@ -23,7 +23,10 @@ export const cartApi = baseApi.injectEndpoints({
             }),
 
         getCartItems: build.query<CartItemResponse, void>({
-            query: () => '/api/v1/cart',
+            query: () =>({
+                url:'/api/v1/cart',
+                method: 'GET',
+            }) ,
             
             providesTags: ['Cart'],
         }),

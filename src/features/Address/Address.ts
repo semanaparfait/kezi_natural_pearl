@@ -16,7 +16,18 @@ export const addressApi = baseApi.injectEndpoints({
             }),
             providesTags: ['Addresses'],
         }),
+        deleteAddress: build.mutation<{ success: boolean; message: string }, string>({
+            query: (addressId) => ({
+                url: `/api/v1/address/`,
+                method: 'DELETE',
+                body: [
+                    addressId,
+                ],
+
+            }),
+            invalidatesTags: ['Addresses'],
+        }),
     }),
 });
 
-export const  {useAddAddressMutation, useGetAddressesQuery} = addressApi;
+export const  {useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation} = addressApi;

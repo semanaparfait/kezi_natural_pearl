@@ -26,7 +26,10 @@ function Shop() {
   
   const productsList = products ?? [];
   // const categories = ["All", ...Array.from(new Set(productsList.map(p => p.category)))].filter(Boolean);
-  const filtered = productsList.filter(p => selectedCategory === "All" || p.category === selectedCategory);
+  const filtered = productsList.filter(
+  p => selectedCategory === "All" || p.category?.name === selectedCategory
+);
+
   const sorted = [...filtered].sort((a, b) => sort === "asc" ? Number(a.price) - Number(b.price) : Number(b.price) - Number(a.price));
 
   const pageCount = Math.ceil(sorted.length / productsPerPage);
@@ -91,7 +94,7 @@ function Shop() {
             </span>
           </div>
           <span className="text-[10px] font-bold text-gray-300 group-hover:text-[var(--gold-color)]">
-            {productsList.filter(p => p.category === category.name || category.name === "All").length}
+            {productsList.filter(p => category.name === "All" || p.category?.name === category.name).length}
           </span>
         </label>
       ))}
@@ -210,7 +213,8 @@ function Shop() {
               <div className="mt-3 flex flex-col flex-1 px-1">
                 <div className="mb-2">
                   <div className="flex items-center justify-between mb-0.5">
-                    <p className="text-[9px] uppercase tracking-widest text-[var(--gold-color)] font-bold">{product.category}</p>
+                    {/* <p className="text-[9px] uppercase tracking-widest text-[var(--gold-color)] font-bold">{product.category?.name}
+</p> */}
                     <div className="flex items-center gap-1.5">
                       <span className={`w-1.5 h-1.5 rounded-full ${isOutOfStock ? 'bg-gray-300' : 'bg-[var(--success-green)] animate-pulse'}`} />
                       <span className="text-[8px] font-bold uppercase tracking-tighter text-gray-500">
@@ -234,8 +238,6 @@ function Shop() {
                 </div>
                 <div className="mt-auto flex items-center gap-2 pt-1">
                   <button 
-
-    
                     className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
                       ${isOutOfStock 
                         ? 'bg-gray-100 text-gray-400 cursor-pointer' 

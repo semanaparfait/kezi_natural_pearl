@@ -89,19 +89,19 @@ function CategoryList() {
         <span className="text-sm text-gray-500">{categories?.length || 0} total</span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2  gap-4">
         {categories?.map((category) => (
           <div
             key={category.id}
             className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
           >
-            <div className="w-14 h-14 rounded-full bg-(--primary)/10 flex items-center justify-center">
-              <img src={category.image} alt={category.name} className="w-13 h-13 object-cover rounded-full" />
+            <div className="w-20 h-20 rounded-full bg-(--primary)/10 flex items-center justify-center">
+              <img src={category.image} alt={category.name} className="w-20 h-20 object-cover rounded-full" />
             </div>
 
             <div>
               <p className="font-medium text-gray-800">{category.name}</p>
-              <p className="text-xs text-gray-500">{category.description}</p>
+              <p className="text-xs text-gray-500">{category.description.slice(0, 100)}</p>
             </div>
 
             <div className="flex ml-auto gap-2">

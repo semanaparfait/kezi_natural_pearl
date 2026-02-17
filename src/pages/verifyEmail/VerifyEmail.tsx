@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useVerifyEmailQuery } from "@/features/verifyEmail/verifyEmailApi";
 import { useResendEmailMutation } from '@/features/ResendEmail/ResendEmail';
 import toast from "react-hot-toast";
-import { Mail } from "lucide-react";
+import { Mail,MoveLeft } from "lucide-react";
 
 function VerifyEmail() {
   const [searchParams] = useSearchParams();
@@ -69,6 +69,15 @@ function VerifyEmail() {
   };
 
   return (
+    <main>
+
+              <button
+                onClick={() => navigate("/account2")}
+          className="group flex items-center gap-2 mt-10 pl-10 text-[10px] uppercase tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all"
+        >
+          <MoveLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+          Back to Account
+        </button>
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md w-full bg-white border border-gray-200 rounded-2xl shadow-lg p-8 text-center">
         <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
@@ -153,6 +162,7 @@ function VerifyEmail() {
         )}
       </div>
     </section>
+    </main>
   );
 }
 

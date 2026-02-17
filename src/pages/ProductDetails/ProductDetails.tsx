@@ -35,7 +35,7 @@ useEffect(() => {
       <section className="min-h-screen bg-[var(--secondary-cream-white)] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary)] mx-auto"></div>
-          <p className="mt-4 text-gray-500">Loading your cart...</p>
+          <p className="mt-4 text-gray-500">Loading your product detail...</p>
         </div>
       </section>
     );
@@ -59,7 +59,11 @@ useEffect(() => {
 
 
 
-const relatedProducts = allProducts?.filter(p => p.category === products.category && p.id !== products.id).slice(0, 8);
+const relatedProducts = allProducts?.filter(p => {
+  const productCategory = typeof p.category === 'object' ? p.category?.name : p.category;
+  const currentCategory = typeof products.category === 'object' ? products.category?.name : products.category;
+  return productCategory === currentCategory && p.id !== products.id;
+}).slice(0, 8);
 
 
 // console.log(products);
@@ -115,7 +119,7 @@ const handleAddRelatedToCart = async (product: any) => {
                 <div className="relative text-center text-white z-10">
                     <h2 className="text-xl md:text-2xl font-serif tracking-widest uppercase mb-1">Face Care</h2>
                     <div className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-tighter opacity-80">
-                        <span>Shop</span> <ChevronRight size={10} /> <span className="font-bold text-[var(--accent-color)]">{products?.category}</span>
+                        <span>Shop</span> <ChevronRight size={10} /> <span className="font-bold text-[var(--accent-color)]">{products.category.name}</span>
                     </div>
                 </div>
             </div>

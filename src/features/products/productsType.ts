@@ -16,7 +16,10 @@ export interface ProductTypeResponse {
   images: string[];
   name: string;
   description: string;
-  category:string;
+  category: {
+    name: string;
+    image:string;
+  };
   price: number;
   stockQuantity: number;
   ingredients: string;

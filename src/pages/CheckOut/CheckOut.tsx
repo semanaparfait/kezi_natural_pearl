@@ -5,7 +5,7 @@ import { Country, State, City } from "country-state-city";
 import Payment from "@/pages/CheckOut/Payment";
 import { useGetCartItemsQuery } from '@/features/cart/cartApi'
 import { toast } from "react-hot-toast";
-import { useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation } from '@/features/Address/Address'
+import { useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation,useSetDefaultAddressMutation } from '@/features/Address/Address'
 
 function CheckOut() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -17,7 +17,7 @@ function CheckOut() {
     const { data: getAddresses } = useGetAddressesQuery();
     const [addAddress, { isLoading: isSending }] = useAddAddressMutation();
     const [deleteAddress, { isLoading: isDeleting }] = useDeleteAddressMutation();
-
+    const [setDefaultAddress, { isLoading: isSettingDefault }] = useSetDefaultAddressMutation();
     const [country, setCountry] = useState("RW");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
@@ -185,8 +185,19 @@ function CheckOut() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             {getAddresses?.map((address: any) => {
                                                 const isSelected = selectedAddressId === address.id;
+                                                
+                                                const handleSelectAddress = async (addressId: string) => {
+                                                    setSelectedAddressId(addressId);
+                                                    try {
+                                                        await setDefaultAddress(addressId).unwrap();
+                                                        toast.success("Address set as default!");
+                                                    } catch (error: any) {
+                                                        toast.error(error?.data?.message || "Failed to set default address");
+                                                    }
+                                                };
+                                                
                                                 return (
-                                                    <div key={address.id} onClick={() => setSelectedAddressId(address.id)}
+                                                    <div key={address.id} onClick={() => handleSelectAddress(address.id)}
                                                         className={`group relative cursor-pointer rounded-[2rem] p-8 transition-all duration-500 border-2 
                                                         ${isSelected ? "border-(--primary) bg-[var(--secondary-cream-white)] shadow-2xl scale-[1.02]" 
                                                         : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-md"}`}>

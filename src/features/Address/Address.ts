@@ -27,7 +27,17 @@ export const addressApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['Addresses'],
         }),
+        setDefaultAddress: build.mutation<{ success: boolean; message: string }, string>({
+            query: (addressId) => ({
+                url: `/api/v1/address/${addressId}/default`,
+                method: 'POST',
+                body: {
+                    addressId,
+                },
+            }),
+            invalidatesTags: ['Addresses'],
+        }),
     }),
 });
 
-export const  {useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation} = addressApi;
+export const  {useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation, useSetDefaultAddressMutation} = addressApi;

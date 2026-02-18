@@ -18,6 +18,7 @@ import CheckOut from "@/pages/CheckOut/CheckOut";
 import ScrollToTop from "./components/ScrollToTop";
 import Account1 from '@/pages/Account/Account1'
 import Account2 from '@/pages/Account/Account2'
+import Community from "@/pages/Community/Community";
 function App() {
 
 
@@ -34,6 +35,7 @@ function App() {
     <Route path="/account1" element={<Account1 />} />
     <Route path="/account2" element={<Account2 />} />
     <Route path="/about" element={<About />} />
+    <Route path="/community" element={<Community />} />
     <Route path="/shop" element={<Shop />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
     <Route path="/verification-successful/:token" element={<VerifySuccess />} />

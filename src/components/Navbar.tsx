@@ -23,7 +23,7 @@ function Navbar() {
     { name: 'Home', link: '/' },
     { name: 'Shop', link: '/shop' },
     { name: 'About', link: '/about' },
-    { name: 'Community', link: '/blogs' },
+    { name: 'Community', link: '/community' },
     { name: 'Contact Us', link: '/contact-us' },
   ];
 

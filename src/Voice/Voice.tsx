@@ -79,7 +79,7 @@ function Voice() {
     };
 
     return (
-        <div className="fixed md:right-8 right-4 md:bottom-8 bottom-4 z-[100] flex flex-col items-end">
+        <div className="fixed hidden md:right-8 right-4 md:bottom-8 bottom-4 z-[100] flex flex-col items-end">
 
             {/* floating mic */}
             {!isRecording && (

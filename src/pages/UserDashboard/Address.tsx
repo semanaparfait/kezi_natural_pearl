@@ -107,7 +107,7 @@ function Address() {
   };
 
   return (
-    <section className=" w-full  p-6 md:p-10 font-sans text-gray-800">
+    <section className=" w-full   font-sans text-gray-800">
       {/* Background Decor */}
       {/* <div className="absolute top-0 right-0 w-[520px] h-[520px] bg-[var(--gold-color)]/10 blur-[140px] rounded-full -mr-48 -mt-48" /> */}
 

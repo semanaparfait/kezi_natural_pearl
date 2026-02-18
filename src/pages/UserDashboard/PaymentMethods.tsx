@@ -1,404 +1,175 @@
 import { useState } from "react";
-import { Plus, Trash2, Edit2, CreditCard, Lock, CheckCircle2, XCircle, Eye, EyeOff } from "lucide-react";
-import Button from "@/components/Button";
-import Input from "@/components/Input";
+import { 
+  Plus, 
+  Trash2, 
+  Check, 
+  ShieldCheck, 
+  ArrowRight,
+  Info,
+  CreditCard
+} from "lucide-react";
 
-interface PaymentMethod {
-  id: string;
-  cardholderName: string;
-  cardNumber: string;
-  expiryMonth: string;
-  expiryYear: string;
-  cvv: string;
-  cardType: "visa" | "mastercard" | "amex";
-  isDefault: boolean;
-}
 
-type PaymentMethodForm = Omit<PaymentMethod, "id">;
+const SAVED_METHODS = [
+  {
+    id: "1",
+    type: "MTN",
+    logo:"https://i.pinimg.com/736x/7f/eb/02/7feb0256dc66ee941c1a5d4c945ed60b.jpg",
+    provider: "MTN Mobile Money",
+    accountName: "Semana Kezi",
+    number: "+250 788 ••• •89",
+    color: "bg-[#FFCC00]", // MTN Yellow
+    textColor: "text-black",
+  },
+  {
+    id: "2",
+    type: "AIRTEL",
+    logo: "https://i.pinimg.com/736x/29/c6/7d/29c67ddcd038c021558b44235314c82c.jpg",
+    provider: "Airtel Money",
+    accountName: "Semana Kezi",
+    number: "+250 733 ••• •12",
+    color: "bg-[#ED1C24]", // Airtel Red
+    textColor: "text-white",
+  }
+];
 
 function PaymentMethods() {
-  const [payments, setPayments] = useState<PaymentMethod[]>([
-    {
-      id: "1",
-      cardholderName: "Jane Doe",
-      cardNumber: "4532123456789876",
-      expiryMonth: "12",
-      expiryYear: "2026",
-      cvv: "123",
-      cardType: "visa",
-      isDefault: true,
-    },
-  ]);
-
-  const [showForm, setShowForm] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [updateMsg, setUpdateMsg] = useState("");
-  const [showCVV, setShowCVV] = useState(false);
-  const [formData, setFormData] = useState<PaymentMethodForm>({
-    cardholderName: "",
-    cardNumber: "",
-    expiryMonth: "",
-    expiryYear: "",
-    cvv: "",
-    cardType: "visa",
-    isDefault: false,
-  });
-
-  const handleInputChange = (field: string, value: any) => {
-    if (field === "cardNumber") {
-      value = value.replace(/\s/g, "").slice(0, 16);
-    }
-    if (field === "cvv") {
-      value = value.slice(0, 4);
-    }
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const getCardType = (cardNumber: string): "visa" | "mastercard" | "amex" => {
-    const num = cardNumber.replace(/\s/g, "");
-    if (/^4/.test(num)) return "visa";
-    if (/^5[1-5]/.test(num)) return "mastercard";
-    if (/^3[47]/.test(num)) return "amex";
-    return "visa";
-  };
-
-  const maskCardNumber = (cardNumber: string) => {
-    const last4 = cardNumber.slice(-4);
-    return `•••• •••• •••• ${last4}`;
-  };
-
-  const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^\d]/gi, "");
-    const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || "";
-    const parts = [];
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
-    }
-    return parts.length ? parts.join(" ") : value;
-  };
-
-  const handleAddPayment = (e: React.FormEvent) => {
-    e.preventDefault();
-    setUpdateMsg("");
-
-    if (!formData.cardholderName || !formData.cardNumber || !formData.expiryMonth || !formData.expiryYear || !formData.cvv) {
-      setUpdateMsg("Please fill in all required fields.");
-      return;
-    }
-
-    if (formData.cardNumber.length < 15) {
-      setUpdateMsg("Card number must be valid.");
-      return;
-    }
-
-    if (editingId) {
-      setPayments(payments.map(pm => 
-        pm.id === editingId ? { ...formData, id: editingId, cardType: getCardType(formData.cardNumber) } : pm
-      ));
-      setUpdateMsg("Payment method updated successfully.");
-      setEditingId(null);
-    } else {
-      const newPayment: PaymentMethod = {
-        ...formData,
-        id: Date.now().toString(),
-        cardType: getCardType(formData.cardNumber),
-      };
-      setPayments([...payments, newPayment]);
-      setUpdateMsg("Payment method added successfully.");
-    }
-
-    setFormData({
-      cardholderName: "",
-      cardNumber: "",
-      expiryMonth: "",
-      expiryYear: "",
-      cvv: "",
-      cardType: "visa",
-      isDefault: false,
-    });
-    setShowForm(false);
-  };
-
-  const handleEdit = (payment: PaymentMethod) => {
-    setFormData({
-      cardholderName: payment.cardholderName,
-      cardNumber: payment.cardNumber,
-      expiryMonth: payment.expiryMonth,
-      expiryYear: payment.expiryYear,
-      cvv: payment.cvv,
-      cardType: payment.cardType,
-      isDefault: payment.isDefault,
-    });
-    setEditingId(payment.id);
-    setShowForm(true);
-  };
-
-  const handleDelete = (id: string) => {
-    setPayments(payments.filter(pm => pm.id !== id));
-    setUpdateMsg("Payment method deleted successfully.");
-  };
-
-  const handleSetDefault = (id: string) => {
-    setPayments(payments.map(pm => ({
-      ...pm,
-      isDefault: pm.id === id
-    })));
-  };
-
-  const getCardIcon = (cardType: string) => {
-    switch (cardType) {
-      case "visa":
-        return "🅥";
-      case "mastercard":
-        return "🅜";
-      case "amex":
-        return "🅰";
-      default:
-        return "💳";
-    }
-  };
+  const [selectedId, setSelectedId] = useState("1");
 
   return (
-    <section className="min-h-screen w-full  p-6 md:p-10 font-sans text-gray-800">
-      {/* Background Decor */}
-      {/* <div className="absolute top-0 right-0 w-[520px] h-[520px] bg-[var(--gold-color)]/10 blur-[140px] rounded-full -mr-48 -mt-48" /> */}
-
-      <div className="relative z-10 w-full max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-serif italic text-[var(--primary)] mb-2">Payment Methods</h1>
-            <p className="text-sm text-gray-500">Manage your credit and debit cards</p>
+    <section className="min-h-screen bg-[#FAF9F6] selection:bg-[var(--gold-color)]">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 pt-32 pb-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-3">
+              <div className="w-10 h-px bg-[var(--gold-color)]" />
+            </div>
+            <h1 className="text-5xl  font-serif text-(--primary) italic tracking-tighter">
+              Payment Methods<span className="text-[var(--gold-color)]">.</span>
+            </h1>
           </div>
-          {!showForm && (
-            <button
-              onClick={() => setShowForm(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:opacity-90 transition-all shadow-lg"
-            >
-              <Plus size={16} /> Add Card
-            </button>
-          )}
+          <button className="flex items-center gap-3 px-8 py-4 bg-(--primary) text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl hover:bg-black transition-all hover:scale-105 active:scale-95">
+            <Plus size={16} /> Add New Method
+          </button>
         </div>
 
-        {/* Add/Edit Form */}
-        {showForm && (
-          <div className="bg-white/90 backdrop-blur-md border border-[var(--bolder-gray)] rounded-[32px] p-8 shadow-xl mb-8">
-            <h2 className="text-lg font-serif italic text-[var(--primary)] mb-6">
-              {editingId ? "Edit Payment Method" : "Add New Card"}
-            </h2>
-            <form onSubmit={handleAddPayment} className="space-y-6">
-              <Input
-                label="Cardholder Name"
-                placeholder="Jane Doe"
-                value={formData.cardholderName}
-                onChange={(e) => handleInputChange("cardholderName", e.target.value)}
-                fullWidth
-              />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          
 
-              <Input
-                label="Card Number"
-                placeholder="1234 5678 9012 3456"
-                value={formatCardNumber(formData.cardNumber)}
-                onChange={(e) => handleInputChange("cardNumber", e.target.value)}
-                fullWidth
-              />
+          <div className="lg:col-span-7 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {SAVED_METHODS.map((method) => {
+                const isSelected = selectedId === method.id;
+                return (
+                  <div 
+                    key={method.id}
+                    onClick={() => setSelectedId(method.id)}
+                    className={`group relative h-64 rounded-[2.5rem] p-8 cursor-pointer transition-all duration-700 overflow-hidden border-2
+                      ${isSelected 
+                        ? "border-(--primary) shadow-2xl scale-[1.02] -translate-y-2" 
+                        : "border-transparent bg-white hover:border-gray-100 shadow-md"}`}
+                  >
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Input
-                  label="Expiry Month"
-                  placeholder="MM"
-                  type="number"
-                  min={1}
-                  max={12}
-                  value={formData.expiryMonth}
-                  onChange={(e) => handleInputChange("expiryMonth", e.target.value.slice(0, 2))}
-                  fullWidth
-                />
-                <Input
-                  label="Expiry Year"
-                  placeholder="YYYY"
-                  type="number"
-                  min={2024}
-                  value={formData.expiryYear}
-                  onChange={(e) => handleInputChange("expiryYear", e.target.value.slice(0, 4))}
-                  fullWidth
-                />
-                <div>
-                  <label className="text-xs font-bold uppercase tracking-widest text-gray-700 block mb-2">
-                    CVV
-                  </label>
-                  <div className="relative flex">
-                    <input
-                      type={showCVV ? "text" : "password"}
-                      placeholder="123"
-                      maxLength={4}
-                      value={formData.cvv}
-                      onChange={(e) => handleInputChange("cvv", e.target.value)}
-                      className="w-full px-4 py-2.5 border border-[var(--bolder-gray)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 transition-all"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowCVV(!showCVV)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    >
-                      {showCVV ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
+                    <div className="absolute -right-10 -bottom-10 opacity-10 group-hover:opacity-20 transition-opacity">
+                       {method.type === "MTN" ? 
+                        <div className="text-9xl font-black italic">MoMo</div> : 
+                        <div className="text-9xl font-black italic">Airtel</div>
+                       }
+                    </div>
+
+                    <div className="relative z-10 flex flex-col h-full justify-between">
+                      <div className="flex justify-between items-start">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg `}>
+
+                           <img src={method.logo} alt={method.provider} className="rounded-md" />
+                        </div>
+                        {isSelected && (
+                          <div className="bg-(--primary) text-white p-2 rounded-full animate-in zoom-in duration-300">
+                            <Check size={14} />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-1">
+                        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                          {method.provider}
+                        </p>
+                        <h3 className="text-xl font-bold text-(--primary) tracking-tight">
+                          {method.accountName}
+                        </h3>
+                        <p className="text-lg font-serif italic text-gray-600">
+                          {method.number}
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between items-center pt-4 border-t border-gray-50">
+                         <span className="text-[9px] font-black uppercase tracking-widest text-green-500">Active Account</span>
+                         <button className="text-gray-300 hover:text-red-500 transition-colors">
+                           <Trash2 size={16} />
+                         </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                );
+              })}
+            </div>
+
+
+            <div className="bg-[var(--secondary-cream-white)] rounded-[2rem] p-8 border border-[var(--gold-color)]/10 flex items-center gap-6">
+              <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-[var(--gold-color)] shadow-sm">
+                <ShieldCheck size={28} />
               </div>
-
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.isDefault}
-                  onChange={(e) => handleInputChange("isDefault", e.target.checked)}
-                  className="w-4 h-4 rounded border-[var(--bolder-gray)] accent-[var(--primary)]"
-                />
-                <span className="text-sm text-gray-600">Set as default payment method</span>
-              </label>
-
-              {updateMsg && (
-                <div className={`flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold ${updateMsg.includes("success") ? "text-[var(--primary)]" : "text-red-500"}`}>
-                  {updateMsg.includes("success") ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
-                  {updateMsg}
-                </div>
-              )}
-
-              <div className="flex gap-3">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  className="flex-1 bg-[var(--primary)] hover:bg-[var(--primary)]/90 rounded-xl py-3 font-bold text-[10px] uppercase tracking-widest transition-all"
-                >
-                  {editingId ? "Update Card" : "Save Card"}
-                </Button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowForm(false);
-                    setEditingId(null);
-                    setFormData({
-                      cardholderName: "",
-                      cardNumber: "",
-                      expiryMonth: "",
-                      expiryYear: "",
-                      cvv: "",
-                      cardType: "visa",
-                      isDefault: false,
-                    });
-                    setUpdateMsg("");
-                  }}
-                  className="flex-1 border border-[var(--bolder-gray)] text-gray-600 hover:bg-gray-50 rounded-xl py-3 font-bold text-[10px] uppercase tracking-widest transition-all"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {/* Payment Methods Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {payments.map((payment) => (
-            <div
-              key={payment.id}
-              className={`relative bg-white/90 backdrop-blur-md rounded-[32px] p-6 shadow-lg border-2 transition-all overflow-hidden ${
-                payment.isDefault
-                  ? "border-[var(--gold-color)] bg-[var(--gold-color)]/5"
-                  : "border-[var(--bolder-gray)]"
-              }`}
-            >
-              {/* Default Badge */}
-              {payment.isDefault && (
-                <div className="absolute -top-3 -right-3 bg-[var(--gold-color)] text-white px-3 py-1 rounded-full text-[8px] font-bold uppercase tracking-widest shadow-lg">
-                  Default
-                </div>
-              )}
-
-              {/* Card Design */}
-              <div className="bg-gradient-to-br from-[var(--primary)] to-[var(--primary)]/80 rounded-2xl p-6 mb-6 text-white relative overflow-hidden">
-                {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
-                
-                <div className="relative z-10 flex justify-between items-start mb-12">
-                  <div className="text-3xl font-bold">{getCardIcon(payment.cardType)}</div>
-                  <Lock size={16} className="text-white/60" />
-                </div>
-
-                <div className="relative z-10 mb-8">
-                  <p className="text-white/70 text-xs uppercase tracking-widest mb-2">Card Number</p>
-                  <p className="text-lg font-mono tracking-wider">{maskCardNumber(payment.cardNumber)}</p>
-                </div>
-
-                <div className="relative z-10 flex justify-between items-end">
-                  <div>
-                    <p className="text-white/70 text-xs uppercase tracking-widest mb-1">Cardholder</p>
-                    <p className="font-semibold">{payment.cardholderName}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-white/70 text-xs uppercase tracking-widest mb-1">Expires</p>
-                    <p className="font-mono">{payment.expiryMonth}/{payment.expiryYear}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Info */}
-              <div className="mb-6 border-t border-[var(--bolder-gray)]/50 pt-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <CreditCard size={14} className="text-[var(--gold-color)]" />
-                  <span className="text-sm font-semibold text-gray-700 capitalize">{payment.cardType}</span>
-                </div>
-                <p className="text-xs text-gray-500">
-                  {payment.expiryMonth}/{payment.expiryYear} • {maskCardNumber(payment.cardNumber)}
+              <div>
+                <h4 className="text-sm font-bold text-(--primary) uppercase tracking-wider">End-to-End Encryption</h4>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Your payment details are strictly encrypted and stored in a secure vault. Kezi Pearl does not have direct access to your MoMo credentials.
                 </p>
               </div>
+            </div>
+          </div>
 
-              {/* Actions */}
-              <div className="flex gap-2">
-                {!payment.isDefault && (
-                  <button
-                    onClick={() => handleSetDefault(payment.id)}
-                    className="flex-1 text-[9px] uppercase tracking-widest font-bold text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-lg py-2 transition-all"
-                  >
-                    Make Default
-                  </button>
-                )}
-                <button
-                  onClick={() => handleEdit(payment)}
-                  className="flex-1 flex items-center justify-center gap-2 text-[9px] uppercase tracking-widest font-bold text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-lg py-2 transition-all"
-                >
-                  <Edit2 size={12} /> Edit
+
+          <div className="lg:col-span-5">
+            <div className="bg-white rounded-[3rem] p-10 shadow-2xl border border-gray-50 sticky top-10">
+              <h2 className="text-2xl font-serif italic text-(--primary) mb-8">Account Details</h2>
+              
+              <div className="space-y-6">
+                <div className="p-6 rounded-[2rem] bg-gray-50 border border-gray-100 flex items-center justify-between">
+                   <div className="flex items-center gap-4">
+                     <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-gray-400">
+                       <CreditCard size={18} />
+                     </div>
+                     <div>
+                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Preferred Method</p>
+                       <p className="text-sm font-bold text-(--primary)">{selectedId === "1" ? "MTN Rwanda" : "Airtel Rwanda"}</p>
+                     </div>
+                   </div>
+                   <ArrowRight size={18} className="text-gray-300" />
+                </div>
+
+                <div className="p-8 space-y-4">
+                  <div className="flex items-start gap-4">
+                    <Info size={16} className="text-[var(--gold-color)] shrink-0 mt-1" />
+                    <p className="text-xs text-gray-500 leading-relaxed">
+                      This method will be used as your default for all <strong>Kezi Pearl</strong> orders.
+                    </p>
+                  </div>
+                </div>
+
+                <button className="w-full py-6 bg-(--primary) text-white rounded-full text-[11px] font-black uppercase tracking-[0.3em] shadow-xl hover:bg-black transition-all group">
+                   Manage Linked Accounts
                 </button>
-                <button
-                  onClick={() => handleDelete(payment.id)}
-                  className="flex-1 flex items-center justify-center gap-2 text-[9px] uppercase tracking-widest font-bold text-red-500 hover:bg-red-50 rounded-lg py-2 transition-all"
-                >
-                  <Trash2 size={12} /> Delete
-                </button>
+                
+                <p className="text-[9px] text-center text-gray-300 font-bold uppercase tracking-[0.2em] mt-6">
+                  Certified by Rwanda Utilities Regulatory Authority (RURA)
+                </p>
               </div>
             </div>
-          ))}
-        </div>
-
-        {payments.length === 0 && !showForm && (
-          <div className="text-center py-16">
-            <div className="w-16 h-16 bg-[var(--gold-color)]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CreditCard size={32} className="text-[var(--gold-color)]" />
-            </div>
-            <p className="text-gray-500 mb-4">No payment methods yet</p>
-            <button
-              onClick={() => setShowForm(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:opacity-90 transition-all"
-            >
-              <Plus size={16} /> Add Your First Card
-            </button>
           </div>
-        )}
+
+        </div>
       </div>
+
     </section>
   );
 }

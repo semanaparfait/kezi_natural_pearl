@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Pen, Calendar, Mail } from "lucide-react";
+import { Pen, Calendar, Mail, Phone, ShieldAlert, Loader2 } from "lucide-react";
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import { toast } from "react-hot-toast";
@@ -14,148 +14,131 @@ function Profile() {
   const [phone, setPhone] = useState("")
   const [memberSince, setMemberSince] = useState("")
 
-const handleUpdateUser = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleUpdateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!currentUser) return;
 
-  if (!currentUser) {
-    toast.error("User data not loaded yet.");
-    return;
-  }
+    try {
+      const updatedData: any = {};
+      const normalize = (value: string) => value.trim();
 
-  try {
-    const updatedData: any = {};
-    const normalize = (value: string) => value.trim();
+      if (normalize(name) !== (currentUser.fullName ?? "")) updatedData.fullName = normalize(name);
+      if (normalize(email) !== (currentUser.email ?? "")) updatedData.email = normalize(email);
+      if (normalize(phone) !== (currentUser.phoneNumber ?? "")) updatedData.phoneNumber = normalize(phone);
 
-    if (normalize(name) !== normalize(currentUser.fullName ?? "")) {
-      updatedData.fullName = normalize(name);
+      if (Object.keys(updatedData).length === 0) return toast("No changes made");
+
+      await updateUser(updatedData).unwrap();
+      toast.success("Profile refined successfully.");
+    } catch (err) {
+      toast.error("Failed to update profile.");
     }
-
-    if (normalize(email) !== normalize(currentUser.email ?? "")) {
-      updatedData.email = normalize(email);
-    }
-
-    if (normalize(phone) !== normalize(currentUser.phoneNumber ?? "")) {
-      updatedData.phoneNumber = normalize(phone);
-    }
-
-    if (Object.keys(updatedData).length === 0) {
-      toast("No changes made");
-      return;
-    }
-
-    await updateUser(updatedData).unwrap();
-    toast.success("Profile updated successfully.");
-  } catch (err) {
-    toast.error("Failed to update profile.");
-  }
-};
-
-
-
+  };
 
   useEffect(() => {
     if (currentUser) {
       setName(currentUser.fullName ?? "")
       setEmail(currentUser.email ?? "")
       setPhone(currentUser.phoneNumber ?? "")
-      setMemberSince(
-        currentUser.createdAt
-          ? new Date(currentUser.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
-          : ""
-      )
+      setMemberSince(currentUser.createdAt ? new Date(currentUser.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : "")
     }
   }, [currentUser])
 
-  const handleDeleteAccount = async () => {
-    if (!window.confirm("Are you sure you want to delete your account? ")) return;
-
-  };
-
-
-  if (isLoading) {
-    return (
-      <section className="flex items-center justify-center   uppercase tracking-[0.3em] text-xs">
-        Syncing Rituals...
-      </section>
-    )
-  }
+  if (isLoading) return (
+    <div className="min-h-[80vh] flex items-center justify-center text-[10px] uppercase tracking-[0.4em] text-gray-400 animate-pulse">
+      Syncing Rituals...
+    </div>
+  );
 
   return (
-    <section className="  p-6 md:p-10 font-sans text-gray-800 flex items-center justify-center relative">
-      <div className="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-6 h-fit md:h-[85vh]">
-        <div className="md:col-span-4 bg-white/90 backdrop-blur-xl border border-[var(--bolder-gray)] rounded-[32px] p-8 flex flex-col items-center justify-center text-center space-y-6 shadow-xl">
-          <div className="relative group">
-            <div className="absolute inset-0 bg-[var(--gold-color)]/20 blur-2xl rounded-full group-hover:bg-[var(--gold-color)]/40 transition-all duration-500" />
-            <img 
-              src={currentUser?.profile || "https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"} 
-              alt="Profile" 
-              className="relative w-32 h-32 rounded-full object-cover border-2 border-[var(--gold-color)]/60 shadow-2xl"
-            />
-            <button className="absolute bottom-1 right-1 bg-[var(--primary)] p-2 rounded-full border border-white/20 hover:scale-110 transition-transform">
-              <Pen size={14} className="text-white" />
-            </button>
-          </div>
-          
-          <div>
-            <h1 className="text-2xl font-serif italic text-[var(--primary)]">{name || "Your Name"}</h1>
-            <p className="text-[var(--gold-color)]/70 text-[10px] uppercase tracking-[0.2em] mt-1">Customer Member</p>
-          </div>
-
-          <div className="w-full pt-6 space-y-4 border-t border-[var(--bolder-gray)]/60">
-            <div className="flex items-center gap-3 text-xs text-gray-500">
-              <Calendar size={14} className="text-[var(--gold-color)]" /> <span>Joined {memberSince}</span>
+    <section className="min-h-screen bg-[#FAF9F6] ">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        {/* LEFT: MINIMALIST AVATAR & STATS */}
+        <div className="lg:col-span-4 space-y-8">
+          <div className="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
+            <div className="relative group mb-6">
+              <div className="absolute inset-0 bg-[var(--gold-color)]/10 blur-3xl rounded-full group-hover:bg-[var(--gold-color)]/20 transition-all duration-700" />
+              <img 
+                src={currentUser?.profile || "https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"} 
+                alt="Profile" 
+                className="relative w-40 h-40 rounded-full object-cover border-[6px] border-white shadow-2xl"
+              />
+              <button className="absolute bottom-2 right-2 bg-(--primary) text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform border-4 border-white">
+                <Pen size={14} />
+              </button>
             </div>
-            <div className="flex items-center gap-3 text-xs text-gray-500">
-              <Mail size={14} className="text-[var(--gold-color)]" /> <span>{email}</span>
+            
+            <h1 className="text-3xl font-serif italic text-(--primary)">{name || "Member"}</h1>
+            <p className="text-[var(--gold-color)] text-[10px] font-black uppercase tracking-[0.3em] mt-2">The Collective Member</p>
+
+            <div className="w-full mt-10 pt-8 border-t border-gray-50 space-y-5">
+              <div className="flex items-center gap-4 text-xs text-gray-500 font-medium">
+                <div className="w-8 h-8 rounded-full bg-[var(--gold-color)]/5 flex items-center justify-center text-[var(--gold-color)]">
+                  <Calendar size={14} />
+                </div>
+                <span>Since {memberSince}</span>
+              </div>
+              <div className="flex items-center gap-4 text-xs text-gray-500 font-medium">
+                <div className="w-8 h-8 rounded-full bg-[var(--gold-color)]/5 flex items-center justify-center text-[var(--gold-color)]">
+                  <Mail size={14} />
+                </div>
+                <span className="truncate">{email}</span>
+              </div>
             </div>
           </div>
         </div>
-        <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-2 ">
-          <div className="md:col-span-2 bg-white/90 backdrop-blur-md border border-[var(--bolder-gray)] rounded-[32px] p-8 shadow-xl">
-            <h2 className="text-lg font-serif italic mb-6 text-[var(--primary)]">Personal Details</h2>
-            <form
-              className="grid grid-cols-1 md:grid-cols-2 gap-5"
-              onSubmit={handleUpdateUser}
-            >
-              <div className="space-y-4">
-                <Input label="Full Name" value={name} onChange={(e) => setName(e.target.value)}  />
-                <Input label="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}  />
-              </div>
-              <div className="space-y-4 flex flex-col justify-between">
-                <Input label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)}  />
-                <Button variant="primary" type="submit" disabled={isUpdating} className="w-full bg-[var(--primary)] hover:bg-[var(--primary)]/90 rounded-xl py-3 font-bold text-[10px] uppercase tracking-widest transition-all">
-                  {isUpdating ? "Updating..." : "Save Changes"}
-                </Button>
+
+        {/* RIGHT: EDITABLE DETAILS */}
+        <div className="lg:col-span-8 space-y-8">
+          <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-sm border border-gray-100">
+            <div className="flex items-center justify-between mb-10 pb-6 border-b border-gray-50">
+              <h2 className="text-2xl font-serif italic text-(--primary)">Personal Details</h2>
+              <p className="text-[9px] font-black uppercase tracking-widest text-gray-300 px-4 py-1 border border-gray-100 rounded-full">Identity</p>
+            </div>
+
+            <form onSubmit={handleUpdateUser} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Input label="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input label="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                
+                <div className="flex flex-col justify-end">
+                  <p className="text-[9px] text-gray-400 uppercase tracking-widest mb-4 italic">Confirm your changes above</p>
+                  <button 
+                    disabled={isUpdating}
+                    className="w-full bg-(--primary) text-white rounded-full py-5 font-black text-[10px] uppercase tracking-[0.3em] shadow-xl hover:bg-black hover:scale-[1.02] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
+                  >
+                    {isUpdating && <Loader2 size={14} className="animate-spin" />}
+                    {isUpdating ? "Refining..." : "Update Profile"}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
-      <div className="mt-10 border w-full border-red-300 bg-red-50 rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 shadow-md">
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 text-red-600 mr-0 sm:mr-6">
-          <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z" />
-          </svg>
-        </div>
-        <div className="flex-1">
-          <h2 className="text-lg font-bold text-red-700 mb-1">Danger Zone</h2>
-          <p className="text-sm text-red-600 mb-4">
-            Deleting your account is <span className="font-semibold">irreversible</span>. All your data will be lost.
-          </p>
-          <Button
-            variant="danger"
-            onClick={handleDeleteAccount}
-            className="w-full sm:w-auto"
-          >
-            Delete Account
-          </Button>
+
+          {/* DANGER ZONE: CLASSIC & CLEAN */}
+          <div className="bg-red-50/30 rounded-[2.5rem] p-8 md:p-10 border border-red-100 flex flex-col md:flex-row items-center justify-between gap-6 transition-all hover:bg-red-50/50">
+            <div className="flex items-center gap-6">
+              <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-red-500 shadow-sm">
+                <ShieldAlert size={28} />
+              </div>
+              <div className="text-left">
+                <h3 className="text-red-900 font-bold text-sm uppercase tracking-wider">Account Deactivation</h3>
+                <p className="text-red-500/70 text-xs mt-1">This will remove all your order history and community points.</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => window.confirm("Are you sure? This ritual cannot be undone.")}
+              className="text-red-400 hover:text-red-600 text-[9px] font-black uppercase tracking-[0.2em] px-8 py-4 rounded-full border border-red-200 hover:bg-white transition-all"
+            >
+              Close Account
+            </button>
+          </div>
         </div>
       </div>
-
-        </div>
-      </div>
-
- 
     </section>
   )
 }
 
-export default Profile
+export default Profile;

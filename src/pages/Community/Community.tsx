@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { 
-  Calendar, 
-  ArrowRight, 
-  Clock, 
-  PlayCircle, 
-  MapPin, 
-  ArrowUpRight, 
-  Filter,
+import {
+  Calendar,
+  ArrowRight,
+  Clock,
+  PlayCircle,
+  MapPin,
+
   Users,
-  BookOpen,
-  Sparkles,
+
   Star,
   MessageCircle,
   Heart
@@ -171,176 +169,100 @@ function Community() {
   const [blogFilter, setBlogFilter] = useState("all");
   const categories = ["all", "Skin Care", "Wellness", "Events", "Jewelry", "Beauty Tips", "Sustainability"];
 
-  const filteredBlogs = blogFilter === "all" 
-    ? BLOGS 
+  const filteredBlogs = blogFilter === "all"
+    ? BLOGS
     : BLOGS.filter(blog => blog.category === blogFilter);
 
   return (
     <section className="min-h-screen bg-white selection:bg-[var(--gold-color)] selection:text-white">
       <Navbar />
-      
-      {/* CLASSIC HERO SECTION */}
-      <div className="relative bg-white overflow-hidden">
-        {/* Decorative Top Border */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--gold-color)] to-transparent"></div>
-        
+
+      {/* CLASSIC ARCH HERO SECTION */}
+      <div className="relative bg-[#faf9f6] overflow-hidden">
+        {/* Background Texture/Pattern */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(#3f5f50 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
+        </div>
+
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center min-h-[85vh] py-20">
-            
-            {/* Left Content - Classic Typography */}
-            <div className="space-y-8 lg:pr-12">
-              {/* Elegant Badge */}
-              <div className="inline-block">
-                <div className="flex items-center gap-2 px-5 py-2 border-2 border-[var(--gold-color)] rounded-sm">
-                  <div className="w-8 h-[1px] bg-[var(--gold-color)]"></div>
-                  <span className="text-[9px] font-black uppercase tracking-[0.4em] text-(--primary)">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[90vh] py-12">
+
+            {/* Left Column - Editorial Typography (5 cols) */}
+            <div className="lg:col-span-5 space-y-10 relative z-10">
+
+              {/* Floating Badge */}
+              <div className="inline-block animate-fade-in-up">
+                <div className="flex items-center gap-3">
+                  <span className="h-[1px] w-12 bg-[var(--gold-color)]"></span>
+                  <span className="text-xs font-serif italic text-[var(--gold-color)] tracking-widest">
                     Est. 2024
                   </span>
-                  <div className="w-8 h-[1px] bg-[var(--gold-color)]"></div>
                 </div>
               </div>
 
-              {/* Main Heading */}
-              <div className="space-y-6">
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-serif text-(--primary) leading-[0.9] tracking-tight">
-                  The Kezi
-                  <span className="block mt-4 text-[var(--gold-color)]">Community</span>
+              {/* Main Headline */}
+              <div className="space-y-4">
+                <h1 className="text-6xl md:text-7xl lg:text-8xl font-serif text-(--primary) leading-[0.85]">
+                  <span className="block italic text-5xl md:text-6xl mb-2 text-gray-400 font-light">The Kezi</span>
+                  COMMUNITY
                 </h1>
-                
-                {/* Decorative Line */}
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-[2px] bg-(--primary)"></div>
-                  <div className="w-2 h-2 rounded-full bg-[var(--gold-color)]"></div>
-                  <div className="w-8 h-[2px] bg-[var(--gold-color)]"></div>
-                </div>
+                <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-md ml-1 border-l-2 border-[var(--gold-color)] pl-6">
+                  Experience a sanctuary where timeless beauty traditions merge with modern wellness.
+                </p>
               </div>
 
-              {/* Description */}
-              <p className="text-xl text-gray-700 leading-relaxed font-light max-w-xl">
-                Where tradition meets innovation. A distinguished community dedicated to 
-                celebrating natural beauty, wellness, and the art of living well.
-              </p>
-
-              {/* Classic Stats */}
-              <div className="grid grid-cols-3 gap-8 pt-8 border-t-2 border-gray-100">
-                <div className="text-center lg:text-left">
-                  <div className="text-5xl font-serif text-(--primary) mb-2">{BLOGS.length}</div>
-                  <div className="text-[10px] uppercase tracking-[0.25em] text-gray-500 font-bold">Articles</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-5xl font-serif text-(--primary) mb-2">{UPCOMING_EVENTS.length}</div>
-                  <div className="text-[10px] uppercase tracking-[0.25em] text-gray-500 font-bold">Events</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-5xl font-serif text-(--primary) mb-2">5K</div>
-                  <div className="text-[10px] uppercase tracking-[0.25em] text-gray-500 font-bold">Members</div>
-                </div>
-              </div>
-
-              {/* Classic CTA Buttons */}
-              <div className="flex flex-wrap gap-4 pt-4">
-                <button className="group px-10 py-5 bg-(--primary) text-white border-2 border-(--primary) hover:bg-white hover:text-(--primary) transition-all duration-300">
-                  <span className="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-3">
-                    Explore Stories
-                    <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-5 pt-4">
+                <button className="px-8 py-4 bg-(--primary) text-white rounded-t-[2rem] rounded-br-[2rem] hover:rounded-tl-none hover:rounded-br-none transition-all duration-500 shadow-lg hover:shadow-xl hover:bg-[var(--gold-color)] group">
+                  <span className="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2">
+                    Join Membership
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
-                <button className="px-10 py-5 border-2 border-(--primary) text-(--primary) hover:bg-(--primary) hover:text-white transition-all duration-300">
-                  <span className="text-xs font-black uppercase tracking-[0.2em]">
-                    View Events
+                <div className="flex items-center gap-4 cursor-pointer group">
+                  <div className="w-12 h-12 rounded-full border border-[var(--gold-color)] flex items-center justify-center group-hover:bg-[var(--gold-color)] group-hover:text-white transition-colors">
+                    <PlayCircle size={20} />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-(--primary) group-hover:text-[var(--gold-color)] transition-colors">
+                    Watch Our Story
                   </span>
-                </button>
+                </div>
+              </div>
+
+              {/* Stat */}
+              <div className="flex items-end gap-2 pt-8 opacity-80">
+                <span className="text-6xl font-serif text-[var(--gold-color)] leading-none">5k+</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Active Members</span>
               </div>
             </div>
 
-            {/* Right Visual - Classic Gallery Grid */}
-            <div className="relative lg:pl-12">
-              <div className="grid grid-cols-2 gap-6">
-                {/* Large Feature Image */}
-                <div className="col-span-2 relative group">
-                  <div className="relative overflow-hidden border-4 border-white shadow-2xl">
-                    <img 
-                      src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80" 
-                      alt="Community" 
-                      className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-(--primary)/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  </div>
-                  {/* Corner Accent */}
-                  <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-[var(--gold-color)] pointer-events-none"></div>
-                </div>
+            {/* Right Column - Arch Visuals (7 cols) */}
+            <div className="lg:col-span-7 relative h-[600px] md:h-[800px] flex items-center justify-center lg:justify-end">
 
-                {/* Two Small Images */}
-                <div className="relative group">
-                  <div className="relative overflow-hidden border-4 border-white shadow-xl">
-                    <img 
-                      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&q=80" 
-                      alt="Wellness" 
-                      className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-105"
+              {/* Main Large Arch */}
+              <div className="relative w-full max-w-md md:max-w-lg h-full">
+
+                {/* Secondary Floating Image (Circle/Oval) */}
+                <div className="absolute  top-1/4 -left-12 md:-left-24 w-48 h-64 md:w-56 md:h-72 hidden md:block">
+                  <div className="absolute inset-0 bg-[var(--primary)] rounded-[3rem] transform -translate-x-3 translate-y-3"></div>
+                  <div className="relative w-full h-full rounded-[3rem] overflow-hidden border-4 border-white shadow-xl rotate-[-5deg] hover:rotate-0 transition-all duration-500">
+                    <img
+                      src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80"
+                      alt="Wellness"
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                </div>
-                <div className="relative group">
-                  <div className="relative overflow-hidden border-4 border-white shadow-xl">
-                    <img 
-                      src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80" 
-                      alt="Events" 
-                      className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                  {/* Decorative Stamp */}
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg animate-spin-slow">
+                    <div className="w-full h-full border-2 border-[var(--gold-color)] border-dashed rounded-full flex items-center justify-center p-1">
+                      <Star size={24} className="text-[var(--gold-color)] fill-[var(--gold-color)]" />
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Floating Info Card */}
-              <div className="absolute -bottom-8 left-12 right-12 bg-white p-6 shadow-2xl border-l-4 border-[var(--gold-color)] z-10">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-1">Next Event</div>
-                    <div className="text-lg font-serif text-(--primary)">Pearl & Petals Workshop</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-serif text-[var(--gold-color)]">MAR</div>
-                    <div className="text-3xl font-bold text-(--primary)">12</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative Elements */}
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 border-2 border-(--primary) pointer-events-none hidden lg:block"></div>
-            </div>
-          </div>
-
-          {/* Bottom Decorative Bar */}
-          <div className="flex items-center justify-center gap-8 py-12 border-t-2 border-gray-100">
-            <div className="flex items-center gap-4">
-              <BookOpen className="text-[var(--gold-color)]" size={20} />
-              <div>
-                <div className="text-sm font-bold text-(--primary)">Featured Stories</div>
-                <div className="text-xs text-gray-500">Latest wellness insights</div>
-              </div>
-            </div>
-            <div className="w-[1px] h-12 bg-gray-200"></div>
-            <div className="flex items-center gap-4">
-              <Calendar className="text-[var(--gold-color)]" size={20} />
-              <div>
-                <div className="text-sm font-bold text-(--primary)">Upcoming Events</div>
-                <div className="text-xs text-gray-500">Join our gatherings</div>
-              </div>
-            </div>
-            <div className="w-[1px] h-12 bg-gray-200"></div>
-            <div className="flex items-center gap-4">
-              <Users className="text-[var(--gold-color)]" size={20} />
-              <div>
-                <div className="text-sm font-bold text-(--primary)">5,000+ Members</div>
-                <div className="text-xs text-gray-500">Growing community</div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Side Decorative Lines */}
-        <div className="absolute top-1/2 left-0 transform -translate-y-1/2 w-1 h-32 bg-gradient-to-b from-transparent via-[var(--gold-color)] to-transparent"></div>
-        <div className="absolute top-1/2 right-0 transform -translate-y-1/2 w-1 h-32 bg-gradient-to-b from-transparent via-[var(--gold-color)] to-transparent"></div>
       </div>
 
       {/* BLOG SECTION WITH FILTERS */}
@@ -350,17 +272,16 @@ function Community() {
             <h2 className="text-5xl font-serif text-(--primary) mb-3">Latest Stories</h2>
             <p className="text-sm text-gray-500 uppercase tracking-widest font-bold">Insights & Inspiration</p>
           </div>
-          
+
           <div className="flex flex-wrap gap-3 mt-6 md:mt-0">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setBlogFilter(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
-                  blogFilter === cat
+                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${blogFilter === cat
                     ? "bg-(--primary) text-white shadow-lg"
                     : "bg-gray-50 text-gray-600 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -371,15 +292,15 @@ function Community() {
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredBlogs.map((post) => (
-            <article 
-              key={post.id} 
+            <article
+              key={post.id}
               className="group bg-white rounded-[2rem] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
             >
               <div className="relative h-64 overflow-hidden">
-                <img 
-                  src={post.image} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                  alt={post.title} 
+                <img
+                  src={post.image}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  alt={post.title}
                 />
                 <div className="absolute top-4 left-4">
                   <span className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-black uppercase tracking-wider text-(--primary)">
@@ -387,7 +308,7 @@ function Community() {
                   </span>
                 </div>
               </div>
-              
+
               <div className="p-8">
                 <h3 className="text-2xl font-serif text-(--primary) mb-4 leading-tight group-hover:text-[var(--gold-color)] transition-colors">
                   {post.title}
@@ -395,7 +316,7 @@ function Community() {
                 <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
                   {post.excerpt}
                 </p>
-                
+
                 <div className="flex items-center justify-between pt-6 border-t border-gray-50">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[var(--secondary-cream-white)] flex items-center justify-center">
@@ -432,16 +353,16 @@ function Community() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {UPCOMING_EVENTS.map((event, index) => (
-              <div 
-                key={event.id} 
+              <div
+                key={event.id}
                 className="group bg-white rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:shadow-[var(--gold-color)]/20 transition-all duration-500 hover:-translate-y-3"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="relative h-72 overflow-hidden">
-                  <img 
-                    src={event.image} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    alt={event.title} 
+                  <img
+                    src={event.image}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    alt={event.title}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute top-6 right-6 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full">
@@ -456,7 +377,7 @@ function Community() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="p-8">
                   <div className="mb-6">
                     <p className="text-[var(--gold-color)] text-xs font-black uppercase tracking-wider mb-3">
@@ -473,7 +394,7 @@ function Community() {
                       <span>{event.location}</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between pt-6 border-t border-gray-100">
                     <span className="text-xl font-bold text-(--primary)">{event.price}</span>
                     <button className="px-6 py-3 bg-(--primary) text-white rounded-full text-xs font-black uppercase tracking-wider hover:bg-[var(--gold-color)] hover:text-(--primary) transition-all shadow-lg hover:shadow-xl">
@@ -499,18 +420,18 @@ function Community() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {PAST_EVENTS.map((event, index) => (
-            <div 
-              key={event.id} 
+            <div
+              key={event.id}
               className="group relative rounded-[2rem] overflow-hidden aspect-[4/3] cursor-pointer"
             >
-              <img 
-                src={event.image} 
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110" 
-                alt={event.title} 
+              <img
+                src={event.image}
+                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                alt={event.title}
               />
-              
+
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
-              
+
               <div className="absolute inset-0 flex flex-col justify-end p-8">
                 <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                   <p className="text-[var(--gold-color)] text-xs font-black uppercase tracking-wider mb-2">
@@ -530,7 +451,7 @@ function Community() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border-2 border-white/50 flex items-center justify-center">
                     <PlayCircle size={32} className="text-white" />
@@ -548,31 +469,31 @@ function Community() {
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-2xl border border-gray-100 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--gold-color)] opacity-5 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--primary)] opacity-5 rounded-full blur-3xl"></div>
-            
+
             <div className="relative z-10">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[var(--secondary-cream-white)] mb-8">
                 <Heart className="text-[var(--gold-color)]" size={32} />
               </div>
-              
+
               <h2 className="text-4xl md:text-5xl font-serif text-(--primary) mb-6 leading-tight">
                 Join the Kezi Community
               </h2>
               <p className="text-gray-600 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-                Be the first to know about new products, exclusive events, beauty tips, 
+                Be the first to know about new products, exclusive events, beauty tips,
                 and special offers reserved for our valued members.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto mb-8">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email address" 
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
                   className="flex-1 bg-[var(--secondary-cream-white)] px-8 py-5 rounded-full border-2 border-transparent outline-none focus:border-[var(--gold-color)] transition-all text-sm"
                 />
                 <button className="bg-(--primary) text-white px-10 py-5 rounded-full text-xs font-black uppercase tracking-widest shadow-xl hover:bg-[var(--gold-color)] hover:text-(--primary) transition-all hover:scale-105 active:scale-95">
                   Subscribe
                 </button>
               </div>
-              
+
               <div className="flex items-center justify-center gap-8 text-sm text-gray-500">
                 <div className="flex items-center gap-2">
                   <MessageCircle size={16} className="text-[var(--gold-color)]" />

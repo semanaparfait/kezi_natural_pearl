@@ -57,7 +57,7 @@ function Orders() {
   };
 
   return (
-    <section className="min-h-screen bg-[#FAF9F6] selection:bg-[var(--gold-color)]">
+    <section className="min-h-screen bg-[#FAF9F6] ">
       <Navbar />
         <div className="pt-10 pl-10 hidden">
     <Link to="/" className="flex items-center gap-2 text-(--primary) hover:underline mb-6 transition-colors duration-200">
@@ -141,7 +141,7 @@ function Orders() {
                   {/* Actions & Summary */}
                   <div className="lg:col-span-4 lg:border-l lg:border-gray-50 lg:pl-10 flex flex-row lg:flex-col justify-between lg:justify-center items-center lg:items-start gap-4">
                     <div>
-                      <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Investment</p>
+                      <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Total Amount</p>
                       <p className="text-2xl font-serif italic text-(--primary)">{order.total}</p>
                     </div>
                     <button className="w-full lg:mt-4 px-8 py-4 bg-gray-50 hover:bg-(--primary) hover:text-white text-(--primary) rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center gap-2">

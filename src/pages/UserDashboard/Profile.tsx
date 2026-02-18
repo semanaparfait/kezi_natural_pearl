@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { Pen, Calendar, Mail, Phone, ShieldAlert, Loader2 } from "lucide-react";
-import Button from "@/components/Button"
+import { Pen, Calendar, Mail,  ShieldAlert, Loader2 } from "lucide-react";
 import Input from "@/components/Input"
 import { toast } from "react-hot-toast";
 import { useGetCurrentUserQuery, useUpdateUserMutation } from "@/features/auth/authApi"

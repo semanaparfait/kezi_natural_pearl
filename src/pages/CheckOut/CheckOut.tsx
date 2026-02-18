@@ -17,7 +17,7 @@ function CheckOut() {
     const { data: getAddresses } = useGetAddressesQuery();
     const [addAddress, { isLoading: isSending }] = useAddAddressMutation();
     const [deleteAddress, { isLoading: isDeleting }] = useDeleteAddressMutation();
-    const [setDefaultAddress, { isLoading: isSettingDefault }] = useSetDefaultAddressMutation();
+    const [setDefaultAddress] = useSetDefaultAddressMutation();
     const [country, setCountry] = useState("RW");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");

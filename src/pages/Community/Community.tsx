@@ -419,7 +419,7 @@ function Community() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PAST_EVENTS.map((event, index) => (
+          {PAST_EVENTS.map((event) => (
             <div
               key={event.id}
               className="group relative rounded-[2rem] overflow-hidden aspect-[4/3] cursor-pointer"

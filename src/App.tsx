@@ -19,6 +19,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Account1 from '@/pages/Account/Account1'
 import Account2 from '@/pages/Account/Account2'
 import Community from "@/pages/Community/Community";
+import Orders from "@/pages/Orders/Orders";
 function App() {
 
 
@@ -37,6 +38,7 @@ function App() {
     <Route path="/about" element={<About />} />
     <Route path="/community" element={<Community />} />
     <Route path="/shop" element={<Shop />} />
+    <Route path="/orderhistory" element={<Orders />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
     <Route path="/verification-successful/:token" element={<VerifySuccess />} />
     <Route path="/userDashboard" element={<UserDashboard />} />

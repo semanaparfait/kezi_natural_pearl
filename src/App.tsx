@@ -8,7 +8,7 @@ import Shop from "@/pages/Shop/Shop";
 import VerifyEmail from "@/pages/verifyEmail/VerifyEmail";
 import VerifySuccess from "@/pages/verifySuccessful/verifySuccessful";
 import UserDashboard from "@/pages/UserDashboard/UserDashboard";
-import Voice from "@/Voice/Voice";
+// import Voice from "@/Voice/Voice";
 import AdminPage from "@/owner/AdminPage";
 import NotFound from "./pages/NotFound/NotFound";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
@@ -26,7 +26,7 @@ function App() {
 
 <BrowserRouter>
   <Toaster position="top-right" reverseOrder={false} />
-  <Voice />
+  {/* <Voice /> */}
   <ScrollToTop />
   <Routes>
     <Route path="/" element={<Home />} />

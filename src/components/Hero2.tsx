@@ -62,7 +62,7 @@ function Hero2() {
           </svg>
         </div>
       </div>
-      <div className='bg-(--primary) z-20 text-white flex justify-evenly py-4 absolute bottom-0 w-full text-sm'>
+      <div className='bg-(--primary) hidden z-20 text-white flex justify-evenly py-4 absolute bottom-0 w-full text-sm'>
         <p>Fast Shipping</p>
         <p>Quality Products</p>
         <p>Eco-Friendly</p>

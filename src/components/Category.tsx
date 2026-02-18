@@ -79,7 +79,7 @@ function Category() {
         viewport={{ once: true }}
         className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-6 md:px-8"
       >
-        {categories?.map((category) => (
+        {categories?.slice(0,4).map((category) => (
           <motion.div
             key={category.id}
             variants={item}

@@ -5,10 +5,13 @@ import Navbar from "@/components/Navbar";
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import  { useState } from "react";
 import {useSubmitContactFormMutation} from '@/features/contactUs/contactUsApi'
+import {useGetCurrentUserQuery} from '@/features/auth/authApi'
 import toast from "react-hot-toast";
-
+  
 function ContactUs() {
   const [submitContactForm] = useSubmitContactFormMutation();
+  const token = localStorage.getItem('token');
+  const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
   const contactInfo = [
     { 
       type: 'Phone', 
@@ -93,14 +96,16 @@ function ContactUs() {
           {/* Form Card */}
           <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-[var(--primary)]/5 border border-gray-50 animate-in fade-in slide-in-from-right-6 duration-700">
             <form className="space-y-5 flex flex-col" onSubmit={handleSubmit}> 
-              <Input
-                  label="Name"
-                  type="text"
-                  placeholder="Your full name"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                />           
+              {!currentUser && (
+                <>
+                <Input
+                    label="Name"
+                    type="text"
+                    placeholder="Your full name"
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  />           
                 <Input
                   label="Email"
                   type="email"
@@ -109,6 +114,8 @@ function ContactUs() {
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
+                </>
+                )}
               
               <div className="space-y-1">
                 <label htmlFor="subject" className="text-[10px] uppercase tracking-widest font-bold text-gray-400 ml-1">
@@ -172,9 +179,9 @@ function ContactUs() {
           ))}
         </div>
       </div>
-      <div className="px-6 mb-20 max-w-7xl mx-auto">
+      <div className="md:px-6 px-3 md:mb-20 mb-5 max-w-7xl mx-auto">
         <div className="relative rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl h-[450px]">
-            <iframe
+            {/* <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127593.18182741913!2d30.007629630325853!3d-1.9515904838382713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca4258ed8e797%3A0xf52b87289416c6c2!2sKigali!5e0!3m2!1sen!2srw!4v1700000000000!5m2!1sen!2srw" 
             width="100%"
             height="100%"
@@ -182,7 +189,18 @@ function ContactUs() {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            ></iframe> */}
+
+            <iframe
+             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4730576220622!2d30.098852474015416!3d-1.9646178980175963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca9b295f0ced9%3A0x3cb73a2a3f5aa7c5!2sSOLVIT%20AFRICA%20Training%20Center!5e0!3m2!1sen!2srw!4v1771490072483!5m2!1sen!2srw"
+            width="100%"
+            height="100%"
+            allowFullScreen
+            style={{ border: 0, filter: 'grayscale(0.5) contrast(1.2)' }}
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade">
+
+                </iframe>
         </div>
       </div>
 

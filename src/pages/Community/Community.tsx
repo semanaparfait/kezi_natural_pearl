@@ -177,20 +177,15 @@ function Community() {
     <section className="min-h-screen bg-white selection:bg-[var(--gold-color)] selection:text-white">
       <Navbar />
 
-      {/* CLASSIC ARCH HERO SECTION */}
-      <div className="relative bg-[#faf9f6] overflow-hidden">
-        {/* Background Texture/Pattern */}
+      <div className="relative  overflow-hidden">
+
         <div className="absolute inset-0 opacity-5 pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(#3f5f50 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
         </div>
 
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[90vh] py-12">
-
-            {/* Left Column - Editorial Typography (5 cols) */}
-            <div className="lg:col-span-5 space-y-10 relative z-10">
-
-              {/* Floating Badge */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center   ">
+            <div className="lg:col-span-5 space-y-10 relative z-10 ">
               <div className="inline-block animate-fade-in-up">
                 <div className="flex items-center gap-3">
                   <span className="h-[1px] w-12 bg-[var(--gold-color)]"></span>
@@ -199,8 +194,6 @@ function Community() {
                   </span>
                 </div>
               </div>
-
-              {/* Main Headline */}
               <div className="space-y-4">
                 <h1 className="text-6xl md:text-7xl lg:text-8xl font-serif text-(--primary) leading-[0.85]">
                   <span className="block italic text-5xl md:text-6xl mb-2 text-gray-400 font-light">The Kezi</span>
@@ -211,7 +204,6 @@ function Community() {
                 </p>
               </div>
 
-              {/* CTA Buttons */}
               <div className="flex flex-wrap gap-5 pt-4">
                 <button className="px-8 py-4 bg-(--primary) text-white rounded-t-[2rem] rounded-br-[2rem] hover:rounded-tl-none hover:rounded-br-none transition-all duration-500 shadow-lg hover:shadow-xl hover:bg-[var(--gold-color)] group">
                   <span className="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2">
@@ -237,7 +229,7 @@ function Community() {
             </div>
 
             {/* Right Column - Arch Visuals (7 cols) */}
-            <div className="lg:col-span-7 relative h-[600px] md:h-[800px] flex items-center justify-center lg:justify-end">
+            <div className="lg:col-span-7 relative h-[600px] md:h-[800px] flex items-center justify-center lg:justify-end ">
 
               {/* Main Large Arch */}
               <div className="relative w-full max-w-md md:max-w-lg h-full">
@@ -303,7 +295,7 @@ function Community() {
                   alt={post.title}
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-black uppercase tracking-wider text-(--primary)">
+                  <span className="px-4 py-2 bg-[var(--gold-color)] backdrop-blur-sm rounded-full text-[10px] font-black uppercase tracking-wider text-white">
                     {post.category}
                   </span>
                 </div>

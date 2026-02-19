@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail, X,User } from "lucide-react";
+import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail, X,User,Globe, Banknote,Currency } from "lucide-react";
 // import {products} from "@/components/products"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -15,13 +15,14 @@ import { useGetProductsQuery } from '@/features/products/productsApi';
 
 function Shop() {
   const navigate = useNavigate();
+  const [sort, setSort] = useState("asc");
+  const [notifyEmail, setNotifyEmail] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currency, setCurrency] = useState("RWF");
   const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(undefined);
   const { data: categoriesData } = useGetCategoriesQuery(undefined);
   const { data: products } = useGetProductsQuery(undefined);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [sort, setSort] = useState("asc");
-  const [notifyEmail, setNotifyEmail] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 6;
   
   const productsList = products ?? [];
@@ -45,7 +46,7 @@ function Shop() {
   return (
     <div className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
       <div className="bg-(--primary) shadow-md"><Navbar /></div>
-      <header className="relative py-20 px-6 overflow-hidden border-b border-[var(--bolder-gray)]">
+      <header className="relative py-32 px-6 overflow-hidden border-b border-[var(--bolder-gray)]">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
             <h1 className="text-5xl md:text-6xl font-serif text-(--primary) mb-4 tracking-tight">Our Collection</h1>
             <div className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.3em] text-[var(--gold-color)] font-bold">
@@ -157,8 +158,22 @@ function Shop() {
         <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">
           <span className="text-(--primary)">{sorted.length}</span> Curated Items
         </p>
-        
+        {/* for currences */}
         <div className="flex items-center gap-2">
+          <Banknote size={12} className="text-gray-400" />
+          <select
+            value={currency}
+            onChange={e => setCurrency(e.target.value)}
+            className="bg-transparent text-[10px] font-bold uppercase tracking-widest focus:outline-none cursor-pointer text-(--primary)"
+          >
+            <option value="RWF">RW (RWF)</option>
+            <option value="USD">Dollar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="GBP">Pound (GBP)</option>
+          </select>
+        </div>
+        {/* price sorting */}
+                <div className="flex items-center gap-2">
           <ArrowUpDown size={12} className="text-gray-400" />
           <select
             value={sort}

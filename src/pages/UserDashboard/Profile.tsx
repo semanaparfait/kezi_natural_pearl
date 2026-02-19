@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState,useRef } from "react"
 import { Pen, Calendar, Mail,  ShieldAlert, Loader2 } from "lucide-react";
 import Input from "@/components/Input"
 import { toast } from "react-hot-toast";
@@ -12,7 +12,8 @@ function Profile() {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [memberSince, setMemberSince] = useState("")
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const handleUpdateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) return;
@@ -53,20 +54,45 @@ function Profile() {
     <section className="min-h-screen bg-[#FAF9F6] ">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
         
-        {/* LEFT: MINIMALIST AVATAR & STATS */}
         <div className="lg:col-span-4 space-y-8">
           <div className="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
-            <div className="relative group mb-6">
-              <div className="absolute inset-0 bg-[var(--gold-color)]/10 blur-3xl rounded-full group-hover:bg-[var(--gold-color)]/20 transition-all duration-700" />
-              <img 
-                src={currentUser?.profile || "https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"} 
-                alt="Profile" 
-                className="relative w-40 h-40 rounded-full object-cover border-[6px] border-white shadow-2xl"
-              />
-              <button className="absolute bottom-2 right-2 bg-(--primary) text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform border-4 border-white">
-                <Pen size={14} />
-              </button>
-            </div>
+          <div className="relative group mb-6">
+
+            <div className="absolute inset-0 bg-[var(--gold-color)]/10 blur-3xl rounded-full group-hover:bg-[var(--gold-color)]/20 transition-all duration-700" />
+
+            {/* PROFILE IMAGE */}
+            <img
+              src={
+                profileImage
+                  ? URL.createObjectURL(profileImage) 
+                  : currentUser?.profile || "https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"
+              }
+              alt="Profile"
+              className="relative w-40 h-40 rounded-full object-cover border-[6px] border-white shadow-2xl"
+            />
+
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="absolute bottom-2 right-2 bg-[var(--primary)] text-white p-3 rounded-full shadow-xl hover:scale-110 transition-transform border-4 border-white"
+            >
+              <Pen size={14} />
+            </button>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setProfileImage(file); 
+                }
+              }}
+            />
+
+          </div>
+
             
             <h1 className="text-3xl font-serif italic text-(--primary)">{name || "Member"}</h1>
             <p className="text-[var(--gold-color)] text-[10px] font-black uppercase tracking-[0.3em] mt-2">The Collective Member</p>
@@ -88,7 +114,7 @@ function Profile() {
           </div>
         </div>
 
-        {/* RIGHT: EDITABLE DETAILS */}
+
         <div className="lg:col-span-8 space-y-8">
           <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-10 pb-6 border-b border-gray-50">
@@ -109,7 +135,7 @@ function Profile() {
                     className="w-full bg-(--primary) text-white rounded-full py-5 font-black text-[10px] uppercase tracking-[0.3em] shadow-xl hover:bg-black hover:scale-[1.02] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
                   >
                     {isUpdating && <Loader2 size={14} className="animate-spin" />}
-                    {isUpdating ? "Refining..." : "Update Profile"}
+                    {isUpdating ? "Updating..." : "Update Profile"}
                   </button>
                 </div>
               </div>

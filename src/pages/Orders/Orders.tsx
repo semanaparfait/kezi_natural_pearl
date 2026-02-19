@@ -14,7 +14,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 
-// Mock data for the premium experience
+
 const MOCK_ORDERS = [
   {
     id: "INV-98231",
@@ -78,7 +78,6 @@ function Orders() {
             </h1>
           </div>
 
-          {/* Search Bar */}
           <div className="relative w-full md:w-80 group">
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[var(--gold-color)] transition-colors" size={18} />
             <input 
@@ -91,7 +90,6 @@ function Orders() {
           </div>
         </div>
 
-        {/* MAIN ORDERS LIST */}
         <div className="space-y-8">
           {MOCK_ORDERS.length > 0 ? (
             MOCK_ORDERS.map((order) => (
@@ -120,7 +118,6 @@ function Orders() {
                   </div>
                 </div>
 
-                {/* Order Content */}
                 <div className="p-6  grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                   <div className="lg:col-span-8">
                     <div className="flex flex-wrap gap-4">
@@ -138,7 +135,6 @@ function Orders() {
                     </div>
                   </div>
 
-                  {/* Actions & Summary */}
                   <div className="lg:col-span-4 lg:border-l lg:border-gray-50 lg:pl-10 flex flex-row lg:flex-col justify-between lg:justify-center items-center lg:items-start gap-4">
                     <div>
                       <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Total Amount</p>
@@ -153,7 +149,7 @@ function Orders() {
               </div>
             ))
           ) : (
-            /* Empty State */
+
             <div className="py-40 text-center space-y-6 bg-white rounded-[3rem] border border-dashed border-gray-200">
               <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto text-gray-300">
                 <ShoppingBag size={32} />
@@ -169,7 +165,6 @@ function Orders() {
           )}
         </div>
 
-        {/* HELP FOOTER */}
         <div className="mt-20 p-10 bg-[var(--secondary-cream-white)] rounded-[2.5rem] border border-[var(--gold-color)]/10 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6">
              <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[var(--gold-color)]">

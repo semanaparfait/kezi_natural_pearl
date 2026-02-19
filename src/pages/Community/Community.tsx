@@ -21,7 +21,7 @@ const BLOGS = [
     category: "Skin Care",
     title: "The Science of Pearl Soap: Why it works for you",
     excerpt: "Discover the natural minerals and ancient beauty secrets that make Kezi Pearl soaps unique. Learn how pearl powder transforms your daily routine into a luxurious self-care ritual.",
-    image: "https://images.unsplash.com/photo-1556228578-dd339a7a2f2c?w=800&q=80",
+    image: "https://i.pinimg.com/1200x/7e/08/27/7e082763f9b6d4588ccb2d7d8d0d3244.jpg",
     author: "Dr. Marie Uwase",
     date: "Feb 15, 2026",
     readTime: "5 min read"
@@ -29,9 +29,9 @@ const BLOGS = [
   {
     id: 2,
     category: "Wellness",
-    title: "Morning Rituals with Kezi: Start Your Day Right",
+    title: "Morning talk with Kezi: Start Your Day Right",
     excerpt: "Transform your morning routine with these wellness practices inspired by African traditions and modern science.",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+    image: "https://i.pinimg.com/1200x/68/a1/68/68a168e9be2eba4379bb725718f54b85.jpg",
     author: "Grace Niyonzima",
     date: "Feb 12, 2026",
     readTime: "4 min read"
@@ -41,7 +41,7 @@ const BLOGS = [
     category: "Events",
     title: "Kigali Wellness Expo 2026: A Recap",
     excerpt: "Highlights from our recent pop-up at the expo where we celebrated natural beauty and community wellness.",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+    image: "https://i.pinimg.com/1200x/78/f3/2b/78f32bab0e0b84b0745638647ba70ace.jpg",
     author: "Kezi Team",
     date: "Jan 20, 2026",
     readTime: "6 min read"
@@ -51,7 +51,7 @@ const BLOGS = [
     category: "Jewelry",
     title: "Choosing the right Gold for your skin tone",
     excerpt: "A comprehensive guide to matching our Glitz & Glam jewelry pieces with your natural glow and personal style.",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80",
+    image: "https://i.pinimg.com/1200x/3d/05/f1/3d05f1ce534f7ed89aa891e7b86ab22e.jpg",
     author: "Aisha Mukamana",
     date: "Feb 10, 2026",
     readTime: "7 min read"
@@ -61,7 +61,7 @@ const BLOGS = [
     category: "Beauty Tips",
     title: "Natural Beauty Secrets from African Queens",
     excerpt: "Timeless beauty wisdom passed down through generations, now available in every Kezi product.",
-    image: "https://images.unsplash.com/photo-1487412912498-0447578fcca8?w=800&q=80",
+    image: "https://i.pinimg.com/1200x/ae/11/0c/ae110c82d723b884e0351e68d7916d46.jpg",
     author: "Zahara Habimana",
     date: "Feb 8, 2026",
     readTime: "5 min read"
@@ -71,7 +71,7 @@ const BLOGS = [
     category: "Sustainability",
     title: "Our Commitment to Sustainable Beauty",
     excerpt: "How Kezi is revolutionizing the beauty industry with eco-friendly practices and ethical sourcing.",
-    image: "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=800&q=80",
+    image: "https://i.pinimg.com/1200x/9b/71/32/9b713260434f2cb8f02a249d182f5cb8.jpg",
     author: "Jean Pierre Nkusi",
     date: "Feb 5, 2026",
     readTime: "8 min read"
@@ -86,7 +86,7 @@ const UPCOMING_EVENTS = [
     time: "10:00 AM - 2:00 PM",
     location: "Kigali Heights, Level 3",
     description: "Join us for an immersive workshop on natural skincare and the art of self-care.",
-    image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=800&q=80",
+    image: "https://i.pinimg.com/1200x/a5/01/40/a50140da98ee4e4fa017095455760dcc.jpg",
     capacity: "Limited to 30 participants",
     price: "15,000 RWF"
   },

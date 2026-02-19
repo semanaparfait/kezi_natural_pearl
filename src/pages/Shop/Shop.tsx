@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail, X,User,Globe, Banknote,Currency } from "lucide-react";
+import {  ShoppingBag, Heart, ArrowUpDown, Zap, Mail, X,User, Banknote } from "lucide-react";
 // import {products} from "@/components/products"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";

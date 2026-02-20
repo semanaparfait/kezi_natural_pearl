@@ -22,6 +22,7 @@ import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import Profile from "@/owner/Profile/Profile";
 import ContactUs from "@/owner/ContactUs/ContactUs";
 import Newsletter from "@/owner/NewsLetter/NewsLetter";
+import ViewOrders from "@/owner/Order/ViewOrders";
 
 function AdminPage() {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
@@ -35,6 +36,7 @@ function AdminPage() {
     { name: "Users", icon: UsersIcon },
     { name: "Products", icon: Package },
     { name: "Categories", icon: Tags },
+    { name: "Orders", icon: Tags },
     { name: "profile", icon: User },
     { name: "contact us", icon: Mail },
     { name: "newsletter", icon: FileText },
@@ -154,6 +156,7 @@ function AdminPage() {
           {activeMenu === "Users" && <Users />}
           {activeMenu === "Products" && <Products />}
           {activeMenu === "Categories" && <Category />}
+          {activeMenu === "Orders" && <ViewOrders />}
           {activeMenu === "profile" && <Profile />}
           {activeMenu === "contact us" && <ContactUs />}
           {activeMenu === "newsletter" && <Newsletter />}

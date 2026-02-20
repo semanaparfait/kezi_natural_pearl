@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Plus, Trash2, Edit2, MapPin, Phone, User, CheckCircle2, XCircle } from "lucide-react";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import {useAddAddressMutation,useGetAddressesQuery} from '@/features/Address/Address'
 
 interface AddressItem {
   id: string;
@@ -43,6 +44,9 @@ function Address() {
     country: "",
     isDefault: false,
   });
+
+  const [addAddress] = useAddAddressMutation();
+  const { data: fetchedAddresses, isLoading, error } = useGetAddressesQuery();
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({
@@ -245,7 +249,7 @@ function Address() {
 
         {/* Addresses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {addresses.map((address) => (
+          {fetchedAddresses.map((address: any) => (
             <div
               key={address.id}
               className={`relative bg-white/90 backdrop-blur-md rounded-[32px] p-6 shadow-lg border-2 transition-all ${

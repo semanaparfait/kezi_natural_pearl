@@ -20,6 +20,7 @@ import Account1 from '@/pages/Account/Account1'
 import Account2 from '@/pages/Account/Account2'
 import Community from "@/pages/Community/Community";
 import Orders from "@/pages/Orders/Orders";
+import Invoice from "@/pages/Invoice/Invoice";
 function App() {
 
 
@@ -43,6 +44,7 @@ function App() {
     <Route path="/verification-successful/:token" element={<VerifySuccess />} />
     <Route path="/userDashboard" element={<UserDashboard />} />
     <Route path="/adminPage" element={<AdminPage />} />
+    <Route path="/order-confirmation" element={<Invoice />} />
     <Route path="*" element={<NotFound />} />
     <Route path="/productdetails/:id" element={<ProductDetails />} />
     <Route path="/cart" element={<Cart />} />

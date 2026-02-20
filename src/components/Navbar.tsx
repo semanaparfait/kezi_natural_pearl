@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Globe, ShoppingCart, ChevronDown, Package, LayoutDashboard, LogOut,  CircleUser } from 'lucide-react';
-import logo from '@/assets/logo-Kezi (1).svg';
+import logo from '@/assets/logo.png';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useState,useEffect } from 'react';
 import {motion} from 'framer-motion'
@@ -58,7 +58,7 @@ function Navbar() {
           animate={{ x: 0 }}
           transition={{ duration: 1 }}
         >
-          <img src={logo} alt="KEZI Logo" className="w-16 h-16 brightness-0 invert" />
+          <img src={logo} alt="KEZI Logo" className="w-20 h-20  " />
         </motion.div>
         <ul className="md:flex hidden gap-4 px-10 py-2 bg-transparent bg-white/10  rounded-full ">
           {Links.map((link) => (

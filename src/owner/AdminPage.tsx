@@ -12,7 +12,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo-Kezi (1).svg";
+import logo from "@/assets/logo.png";
 import Dashboard from "@/owner/Dashboard/Dashboard";
 import Products from "@/owner/Products/Products";
 import Users from "@/owner/Users/Users";

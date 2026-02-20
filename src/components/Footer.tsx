@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-import logo from '@/assets/logo-Kezi (1).svg'
+import logo from '@/assets/logo.png'
 import { Facebook, Instagram, Twitter, Youtube, Phone, Mail,MapPin } from 'lucide-react'
 
 function Footer() {

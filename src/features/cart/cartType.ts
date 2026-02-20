@@ -8,8 +8,12 @@ export interface CartItemResponse {
   items: [
     {
       id: string;
-      image: string;
-      product: string;
+      product:{
+        id: string;
+        image: string;
+        name: string;
+        stockquantity: number;
+      }
       quantity: number;
       unitPrice: number;
       totalPrice: number;

@@ -3,14 +3,14 @@ import { MoveLeft, Minus, Plus, Trash2, ShieldCheck, Truck } from 'lucide-react'
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
-import { useGetCartItemsQuery, useAddToCartMutation, useRemoveFromCartMutation } from '@/features/cart/cartApi';
+import { useGetCartItemsQuery,  useRemoveFromCartMutation,useUpdateCartItemMutation } from '@/features/cart/cartApi';
 
 function Cart() {
   const token = localStorage.getItem('token');
   const [cart, setCart] = useState<any[]>([]);
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
   const { data: cartItems, isLoading, error, refetch } = useGetCartItemsQuery(undefined);
-  const [updateCartItem] = useAddToCartMutation();
+  const [updateCartItem] = useUpdateCartItemMutation();
   const [removeCartItem] = useRemoveFromCartMutation();
 //  console.log(useGetCartItemsQuery(undefined));
   useEffect(() => {
@@ -62,7 +62,7 @@ function Cart() {
     );
 
     try {
-      await updateCartItem({ productId: item.productId, quantity: newQuantity }).unwrap();
+      await updateCartItem({ productId: item.id, quantity: newQuantity }).unwrap();
       refetch();
     } catch (err) {
       console.error("Failed to update quantity:", err);
@@ -84,7 +84,7 @@ function Cart() {
     );
 
     try {
-      await updateCartItem({ productId: item.productId, quantity: newQuantity }).unwrap();
+      await updateCartItem({ productId: item.id, quantity: newQuantity }).unwrap();
       refetch();
 
     } catch (err) {

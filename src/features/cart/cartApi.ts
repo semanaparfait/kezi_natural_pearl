@@ -30,6 +30,14 @@ export const cartApi = baseApi.injectEndpoints({
             
             providesTags: ['Cart'],
         }),
+        updateCartItem: build.mutation<CartItem, { productId: string; quantity: number }>({
+            query: ({ productId, quantity }) => ({
+                url: `/api/v1/cart/item/${productId}`,
+                method: 'PATCH',
+                body: { quantity },
+            }),
+            invalidatesTags: ['Cart'],
+        }),
         checkout: build.mutation<{ success: boolean }, CheckoutData>({
             query: (checkoutData) => ({
                 url: '/api/v1/cart/check-out',
@@ -45,5 +53,6 @@ export const {
     useAddToCartMutation,
     useRemoveFromCartMutation,
     useGetCartItemsQuery,
+    useUpdateCartItemMutation,
     useCheckoutMutation,
 } = cartApi;

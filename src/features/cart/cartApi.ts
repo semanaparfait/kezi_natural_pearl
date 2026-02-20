@@ -1,11 +1,11 @@
 import {baseApi} from '@/services/baseApi'
-import type{ CartItem, CartItemResponse } from '@/features/cart/cartType';
+import type{ CartItem, CartItemResponse, CheckoutData } from '@/features/cart/cartType';
 
 export const cartApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         addToCart: build.mutation<CartItem, CartItem>({
             query: (item) => ({
-                url: '/api/v1/cart/add',
+                url: '/api/v1/cart/item',
                 method: 'POST',
                 body: item,
             }),
@@ -30,6 +30,14 @@ export const cartApi = baseApi.injectEndpoints({
             
             providesTags: ['Cart'],
         }),
+        checkout: build.mutation<{ success: boolean }, CheckoutData>({
+            query: (checkoutData) => ({
+                url: '/api/v1/cart/check-out',
+                method: 'POST',
+                body: checkoutData,
+            }),
+            invalidatesTags: ['Cart'],
+        }),
     }),
 });
 
@@ -37,4 +45,5 @@ export const {
     useAddToCartMutation,
     useRemoveFromCartMutation,
     useGetCartItemsQuery,
+    useCheckoutMutation,
 } = cartApi;

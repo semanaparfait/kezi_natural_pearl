@@ -12,7 +12,7 @@ function Cart() {
   const { data: cartItems, isLoading, error, refetch } = useGetCartItemsQuery(undefined);
   const [updateCartItem] = useAddToCartMutation();
   const [removeCartItem] = useRemoveFromCartMutation();
-
+//  console.log(useGetCartItemsQuery(undefined));
   useEffect(() => {
     if (cartItems?.items) {
       setCart(cartItems.items);
@@ -139,8 +139,8 @@ function Cart() {
                   <div className="relative group shrink-0">
                     <div className="w-32 h-32 rounded-2xl overflow-hidden border border-[var(--bolder-gray)]/20">
                       <img
-                        src={item.image}
-                        alt={item.product}
+                        src={item.product.image}
+                        alt={item.product.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                     </div>
@@ -148,8 +148,8 @@ function Cart() {
 
                   <div className="flex-1 flex flex-wrap items-center justify-between w-full">
                     <div className="flex flex-col space-y-2 text-center sm:text-left">
-                      <h2 className="text-sm text-green-600">{item?.stockQuantity ?? ""}</h2>
-                      <h3 className="text-xl font-serif text-[var(--primary)] italic leading-tight">{item.product}</h3>
+                      <h2 className="text-sm text-green-600">{item?.product.stockQuantity ?? ""}</h2>
+                      <h3 className="text-xl font-serif text-[var(--primary)] italic leading-tight">{item.product.name}</h3>
                       <div className="flex items-center justify-center gap-4 bg-[var(--secondary-cream-white)] rounded-md px-4 py-2 border border-[var(--bolder-gray)]/20">
                         <button onClick={() => decrement(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">
                           <Minus size={14} />

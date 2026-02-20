@@ -1,9 +1,26 @@
 import { useState } from "react";
-import { CreditCard, Smartphone } from "lucide-react";
+import { CreditCard, Smartphone, Loader2 } from "lucide-react";
 import Input from "@/components/Input";
 
-const Payment = ({ setCurrentStep }: { setCurrentStep: (step: number) => void }) => {
+const Payment = ({ 
+  setCurrentStep, 
+  handleCheckout 
+}: { 
+  setCurrentStep: (step: number) => void;
+  handleCheckout: (phoneNumber?: string) => Promise<void>;
+}) => {
   const [paymentMethod, setPaymentMethod] = useState("momo");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [momoNumber, setMomoNumber] = useState("");
+
+  const handleCompleteOrder = async () => {
+    setIsProcessing(true);
+    try {
+      await handleCheckout(momoNumber);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <div className="bg-white rounded-[2.5rem] p-6 md:p-12 shadow-sm border border-gray-100 space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
@@ -31,20 +48,37 @@ const Payment = ({ setCurrentStep }: { setCurrentStep: (step: number) => void })
 
       {paymentMethod === 'momo' && (
         <div className="bg-gray-50 p-6 rounded-3xl animate-in zoom-in-95">
-          <Input label="MoMo Number" placeholder="078XXXXXXX" value="" onChange={()=>{}} />
+          <Input 
+            label="MoMo Number" 
+            placeholder="078XXXXXXX" 
+            value={momoNumber} 
+            onChange={(e) => setMomoNumber(e.target.value)} 
+          />
           <p className="text-[10px] text-gray-400 mt-2 italic">* A prompt will be sent to this number for your PIN.</p>
         </div>
       )}
 
       <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
         <button 
-          onClick={() => setCurrentStep(2)} 
+          onClick={() => setCurrentStep(1)} 
           className="text-gray-400 hover:text-(--primary) text-xs font-bold uppercase tracking-widest"
+          disabled={isProcessing}
         >
           Back
         </button>
-        <button className="px-16 py-5 rounded-full bg-[var(--gold-color)] text-white text-[10px] uppercase tracking-[0.3em] font-black shadow-2xl">
-          Complete Order
+        <button 
+          onClick={handleCompleteOrder}
+          disabled={isProcessing}
+          className="px-16 py-5 rounded-full bg-[var(--gold-color)] text-white text-[10px] uppercase tracking-[0.3em] font-black shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 disabled:opacity-50 disabled:hover:scale-100"
+        >
+          {isProcessing ? (
+            <>
+              <Loader2 size={16} className="animate-spin" />
+              Processing...
+            </>
+          ) : (
+            "Complete Order"
+          )}
         </button>
       </div>
     </div>

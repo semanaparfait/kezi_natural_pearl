@@ -5,6 +5,7 @@ import { Country, State, City } from "country-state-city";
 import Payment from "@/pages/CheckOut/Payment";
 import { useGetCartItemsQuery } from '@/features/cart/cartApi'
 import { toast } from "react-hot-toast";
+import {useCheckoutMutation} from  '@/features/cart/cartApi'
 import { useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation,useSetDefaultAddressMutation } from '@/features/Address/Address'
 
 function CheckOut() {
@@ -12,12 +13,14 @@ function CheckOut() {
     const [selectedOption, setSelectedOption] = useState(1);
     const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
     const [showNewAddressForm, setShowNewAddressForm] = useState(false);
+    const [guestAddressSnapshot, setGuestAddressSnapshot] = useState<any>(null);
 
     const { data: cartData } = useGetCartItemsQuery();
     const { data: getAddresses } = useGetAddressesQuery();
     const [addAddress, { isLoading: isSending }] = useAddAddressMutation();
     const [deleteAddress, { isLoading: isDeleting }] = useDeleteAddressMutation();
     const [setDefaultAddress] = useSetDefaultAddressMutation();
+    const [checkout] = useCheckoutMutation();
     const [country, setCountry] = useState("RW");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
@@ -43,13 +46,15 @@ function CheckOut() {
     ];
 
     const handleSubmitAddress = async () => {
-        // If an existing address is selected, just move to payment
-        if (selectedAddressId && !showNewAddressForm) {
+        const token = localStorage.getItem('token');
+
+        // If logged in and existing address is selected, just move to payment
+        if (token && selectedAddressId && !showNewAddressForm) {
             setCurrentStep(2);
             return;
         }
 
-        // Validation for new address
+        // Validate form data
         if (!formData.fullName || !formData.phoneNumber) {
             return toast.error("Full Name and Phone Number are required.");
         }
@@ -58,25 +63,32 @@ function CheckOut() {
             return toast.error("Please provide a street address.");
         }
 
-        try {
-            const addressData = {
-                fullName: formData.fullName,
-                phoneNumber: formData.phoneNumber,
-                country: Country.getCountryByCode(country)?.name || country,
-                state: State.getStateByCodeAndCountry(state, country)?.name || state,
-                city: isRwanda ? formData.district : city,
-                district: formData.district,
-                sector: formData.sector,
-                addressLine1: formData.addressLine1,
-                postalCode: formData.postalCode,
-                province: isRwanda ? State.getStateByCodeAndCountry(state, country)?.name : ""
-            };
+        const addressData = {
+            fullName: formData.fullName,
+            phoneNumber: formData.phoneNumber,
+            country: Country.getCountryByCode(country)?.name || country,
+            state: State.getStateByCodeAndCountry(state, country)?.name || state,
+            city: isRwanda ? formData.district : city,
+            district: formData.district,
+            sector: formData.sector,
+            addressLine1: formData.addressLine1,
+            postalCode: formData.postalCode,
+            province: isRwanda ? State.getStateByCodeAndCountry(state, country)?.name : ""
+        };
 
-            await addAddress(addressData).unwrap();
-            toast.success("Shipping address saved!");
+        // If user is logged in, save address to database
+        if (token) {
+            try {
+                await addAddress(addressData).unwrap();
+                toast.success("Shipping address saved!");
+                setCurrentStep(2);
+            } catch (error: any) {
+                toast.error(error?.data?.message || "Failed to save address.");
+            }
+        } else {
+            // If guest user, store address snapshot and proceed
+            setGuestAddressSnapshot(addressData);
             setCurrentStep(2);
-        } catch (error: any) {
-            toast.error(error?.data?.message || "Failed to save address.");
         }
     };
 
@@ -96,14 +108,47 @@ function CheckOut() {
         if (currentStep > 1) setCurrentStep(currentStep - 1);
         else window.history.back();
     };
-
+    const handleCheckout = async (phoneNumber?: string): Promise<void> => {
+        const token = localStorage.getItem('token');
+        
+        // For logged-in users, require addressId
+        if (token && !selectedAddressId) {
+            toast.error("Please select a shipping address.");
+            return;
+        }
+        
+        // For guest users, require address snapshot
+        if (!token && !guestAddressSnapshot) {
+            toast.error("Please provide your shipping address.");
+            return;
+        }
+        
+        try {
+            const checkoutData: any = {
+                phoneNumber: phoneNumber || guestAddressSnapshot?.phoneNumber
+            };
+            
+            // Add either addressId (logged in) or shippingAddressSnapshot (guest)
+            if (token) {
+                checkoutData.addressId = selectedAddressId;
+            } else {
+                checkoutData.shippingAddressSnapshot = guestAddressSnapshot;
+            }
+            
+            await checkout(checkoutData).unwrap();
+            toast.success("Order placed successfully!");
+            window.location.href = "/order-confirmation";
+        } catch (error: any) {
+            toast.error(error?.data?.message || "Failed to place order.");
+        }
+    };
     const selectClass = "w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[var(--gold-color)] focus:ring-2 focus:ring-[var(--gold-color)]/20 transition-all appearance-none cursor-pointer";
 
     return (
         <section className="min-h-screen bg-gray-50/30 pb-20">
             {/* Header */}
             <div className="max-w-7xl mx-auto pt-10 px-6 md:px-10">
-                <button onClick={handleBack} className="group flex items-center gap-2 text-[10px] uppercase font-black tracking-[0.3em] text-gray-400 hover:text-(--primary) transition-all">
+                <button onClick={handleBack} className="group flex items-center gap-2 text-[10px] uppercase font-black tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all">
                     <MoveLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
                     {currentStep === 1 ? "Back to cart" : `Back to ${steps[currentStep - 2].title}`}
                 </button>
@@ -310,7 +355,7 @@ function CheckOut() {
                         </div>
                     )}
 
-                    {currentStep === 2 && <Payment setCurrentStep={setCurrentStep} />}
+                    {currentStep === 2 && <Payment setCurrentStep={setCurrentStep} handleCheckout={handleCheckout} />}
                 </div>
 
                 {/* Right Column: Order Summary */}
@@ -321,10 +366,10 @@ function CheckOut() {
                             {cartData?.items?.map((item: any) => (
                                 <div key={item.id} className="flex gap-5 items-center">
                                     <div className="w-20 h-20 bg-gray-50 rounded-[1.5rem] overflow-hidden border border-gray-100 shrink-0 shadow-sm">
-                                        <img src={item.image} className="w-full h-full object-cover" alt={item.product} />
+                                        <img src={item.product.image} className="w-full h-full object-cover" alt={item.product.name} />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-black text-(--primary) uppercase tracking-tight truncate">{item.product}</p>
+                                        <p className="text-sm font-black text-[var(--primary)] uppercase tracking-tight truncate">{item.product.name}</p>
                                         <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">Quantity: {item.quantity}</p>
                                         <p className="text-xs font-black text-gray-800 mt-2">{item.totalPrice.toLocaleString()} RWF</p>
                                     </div>
@@ -334,7 +379,7 @@ function CheckOut() {
                         <div className="space-y-5 text-sm mb-10 pt-6 border-t border-gray-100">
                             <div className="flex justify-between text-gray-500 font-medium">
                                 <span>Subtotal</span>
-                                <span className="text-(--primary) font-black">{cartData?.items ? cartData.items.reduce((sum: number, item: any) => sum + item.totalPrice, 0).toLocaleString() : 0} RWF</span>
+                                <span className="text-[var(--primary)] font-black">{cartData?.items ? cartData.items.reduce((sum: number, item: any) => sum + item.totalPrice, 0).toLocaleString() : 0} RWF</span>
                             </div>
                             <div className="flex justify-between items-center text-gray-500 italic">
                                 <span className="flex items-center gap-2"><Truck size={16}/> Shipping</span>

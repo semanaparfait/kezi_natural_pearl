@@ -227,14 +227,8 @@ function Community() {
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Active Members</span>
               </div>
             </div>
-
-            {/* Right Column - Arch Visuals (7 cols) */}
             <div className="lg:col-span-7 relative h-[600px] md:h-[800px] flex items-center justify-center lg:justify-end ">
-
-              {/* Main Large Arch */}
               <div className="relative w-full max-w-md md:max-w-lg h-full">
-
-                {/* Secondary Floating Image (Circle/Oval) */}
                 <div className="absolute  top-1/4 -left-12 md:-left-24 w-48 h-64 md:w-56 md:h-72 hidden md:block">
                   <div className="absolute inset-0 bg-[var(--primary)] rounded-[3rem] transform -translate-x-3 translate-y-3"></div>
                   <div className="relative w-full h-full rounded-[3rem] overflow-hidden border-4 border-white shadow-xl rotate-[-5deg] hover:rotate-0 transition-all duration-500">
@@ -244,7 +238,7 @@ function Community() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  {/* Decorative Stamp */}
+
                   <div className="absolute -top-6 -right-6 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg animate-spin-slow">
                     <div className="w-full h-full border-2 border-[var(--gold-color)] border-dashed rounded-full flex items-center justify-center p-1">
                       <Star size={24} className="text-[var(--gold-color)] fill-[var(--gold-color)]" />

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { MoveLeft, Minus, Plus, Trash2, ShieldCheck, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useGetCartItemsQuery,  useRemoveFromCartMutation,useUpdateCartItemMutation } from '@/features/cart/cartApi';
 
 function Cart() {
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const [cart, setCart] = useState<any[]>([]);
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
@@ -104,14 +106,13 @@ function Cart() {
   };
 
   const subtotal = cart.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
-  const shipping = subtotal > 5000 || cart.length === 0 ? 0 : 500;
-  const total = subtotal + shipping;
+  const total = subtotal; // + shipping + tax (if applicable)
 
   return (
     <section className="min-h-screen bg-[var(--secondary-cream-white)] pb-24">
       <div className="max-w-7xl mx-auto px-6 pt-12">
         <button
-          onClick={() => window.history.back()}
+          onClick={() => navigate('/shop')}
           className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all"
         >
           <MoveLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
@@ -148,7 +149,7 @@ function Cart() {
 
                   <div className="flex-1 flex flex-wrap items-center justify-between w-full">
                     <div className="flex flex-col space-y-2 text-center sm:text-left">
-                      <h2 className="text-sm text-green-600">{item?.product.stockQuantity ?? ""}</h2>
+                      <h2 className="text-sm text-green-600 hidden">{item.product.stockquantity }</h2>
                       <h3 className="text-xl font-serif text-[var(--primary)] italic leading-tight">{item.product.name}</h3>
                       <div className="flex items-center justify-center gap-4 bg-[var(--secondary-cream-white)] rounded-md px-4 py-2 border border-[var(--bolder-gray)]/20">
                         <button onClick={() => decrement(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">
@@ -201,12 +202,12 @@ function Cart() {
                 <span>Subtotal</span>
                 <span>{subtotal.toLocaleString()} RWF</span>
               </div>
-              <div className="flex justify-between text-sm font-light text-white/70 italic">
+              {/* <div className="flex justify-between text-sm font-light text-white/70 italic hidden">
                 <span>Shipping Fees</span>
                 <span className="text-[var(--gold-color)] font-bold uppercase text-[10px] tracking-widest">
                   {shipping === 0 ? 'Free' : `${shipping} RWF`}
                 </span>
-              </div>
+              </div> */}
               <div className="flex justify-between text-sm font-light text-white/70 italic hidden">
                 <span>Estimated Tax (5%)</span>
                 <span>{Math.floor(subtotal * 0.05).toLocaleString()} RWF</span>

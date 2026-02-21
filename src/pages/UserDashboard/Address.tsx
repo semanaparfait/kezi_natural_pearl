@@ -46,7 +46,7 @@ function Address() {
   });
 
   const [addAddress] = useAddAddressMutation();
-  const { data: fetchedAddresses, isLoading, error } = useGetAddressesQuery();
+  const { data: fetchedAddresses, } = useGetAddressesQuery();
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({
@@ -249,7 +249,7 @@ function Address() {
 
         {/* Addresses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {fetchedAddresses.map((address: any) => (
+          {addresses.map((address) => (
             <div
               key={address.id}
               className={`relative bg-white/90 backdrop-blur-md rounded-[32px] p-6 shadow-lg border-2 transition-all ${

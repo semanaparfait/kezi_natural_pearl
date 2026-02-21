@@ -5,10 +5,12 @@ import { Country, State, City } from "country-state-city";
 import Payment from "@/pages/CheckOut/Payment";
 import { useGetCartItemsQuery } from '@/features/cart/cartApi'
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import {useCheckoutMutation} from  '@/features/cart/cartApi'
 import { useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation,useSetDefaultAddressMutation } from '@/features/Address/Address'
 
 function CheckOut() {
+    const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedOption, setSelectedOption] = useState(1);
     const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
@@ -104,10 +106,6 @@ function CheckOut() {
         }
     };
 
-    const handleBack = () => {
-        if (currentStep > 1) setCurrentStep(currentStep - 1);
-        else window.history.back();
-    };
     const handleCheckout = async (phoneNumber?: string): Promise<void> => {
         const token = localStorage.getItem('token');
         
@@ -137,7 +135,7 @@ function CheckOut() {
             
             await checkout(checkoutData).unwrap();
             toast.success("Order placed successfully!");
-            window.location.href = "/order-confirmation";
+            navigate("/order-confirmation");
         } catch (error: any) {
             toast.error(error?.data?.message || "Failed to place order.");
         }
@@ -148,7 +146,7 @@ function CheckOut() {
         <section className="min-h-screen bg-gray-50/30 pb-20">
             {/* Header */}
             <div className="max-w-7xl mx-auto pt-10 px-6 md:px-10">
-                <button onClick={handleBack} className="group flex items-center gap-2 text-[10px] uppercase font-black tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all">
+                <button onClick={() => navigate('/cart')} className="group flex items-center gap-2 text-[10px] uppercase font-black tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all">
                     <MoveLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
                     {currentStep === 1 ? "Back to cart" : `Back to ${steps[currentStep - 2].title}`}
                 </button>
@@ -343,7 +341,7 @@ function CheckOut() {
 
                             {/* Action Footer */}
                             <div className="pt-10 flex justify-between items-center">
-                                <button onClick={handleBack} className="text-gray-400 hover:text-(--primary) text-xs font-black uppercase tracking-widest transition-colors">Cancel</button>
+                                <button onClick={() => navigate('/cart')} className="text-gray-400 hover:text-[var(--primary)] text-xs font-black uppercase tracking-widest transition-colors">Cancel</button>
                                 <button 
                                     onClick={handleSubmitAddress} 
                                     disabled={isSending || (!selectedAddressId && !showNewAddressForm && selectedOption === 1)}

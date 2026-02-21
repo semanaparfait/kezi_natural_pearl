@@ -75,7 +75,7 @@ function Navbar() {
           ))}
         </ul>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 hidden">
             <Globe />
             <select className=" rounded-md p-1 outline-none">
               <option value="en">EN</option>

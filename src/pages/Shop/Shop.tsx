@@ -122,35 +122,47 @@ function Shop() {
       <span className="h-[1px] w-12 bg-[var(--bolder-gray)]"></span>
     </h2>
     
-    <div className="space-y-4">
-      {[
-        { label: "All", range: "all" },
-        { label: "1,000 - 2,000 RWF", range: "1000-2000" },
-        { label: "2,000 - 5,000 RWF", range: "2000-5000" },
-        { label: "Above 5,000 RWF", range: "5000-up" }
-      ].map((price) => (
-        <label 
-          key={price.range} 
-          className="group flex items-center cursor-pointer"
-        >
-          <div className="relative flex items-center justify-center mr-3">
-            <input
-              type="checkbox"
-              className="peer appearance-none w-4 h-4 border border-[var(--bolder-gray)] rounded-sm bg-white checked:bg-(--primary) checked:border-(--primary) transition-all cursor-pointer"
-            />
-            <svg 
-              className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" 
-              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4"
-            >
-              <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+    {(() => {
+
+      
+      const minPrice = Math.min(...productsList.map(p => Number(p.price))) ; 
+      const maxPrice = Math.max(...productsList.map(p => Number(p.price))) ; 
+
+
+      return (
+        <div className="w-full px-2 py-4">
+
+          <div className="flex justify-between items-end mb-4">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Price Range</p>
+              <p className="text-sm font-bold text-gray-700">
+                {minPrice.toLocaleString()} - {maxPrice.toLocaleString()} <span className="text-[10px] text-gray-400">RWF</span>
+              </p>
+            </div>
+            <div className="bg-[var(--primary)] px-2 py-1 rounded text-[10px]  border text-white">
+              MAX: {maxPrice.toLocaleString()}
+            </div>
           </div>
-          <span className="text-sm text-gray-500 group-hover:text-(--primary) transition-colors">
-            {price.label}
-          </span>
-        </label>
-      ))}
-    </div>
+
+          <div className="relative w-full group">
+            <input
+              type="range"
+              min={minPrice}
+              max={maxPrice}
+              value={minPrice}
+              onChange={(e) => console.log(e.target.value)} 
+              className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 hover:accent-emerald-700 transition-all"
+            />
+          </div>
+
+          {/* Range Markers */}
+          <div className="flex justify-between mt-2">
+            <span className="text-[10px] text-gray-400 font-medium">{minPrice.toLocaleString()}</span>
+            <span className="text-[10px] text-gray-400 font-medium">{maxPrice.toLocaleString()}</span>
+          </div>
+        </div>
+      );
+    })()}
   </div>
   <div className="relative p-6 bg-[var(--secondary-beige)] rounded-2xl overflow-hidden border border-[var(--bolder-gray)] group hover:border-[var(--gold-color)] transition-all duration-500">
     <div className="absolute -top-4 -right-4 w-12 h-12 bg-[var(--gold-color)] opacity-10 rounded-full group-hover:scale-150 transition-transform duration-700"></div>

@@ -154,10 +154,10 @@ function Cart() {
                     const isOutOfStock = remainingStock <= 0;
 
                     return (
-                      <div className={`inline-block px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest mb-1 
+                      <div className={`inline-block px-3 py-1 rounded-md text-[10px]  uppercase tracking-widest mb-1 
                         ${isOutOfStock 
                           ? "bg-red-100 text-red-700" 
-                          : "bg-green-100 text-[var(--primary)]"
+                          : "bg-[var(--primary)] text-white"
                         }`}
                       >
                         {isOutOfStock ? (

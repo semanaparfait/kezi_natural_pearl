@@ -1,5 +1,5 @@
 
-import { Download, Printer, Share2, CheckCircle2, MapPin, Globe, Mail } from 'lucide-react';
+import { Download, Printer, CheckCircle2, MapPin, Globe } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
 const Invoice = () => {

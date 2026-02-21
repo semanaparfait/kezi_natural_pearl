@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Payment = ({ 
   setCurrentStep, 
   addressData,
-  cartData
+  // cartData removed (unused)
 }: { 
   setCurrentStep: (step: number) => void;
   addressData: any;

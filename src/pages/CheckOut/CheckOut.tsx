@@ -44,7 +44,6 @@ function CheckOut() {
     const isRwanda = country === "RW";
     const countries = Country.getAllCountries();
     const states = State.getStatesOfCountry(country);
-    const cities = City.getCitiesOfState(country, state);
 
     const steps = [{ id: 1, title: "Shipping" }, { id: 2, title: "Payment" }];
 

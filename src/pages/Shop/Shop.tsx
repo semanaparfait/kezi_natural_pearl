@@ -10,6 +10,7 @@ import ReactPaginate from 'react-paginate';
 import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from '@/features/category/categoryApi';
 import { useGetProductsQuery } from '@/features/products/productsApi';
+import { useAddToCartMutation } from '@/features/cart/cartApi';
 
 
 
@@ -22,6 +23,7 @@ function Shop() {
   const { data: currentUser, isLoading, error } = useGetCurrentUserQuery(undefined);
   const { data: categoriesData } = useGetCategoriesQuery(undefined);
   const { data: products } = useGetProductsQuery(undefined);
+  const [addToCart] = useAddToCartMutation();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const productsPerPage = 6;
   
@@ -41,6 +43,19 @@ function Shop() {
   const handlePageChange = (event: { selected: number }) => {
     setCurrentPage(event.selected);
     window.scrollTo(0, 0);
+  };
+
+  const handleAddToCart = async (product: any, count = 1) => {
+    if (!product) return;
+    try {
+        await addToCart({
+            productId: product.id,
+            quantity: count
+        }).unwrap();
+        toast.success(`${product.name} added to cart!`);
+    } catch (error) {
+        toast.error("Failed to add to cart");
+    }
   };
 
   return (
@@ -194,7 +209,7 @@ function Shop() {
               onClick={() => {
                 if (isLoading) return;
                 if (product.stockQuantity > 0) {
-                  navigate(`/productdetails/${product.id}`);
+                  // navigate(`/productdetails/${product.id}`);
                   return;
                 }
                 if (error || !currentUser) {
@@ -218,8 +233,9 @@ function Shop() {
                     <Zap size={8} fill="currentColor" /> LOW STOCK
                   </div>
                 )}
-                
+              
                 <img
+                onClick={() => navigate(`/productdetails/${product.id}`)}
                   src={typeof product.images === 'string' ? product.images : product.images[0]}
                   alt={product.name}
                   className={`w-full h-full object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
@@ -257,6 +273,7 @@ function Shop() {
                       ${isOutOfStock 
                         ? 'bg-gray-100 text-gray-400 cursor-pointer' 
                         : 'bg-(--primary) text-white hover:bg-[var(--primary-color)]'}`}
+                    onClick={!isOutOfStock ? () => handleAddToCart(product, 1) : undefined}
                   >
                     
                       {isOutOfStock ? (<> Notify Me <Mail size={12} /> </>) : (<>Add to Cart <ShoppingBag size={12} /></>

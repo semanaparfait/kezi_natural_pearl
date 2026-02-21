@@ -1,25 +1,49 @@
 import { useState } from "react";
 import { CreditCard, Smartphone, Loader2 } from "lucide-react";
 import Input from "@/components/Input";
+import { useCheckoutMutation } from '@/features/cart/cartApi';
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Payment = ({ 
   setCurrentStep, 
-  handleCheckout 
+  addressData,
+  cartData
 }: { 
   setCurrentStep: (step: number) => void;
-  handleCheckout: (phoneNumber?: string) => Promise<void>;
+  addressData: any;
+  cartData: any;
 }) => {
   const [paymentMethod, setPaymentMethod] = useState("momo");
   const [isProcessing, setIsProcessing] = useState(false);
   const [momoNumber, setMomoNumber] = useState("");
+  const [checkout] = useCheckoutMutation();
+  const navigate = useNavigate();
 
   const handleCompleteOrder = async () => {
     setIsProcessing(true);
     try {
-      await handleCheckout(momoNumber);
-    } finally {
-      setIsProcessing(false);
+      // Build checkout payload
+      let checkoutPayload: any = { phoneNumber: momoNumber };
+      if (addressData) {
+        if (addressData.shippingAddressSnapshot) {
+          // Remove saveAddress from shippingAddressSnapshot if present
+          const { saveAddress, ...snapshot } = addressData.shippingAddressSnapshot;
+          checkoutPayload.shippingAddressSnapshot = snapshot;
+          if (addressData.saveAddress !== undefined) {
+            checkoutPayload.saveAddress = addressData.saveAddress;
+          }
+        } else if (addressData.addressId) {
+          checkoutPayload.addressId = addressData.addressId;
+        }
+      }
+      const response = await checkout(checkoutPayload).unwrap();
+      toast.success("Order placed successfully!");
+      navigate("/order-confirmation", { state: { invoiceData: response } });
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to place order.");
     }
+    setIsProcessing(false);
   };
 
   return (

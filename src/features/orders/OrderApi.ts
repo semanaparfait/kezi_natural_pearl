@@ -11,7 +11,7 @@ export const orderApi = baseApi.injectEndpoints({
         }),
     }),
     getOrders: build.query({
-        query: () => '/orders',
+        query: () => 'api/v1/orders',
     }),
     getAllOrders: build.query<Order[], void>({
         query: () => '/api/v1/order/admin',

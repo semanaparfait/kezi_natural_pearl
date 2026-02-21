@@ -6,8 +6,9 @@ import Payment from "@/pages/CheckOut/Payment";
 import { useGetCartItemsQuery } from '@/features/cart/cartApi'
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import {useCheckoutMutation} from  '@/features/cart/cartApi'
-import { useAddAddressMutation, useGetAddressesQuery, useDeleteAddressMutation,useSetDefaultAddressMutation } from '@/features/Address/Address'
+import { useGetAddressesQuery, useDeleteAddressMutation,useSetDefaultAddressMutation } from '@/features/Address/Address'
 
 function CheckOut() {
     const navigate = useNavigate();
@@ -15,24 +16,29 @@ function CheckOut() {
     const [selectedOption, setSelectedOption] = useState(1);
     const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
     const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-    const [guestAddressSnapshot, setGuestAddressSnapshot] = useState<any>(null);
+
 
     const { data: cartData } = useGetCartItemsQuery();
-    const { data: getAddresses } = useGetAddressesQuery();
-    const [addAddress, { isLoading: isSending }] = useAddAddressMutation();
+    const { data: getAddresses } = useGetAddressesQuery(undefined, { skip: !localStorage.getItem('token') });
     const [deleteAddress, { isLoading: isDeleting }] = useDeleteAddressMutation();
     const [setDefaultAddress] = useSetDefaultAddressMutation();
+    const [isSending, setIsSending] = useState(false);
+    const [guestAddressSnapshot, setGuestAddressSnapshot] = useState<any>(null);
+    const token = localStorage.getItem('token');
+    const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
     const [checkout] = useCheckoutMutation();
     const [country, setCountry] = useState("RW");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
     const [formData, setFormData] = useState({
-        fullName: "",
-        phoneNumber: "",
+        fullName: currentUser?.fullName || "",
+        phoneNumber: currentUser?.phoneNumber || "",
+        email: currentUser?.email || "",
         addressLine1: "",
         postalCode: "",
         district: "",
         sector: "",
+        saveAddress: false,
     });
 
     const isRwanda = country === "RW";
@@ -47,52 +53,7 @@ function CheckOut() {
         { id: 2, title: "Store Pickup", description: "Pick up your order and enjoy an exclusive experience.", icon: <MapPin size={23} /> },
     ];
 
-    const handleSubmitAddress = async () => {
-        const token = localStorage.getItem('token');
 
-        // If logged in and existing address is selected, just move to payment
-        if (token && selectedAddressId && !showNewAddressForm) {
-            setCurrentStep(2);
-            return;
-        }
-
-        // Validate form data
-        if (!formData.fullName || !formData.phoneNumber) {
-            return toast.error("Full Name and Phone Number are required.");
-        }
-
-        if (selectedOption === 1 && !formData.addressLine1) {
-            return toast.error("Please provide a street address.");
-        }
-
-        const addressData = {
-            fullName: formData.fullName,
-            phoneNumber: formData.phoneNumber,
-            country: Country.getCountryByCode(country)?.name || country,
-            state: State.getStateByCodeAndCountry(state, country)?.name || state,
-            city: isRwanda ? formData.district : city,
-            district: formData.district,
-            sector: formData.sector,
-            addressLine1: formData.addressLine1,
-            postalCode: formData.postalCode,
-            province: isRwanda ? State.getStateByCodeAndCountry(state, country)?.name : ""
-        };
-
-        // If user is logged in, save address to database
-        if (token) {
-            try {
-                await addAddress(addressData).unwrap();
-                toast.success("Shipping address saved!");
-                setCurrentStep(2);
-            } catch (error: any) {
-                toast.error(error?.data?.message || "Failed to save address.");
-            }
-        } else {
-            // If guest user, store address snapshot and proceed
-            setGuestAddressSnapshot(addressData);
-            setCurrentStep(2);
-        }
-    };
 
     const handleDeleteAddress = async (addressId: string) => {
         try {
@@ -106,39 +67,32 @@ function CheckOut() {
         }
     };
 
-    const handleCheckout = async (phoneNumber?: string): Promise<void> => {
+    const handleCheckout = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        // Only move to payment step, do not place checkout here
+        event.preventDefault();
         const token = localStorage.getItem('token');
-        
-        // For logged-in users, require addressId
-        if (token && !selectedAddressId) {
-            toast.error("Please select a shipping address.");
-            return;
-        }
-        
-        // For guest users, require address snapshot
-        if (!token && !guestAddressSnapshot) {
-            toast.error("Please provide your shipping address.");
-            return;
-        }
-        
-        try {
-            const checkoutData: any = {
-                phoneNumber: phoneNumber || guestAddressSnapshot?.phoneNumber
-            };
-            
-            // Add either addressId (logged in) or shippingAddressSnapshot (guest)
-            if (token) {
-                checkoutData.addressId = selectedAddressId;
-            } else {
-                checkoutData.shippingAddressSnapshot = guestAddressSnapshot;
+        if (token) {
+            if (!selectedAddressId && !(showNewAddressForm && formData.addressLine1 && formData.fullName && formData.phoneNumber && formData.saveAddress)) {
+                toast.error("Please select a shipping address or add a new one.");
+                return;
             }
-            
-            await checkout(checkoutData).unwrap();
-            toast.success("Order placed successfully!");
-            navigate("/order-confirmation");
-        } catch (error: any) {
-            toast.error(error?.data?.message || "Failed to place order.");
+        } else {
+            // For guests, set guestAddressSnapshot if form is filled
+            if (!guestAddressSnapshot) {
+                if (formData.fullName && formData.phoneNumber && formData.addressLine1) {
+                    setGuestAddressSnapshot({
+                        ...formData,
+                        country,
+                        state,
+                        city,
+                    });
+                } else {
+                    toast.error("Please provide your shipping address.");
+                    return;
+                }
+            }
         }
+        setCurrentStep(2);
     };
     const selectClass = "w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[var(--gold-color)] focus:ring-2 focus:ring-[var(--gold-color)]/20 transition-all appearance-none cursor-pointer";
 
@@ -210,7 +164,7 @@ function CheckOut() {
                                 </div>
                             </div>
 
-                            {/* Address Management Section */}
+
                             {selectedOption === 1 && (
                                 <div className="space-y-6">
                                     <div className="flex items-center justify-between px-2">
@@ -224,7 +178,7 @@ function CheckOut() {
                                     </div>
 
                                     {!showNewAddressForm ? (
-                                        /* PRE-SAVED ADDRESS CARDS */
+
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             {getAddresses?.map((address: any) => {
                                                 const isSelected = selectedAddressId === address.id;
@@ -284,10 +238,11 @@ function CheckOut() {
                                         </div>
                                     ) : (
                                         /* NEW ADDRESS FORM */
-                                        <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-gray-100 animate-in zoom-in-95 duration-500">
+                                        <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-gray-100 animate-in zoom-in-95 duration-500 ">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                 <Input label="Full Name" placeholder="e.g. Jane Doe" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} />
                                                 <Input label="Phone Number" placeholder="e.g. +250 788..." value={formData.phoneNumber} onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})} />
+                                                <Input label="Email Address" placeholder="e.g. jane.doe@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
                                                 <div className="space-y-1">
                                                     <label className="text-[10px] uppercase font-black text-gray-400 ml-1">Country</label>
                                                     <select className={selectClass} value={country} onChange={(e) => { setCountry(e.target.value); setState(""); setCity(""); }}>
@@ -316,10 +271,18 @@ function CheckOut() {
                                                         </div>
                                                     )}
 
-                                                <div className="md:col-span-2">
-                                                    <Input label="House / Street / Landmark" placeholder="e.g. Near Centenary House" value={formData.addressLine1} onChange={(e) => setFormData({...formData, addressLine1: e.target.value})}/>
-                                                </div>
                                             </div>
+                                                <div className="w-full pt-5 ">
+                                                    <label className="text-[10px] uppercase font-black text-gray-400 ml-1">Street Address</label>
+                                                    <textarea className="border rounded-lg resize-none p-5 border-gray-300 w-full"  rows={5} placeholder="e.g. Near Centenary House" value={formData.addressLine1} onChange={(e) => setFormData({...formData, addressLine1: e.target.value})}></textarea>
+                                                    {/* <Input label="House / Street " fullWidth placeholder="e.g. Near Centenary House" value={formData.addressLine1} onChange={(e) => setFormData({...formData, addressLine1: e.target.value})}/> */}
+                                                </div>
+                                                {currentUser && (
+                                                <div className="pt-4">
+                                                    <input type="checkbox" name="saveAddress" id="saveAddress" className="mr-2" checked={formData.saveAddress} onChange={(e) => setFormData({...formData, saveAddress: e.target.checked})} />
+                                                    <label htmlFor="saveAddress" className="text-sm text-gray-500">Do you want to save this address for future orders?</label>
+                                                </div>
+                                                    )}
                                         </div>
                                     )}
                                 </div>
@@ -343,7 +306,7 @@ function CheckOut() {
                             <div className="pt-10 flex justify-between items-center">
                                 <button onClick={() => navigate('/cart')} className="text-gray-400 hover:text-[var(--primary)] text-xs font-black uppercase tracking-widest transition-colors">Cancel</button>
                                 <button 
-                                    onClick={handleSubmitAddress} 
+                                    onClick={handleCheckout} 
                                     disabled={isSending || (!selectedAddressId && !showNewAddressForm && selectedOption === 1)}
                                     className="px-14 py-5 rounded-full bg-(--primary) text-white text-[11px] uppercase tracking-[0.2em] font-black shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 disabled:opacity-40 disabled:hover:scale-100"
                                 >
@@ -353,7 +316,22 @@ function CheckOut() {
                         </div>
                     )}
 
-                    {currentStep === 2 && <Payment setCurrentStep={setCurrentStep} handleCheckout={handleCheckout} />}
+                    {currentStep === 2 && (
+                        <Payment
+                            setCurrentStep={setCurrentStep}
+                            // Pass address and cart info to Payment
+                            addressData={selectedAddressId ? { addressId: selectedAddressId } : showNewAddressForm && formData.saveAddress ? {
+                                shippingAddressSnapshot: {
+                                    ...formData,
+                                    country,
+                                    state,
+                                    city,
+                                },
+                                saveAddress: formData.saveAddress,
+                            } : guestAddressSnapshot ? { shippingAddressSnapshot: guestAddressSnapshot } : null}
+                            cartData={cartData}
+                        />
+                    )}
                 </div>
 
                 {/* Right Column: Order Summary */}
@@ -381,7 +359,7 @@ function CheckOut() {
                             </div>
                             <div className="flex justify-between items-center text-gray-500 italic">
                                 <span className="flex items-center gap-2"><Truck size={16}/> Shipping</span>
-                                <span className="text-[var(--gold-color)] font-black text-[10px] bg-[var(--gold-color)]/10 px-3 py-1 rounded-full uppercase">Complimentary</span>
+                                <span className="text-(--gold-color) font-black text-[10px] bg-(--gold-color)/10 px-3 py-1 rounded-full uppercase">Complimentary</span>
                             </div>
                             <div className="flex justify-between font-serif italic text-(--primary) pt-8 border-t text-3xl">
                                 <span>Total</span>
@@ -389,7 +367,7 @@ function CheckOut() {
                             </div>
                         </div>
                         <div className="p-6 bg-gray-50 rounded-[2rem] flex items-center gap-5 border border-gray-100">
-                            <ShieldCheck size={28} className="text-[var(--gold-color)]" />
+                            <ShieldCheck size={28} className="text-(--gold-color)" />
                             <p className="text-[10px] uppercase tracking-[0.15em] font-black text-gray-400 leading-relaxed">Secure, Encrypted Checkout</p>
                         </div>
                     </div>

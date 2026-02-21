@@ -5,7 +5,7 @@ export const cartApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         addToCart: build.mutation<CartItem, CartItem>({
             query: (item) => ({
-                url: '/api/v1/cart/item',
+                url: '/api/v1/cart/item/add',
                 method: 'POST',
                 body: item,
             }),
@@ -13,7 +13,7 @@ export const cartApi = baseApi.injectEndpoints({
         }),
             removeFromCart: build.mutation<{ success: boolean }, string>({
             query: (productId) => ({
-                url: '/api/v1/cart',
+                url: `/api/v1/cart/item/remove/${productId}`,
                 method: 'DELETE',
                 body: {
                 items: [productId]  
@@ -32,7 +32,7 @@ export const cartApi = baseApi.injectEndpoints({
         }),
         updateCartItem: build.mutation<CartItem, { productId: string; quantity: number }>({
             query: ({ productId, quantity }) => ({
-                url: `/api/v1/cart/item/${productId}`,
+                url: `/api/v1/cart/item/update/${productId}`,
                 method: 'PATCH',
                 body: { quantity },
             }),
@@ -46,13 +46,21 @@ export const cartApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['Cart'],
         }),
+        clearCart: build.mutation<{ success: boolean }, void>({
+            query: () => ({
+                url: '/api/v1/cart/clear',
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Cart'],
+        }),
     }),
 });
 
 export const {
-    useAddToCartMutation,
     useRemoveFromCartMutation,
+    useAddToCartMutation,
     useGetCartItemsQuery,
     useUpdateCartItemMutation,
     useCheckoutMutation,
+    useClearCartMutation,
 } = cartApi;

@@ -10,8 +10,8 @@ export const orderApi = baseApi.injectEndpoints({
             body: orderData,
         }),
     }),
-    getOrders: build.query({
-        query: () => 'api/v1/orders',
+    getMyOrders: build.query<Order[], void>({
+        query: () => 'api/v1/order',
     }),
     getAllOrders: build.query<Order[], void>({
         query: () => '/api/v1/order/admin',
@@ -23,4 +23,4 @@ export const orderApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateOrderMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetAllOrdersQuery } = orderApi;
+export const { useCreateOrderMutation, useGetMyOrdersQuery, useGetOrderByIdQuery, useGetAllOrdersQuery } = orderApi;

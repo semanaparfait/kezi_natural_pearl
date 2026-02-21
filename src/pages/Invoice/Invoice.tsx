@@ -99,7 +99,7 @@ const Invoice = () => {
           <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-16">
             <div className="space-y-4">
               <div className="w-16 h-16 bg-[var(--primary)] rounded-2xl flex items-center justify-center text-[var(--gold-color)] text-2xl font-black italic shadow-xl">
-                L
+                KEZI
               </div>
               <div>
                 <h2 className="text-xl font-bold tracking-tight">KEZI NATURAL PEARL</h2>
@@ -126,7 +126,7 @@ const Invoice = () => {
             <div>
               <p className="text-[10px] uppercase tracking-[0.2em] font-black text-[var(--gold-color)] mb-4">Billed To</p>
               <h4 className="text-lg font-bold text-[var(--primary)]">{invoiceDataFromCheckout.data.shippingAddressSnapshot.fullName}</h4>
-              <p className="text-gray-500 text-sm mt-1">{invoiceDataFromCheckout.data.shippingAddressSnapshot.city}</p>
+              <p className="text-gray-500 text-sm mt-1">{invoiceDataFromCheckout.data.shippingAddressSnapshot.country} , {invoiceDataFromCheckout.data.shippingAddressSnapshot.city},{invoiceDataFromCheckout.data.shippingAddressSnapshot.state}</p>
               {/* is for email */}
               <p className="text-gray-500 text-sm">{invoiceDataFromCheckout.data.shippingAddressSnapshot.phoneNumber}</p> 
             </div>
@@ -151,7 +151,7 @@ const Invoice = () => {
               <tbody className="divide-y divide-gray-50">
                 {invoiceDataFromCheckout.data.items.map((item, index) => (
                   <tr key={index} className="group hover:bg-gray-50/50 transition-colors">
-                    <div>
+                    <div className='flex flex-wrap items-center gap-4 py-6'>
                     <td className="py-6 px-4">
                       <img src={item.product.image} 
                       alt={item.product.name}

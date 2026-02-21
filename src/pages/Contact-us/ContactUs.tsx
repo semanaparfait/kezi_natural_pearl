@@ -34,8 +34,8 @@ function ContactUs() {
   ];
 
   const [form, setForm] = useState({
-    name: "",
-    email: "",
+    name: currentUser?.fullName || "",
+    email: currentUser?.email || "",
     subject: "",
     message: ""
   });
@@ -130,10 +130,10 @@ function ContactUs() {
                   className="w-full rounded-2xl border border-gray-200 bg-gray-50/50 text-gray-900 px-4 py-3 text-sm focus:border-[var(--gold-color)] focus:ring-2 focus:ring-[var(--gold-color)]/20 transition appearance-none cursor-pointer outline-none"
                 >
                   <option value="" disabled>Select a subject</option>
-                  <option value="general">General Inquiry</option>
-                  <option value="support">Support</option>
-                  <option value="feedback">Feedback</option>
-                  <option value="testimony">Testimony</option>
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Support">Support</option>
+                  <option value="Feedback">Feedback</option>
+                  <option value="Testimony">Testimony</option>
                 </select>
               </div>
 

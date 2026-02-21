@@ -110,7 +110,7 @@ function Cart() {
 
   return (
     <section className="min-h-screen bg-[var(--secondary-cream-white)] pb-24">
-      <div className="max-w-7xl mx-auto px-6 pt-12">
+      <div className="max-w-7xl mx-auto px-10 pt-12">
         <button
           onClick={() => navigate('/shop')}
           className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-400 hover:text-[var(--primary)] transition-all"
@@ -131,14 +131,14 @@ function Cart() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mt-12 grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <div className="max-w-6xl mx-auto px-6 mt-12 grid grid-cols-1 lg:grid-cols-12 gap-16">
         <div className="lg:col-span-8 space-y-8">
           {cart.map(item => (
             <div key={item.id} className="bg-white rounded-[2rem] shadow-sm border border-[var(--bolder-gray)]/30 overflow-hidden">
               <div className="px-5 py-4 space-y-2">
                 <div className="flex flex-col  sm:flex-row gap-8 items-center  border-b border-gray-50 last:border-0">
                   <div className="relative group shrink-0">
-                    <div className="w-32 h-32 rounded-2xl overflow-hidden border border-[var(--bolder-gray)]/20">
+                    <div className="w-25 h-25 rounded-2xl overflow-hidden border border-[var(--bolder-gray)]/20">
                       <img
                         src={item.product.image}
                         alt={item.product.name}
@@ -149,14 +149,40 @@ function Cart() {
 
                   <div className="flex-1 flex flex-wrap items-center justify-between w-full">
                     <div className="flex flex-col space-y-2 text-center sm:text-left">
-                      <h2 className="text-sm text-green-600 hidden">{item.product.stockquantity }</h2>
+                  {(() => {
+                    const remainingStock = item.product.stockquantity - item.quantity;
+                    const isOutOfStock = remainingStock <= 0;
+
+                    return (
+                      <div className={`inline-block px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest mb-1 
+                        ${isOutOfStock 
+                          ? "bg-red-100 text-red-700" 
+                          : "bg-green-100 text-[var(--primary)]"
+                        }`}
+                      >
+                        {isOutOfStock ? (
+                          "Out of Stock"
+                        ) : (
+                          `In Stock: ${remainingStock} products`
+                        )}
+                      </div>
+                    );
+                  })()}
                       <h3 className="text-xl font-serif text-[var(--primary)] italic leading-tight">{item.product.name}</h3>
                       <div className="flex items-center justify-center gap-4 bg-[var(--secondary-cream-white)] rounded-md px-4 py-2 border border-[var(--bolder-gray)]/20">
-                        <button onClick={() => decrement(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">
+                        <button
+                          onClick={() => decrement(item.id)}
+                          className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors"
+                          disabled={item.quantity <= 1}
+                        >
                           <Minus size={14} />
                         </button>
                         <span className="w-8 text-center text-sm font-bold tabular-nums">{item.quantity}</span>
-                        <button onClick={() => increment(item.id)} className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors">
+                        <button
+                          onClick={() => increment(item.id)}
+                          className="text-[var(--primary)] hover:text-[var(--gold-color)] transition-colors"
+                          disabled={item.quantity >= item.product.stockquantity}
+                        >
                           <Plus size={14} />
                         </button>
                       </div>

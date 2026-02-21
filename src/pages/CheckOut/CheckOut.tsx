@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MoveLeft, Check, ShieldCheck, Truck, MapPin, LocateFixed, Loader2, Plus, Home, Trash2 } from "lucide-react";
+import { MoveLeft, Check, ShieldCheck, Truck, MapPin, LocateFixed,Plus, Home, Trash2 } from "lucide-react";
 import Input from "@/components/Input";
 import { Country, State, City } from "country-state-city";
 import Payment from "@/pages/CheckOut/Payment";

@@ -14,7 +14,7 @@ function Navbar() {
   const isHomePage = pathname === '/';
   const token = localStorage.getItem('token');
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
-  const { data: cartItems } = useGetCartItemsQuery(undefined, {skip: !token,});
+  const { data: cartItems } = useGetCartItemsQuery(undefined);
   const cart = cartItems?.items || [];
   // console.log('Current User:', currentUser);
 

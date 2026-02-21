@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Plus, Trash2, Edit2, MapPin, Phone, User, CheckCircle2, XCircle } from "lucide-react";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import {useAddAddressMutation,useGetAddressesQuery} from '@/features/Address/Address'
+// import {useAddAddressMutation,useGetAddressesQuery} from '@/features/Address/Address'
 
 interface AddressItem {
   id: string;
@@ -45,8 +45,8 @@ function Address() {
     isDefault: false,
   });
 
-  const [addAddress] = useAddAddressMutation();
-  const { data: fetchedAddresses, } = useGetAddressesQuery();
+  // const [addAddress] = useAddAddressMutation();
+  // const { data: fetchedAddresses, } = useGetAddressesQuery();
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({

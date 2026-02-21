@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { 
-  Inbox, Star, Clock, CheckCircle2, 
+  Inbox, Star, 
   Menu, X, ChevronLeft, Send, Trash2, Reply, 
   MoreVertical, Search as SearchIcon, Loader2
 } from 'lucide-react';

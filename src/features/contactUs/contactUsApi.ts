@@ -19,7 +19,7 @@ export const contactUsApi = baseApi.injectEndpoints({
         }),
         replyMessage: builder.mutation<void, { id: string; response: string }>({
             query: ({ id, response }) => ({
-                url: `/api/v1/contact/respond/id`,
+                url: `/api/v1/contact/respond/${id}`,
                 method: 'PATCH',
                 body: { response },
             }),

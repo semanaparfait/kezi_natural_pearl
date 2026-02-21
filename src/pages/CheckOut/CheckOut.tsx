@@ -7,7 +7,7 @@ import { useGetCartItemsQuery } from '@/features/cart/cartApi'
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
-import {useCheckoutMutation} from  '@/features/cart/cartApi'
+// import {useCheckoutMutation} from  '@/features/cart/cartApi'
 import { useGetAddressesQuery, useDeleteAddressMutation,useSetDefaultAddressMutation } from '@/features/Address/Address'
 
 function CheckOut() {
@@ -22,11 +22,11 @@ function CheckOut() {
     const { data: getAddresses } = useGetAddressesQuery(undefined, { skip: !localStorage.getItem('token') });
     const [deleteAddress, { isLoading: isDeleting }] = useDeleteAddressMutation();
     const [setDefaultAddress] = useSetDefaultAddressMutation();
-    const [isSending, setIsSending] = useState(false);
+    // const [isSending, setIsSending] = useState(false);
     const [guestAddressSnapshot, setGuestAddressSnapshot] = useState<any>(null);
     const token = localStorage.getItem('token');
     const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
-    const [checkout] = useCheckoutMutation();
+    // const [checkout] = useCheckoutMutation();
     const [country, setCountry] = useState("RW");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
@@ -44,6 +44,7 @@ function CheckOut() {
     const isRwanda = country === "RW";
     const countries = Country.getAllCountries();
     const states = State.getStatesOfCountry(country);
+    const cities = City.getCitiesOfState(country, state);
 
     const steps = [{ id: 1, title: "Shipping" }, { id: 2, title: "Payment" }];
 
@@ -306,10 +307,10 @@ function CheckOut() {
                                 <button onClick={() => navigate('/cart')} className="text-gray-400 hover:text-[var(--primary)] text-xs font-black uppercase tracking-widest transition-colors">Cancel</button>
                                 <button 
                                     onClick={handleCheckout} 
-                                    disabled={isSending || (!selectedAddressId && !showNewAddressForm && selectedOption === 1)}
+                                    disabled={!selectedAddressId && !showNewAddressForm && selectedOption === 1}
                                     className="px-14 py-5 rounded-full bg-(--primary) text-white text-[11px] uppercase tracking-[0.2em] font-black shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 disabled:opacity-40 disabled:hover:scale-100"
                                 >
-                                    {isSending ? <Loader2 size={16} className="animate-spin" /> : "Continue to Payment"}
+                                    {"Continue to Payment"}
                                 </button>
                             </div>
                         </div>

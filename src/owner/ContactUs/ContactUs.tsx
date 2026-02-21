@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
-  Search, Inbox, Star, Clock, CheckCircle2, 
+   Inbox, Star, Clock, CheckCircle2, 
   Menu, X, ChevronLeft, Send, Trash2, Reply, 
   MoreVertical, Search as SearchIcon
 } from 'lucide-react';

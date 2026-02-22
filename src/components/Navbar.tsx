@@ -58,7 +58,9 @@ function Navbar() {
           animate={{ x: 0 }}
           transition={{ duration: 1 }}
         >
+          <Link to="/">
           <img src={logo} alt="KEZI Logo" className="w-20 h-20  " />
+          </Link>
         </motion.div>
         <ul className="md:flex hidden gap-4 px-10 py-2 bg-transparent bg-white/10  rounded-full ">
           {Links.map((link) => (

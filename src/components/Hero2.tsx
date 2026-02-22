@@ -1,5 +1,6 @@
 import Heroimg from '@/assets/hero/hero2.jpeg'
 import { useRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Hero2() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -47,11 +48,12 @@ function Hero2() {
           `}>
             Made with pure ingredients from nature, gently crafted for everyday care, because your skin deserves the best.
           </p>
-          <button className={`bg-(--primary) py-1.5 px-3.5 rounded-md transition-all duration-1000 delay-300 transform ease-out
+          <Link to="/shop"
+           className={`bg-(--primary) py-1.5 px-3.5 rounded-md transition-all duration-1000 delay-300 transform ease-out
             ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}
           `}>
             Shop Now
-          </button>
+          </Link >
         </div>
       </div>
       <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">

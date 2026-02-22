@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Plus, Trash2, Edit2, MapPin, Phone, User, CheckCircle2, XCircle } from "lucide-react";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import {useAddAddressMutation,useGetAddressesQuery,useDeleteAddressMutation,useSetDefaultAddressMutation} from '@/features/Address/Address'
+import {useGetAddressesQuery,useDeleteAddressMutation,useSetDefaultAddressMutation} from '@/features/Address/Address'
 
 interface AddressItem {
   id: string;
@@ -121,10 +121,7 @@ function Address() {
   };
 
   return (
-    <section className=" w-full   font-sans text-gray-800">
-      {/* Background Decor */}
-      {/* <div className="absolute top-0 right-0 w-[520px] h-[520px] bg-[var(--gold-color)]/10 blur-[140px] rounded-full -mr-48 -mt-48" /> */}
-
+    <section className="w-full font-sans text-gray-800">
       <div className="relative z-10 w-full max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
@@ -258,85 +255,78 @@ function Address() {
         )}
 
         {/* Addresses Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {fetchedAddresses.map((address: any) => (
-            <div
-              key={address.id}
-              className={`relative bg-white/90 backdrop-blur-md rounded-[32px] p-6 shadow-lg border-2 transition-all ${
-                address.isDefault
-                  ? "border-[var(--gold-color)] bg-[var(--gold-color)]/5"
-                  : "border-[var(--bolder-gray)]"
-              }`}
-            >
-              {/* Default Badge */}
-              {address.isDefault && (
-                <div className="absolute -top-3 -right-3 bg-[var(--gold-color)] text-white px-3 py-1 rounded-full text-[8px] font-bold uppercase tracking-widest shadow-lg">
-                  Default
-                </div>
-              )}
-
-              {/* Address Header */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 bg-[var(--gold-color)]/20 rounded-full flex items-center justify-center">
-                    <MapPin size={18} className="text-[var(--gold-color)]" />
+        {fetchedAddresses.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {fetchedAddresses.map((address: any) => (
+              <div
+                key={address.id}
+                className={`relative bg-white/90 backdrop-blur-md rounded-[32px] p-6 shadow-lg border-2 transition-all ${
+                  address.isDefault
+                    ? "border-[var(--gold-color)] bg-[var(--gold-color)]/5"
+                    : "border-[var(--bolder-gray)]"
+                }`}
+              >
+                {address.isDefault && (
+                  <div className="absolute -top-3 -right-3 bg-[var(--gold-color)] text-white px-3 py-1 rounded-full text-[8px] font-bold uppercase tracking-widest shadow-lg">
+                    Default
                   </div>
-                  <div>
-                    <h3 className="font-serif italic text-lg text-[var(--primary)]">{address.fullName}</h3>
-                    <p className="text-[10px] text-gray-500 uppercase tracking-widest">Delivery Address</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Address Details */}
-              <div className="space-y-3 mb-6 border-t border-[var(--bolder-gray)]/50 pt-4">
-                <div className="flex items-center gap-3 text-sm text-gray-700">
-                  <User size={14} className="text-[var(--gold-color)]" />
-                  <span>{address.fullName},{address.phoneNumber}</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm text-gray-700">
-                  <MapPin size={14} className="text-[var(--gold-color)]" />
-                  <span>{address.country},{address.city}, {address.province},{address.district}</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm text-gray-700">
-                  <Phone size={14} className="text-[var(--gold-color)]" />
-                  <span>{address.phoneNumber}</span>
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-2">
-                {!address.isDefault && (
-                  <button
-                    onClick={() => handleSetDefault(address.id)}
-                    className="flex-1 text-[9px] uppercase tracking-widest font-bold text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-lg py-2 transition-all"
-                  >
-                    Make Default
-                  </button>
                 )}
-                <button
-                  onClick={() => handleEdit(address)}
-                  className="flex-1 flex items-center justify-center gap-2 text-[9px] uppercase tracking-widest font-bold text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-lg py-2 transition-all"
-                >
-                  <Edit2 size={12} /> Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(address.id)}
-                  className="flex-1 flex items-center justify-center gap-2 text-[9px] uppercase tracking-widest font-bold text-red-500 hover:bg-red-50 rounded-lg py-2 transition-all"
-                >
-                  <Trash2 size={12} /> Delete
-                </button>
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 bg-[var(--gold-color)]/20 rounded-full flex items-center justify-center">
+                      <MapPin size={18} className="text-[var(--gold-color)]" />
+                    </div>
+                    <div>
+                      <h3 className="font-serif italic text-lg text-[var(--primary)]">{address.fullName}</h3>
+                      <p className="text-[10px] text-gray-500 uppercase tracking-widest">Delivery Address</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-3 mb-6 border-t border-[var(--bolder-gray)]/50 pt-4">
+                  <div className="flex items-center gap-3 text-sm text-gray-700">
+                    <User size={14} className="text-[var(--gold-color)]" />
+                    <span>{address.fullName},{address.phoneNumber}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-700">
+                    <MapPin size={14} className="text-[var(--gold-color)]" />
+                    <span>{address.country},{address.city}, {address.province},{address.district}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-700">
+                    <Phone size={14} className="text-[var(--gold-color)]" />
+                    <span>{address.phoneNumber}</span>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  {!address.isDefault && (
+                    <button
+                      onClick={() => handleSetDefault(address.id)}
+                      className="flex-1 text-[9px] uppercase tracking-widest font-bold text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-lg py-2 transition-all"
+                    >
+                      Make Default
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleEdit(address)}
+                    className="flex-1 flex items-center justify-center gap-2 text-[9px] uppercase tracking-widest font-bold text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-lg py-2 transition-all"
+                  >
+                    <Edit2 size={12} /> Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(address.id)}
+                    className="flex-1 flex items-center justify-center gap-2 text-[9px] uppercase tracking-widest font-bold text-red-500 hover:bg-red-50 rounded-lg py-2 transition-all"
+                  >
+                    <Trash2 size={12} /> Delete
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {addresses.length === 0 && !showForm && (
-          <div className="text-center py-16">
-            <div className="w-16 h-16 bg-[var(--gold-color)]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-24">
+            <div className="w-16 h-16 bg-[var(--gold-color)]/20 rounded-full flex items-center justify-center mb-4">
               <MapPin size={32} className="text-[var(--gold-color)]" />
             </div>
-            <p className="text-gray-500 mb-4">No addresses yet</p>
+            <p className="text-gray-500 mb-4 text-lg font-serif italic">No addresses yet</p>
             <button
               onClick={() => setShowForm(true)}
               className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:opacity-90 transition-all"

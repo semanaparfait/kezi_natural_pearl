@@ -1,5 +1,5 @@
 import {baseApi} from '@/services/baseApi'
-import type {Order} from '@/features/orders/orderType'
+import type {Order, OrderResponse} from '@/features/orders/orderType'
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +10,7 @@ export const orderApi = baseApi.injectEndpoints({
             body: orderData,
         }),
     }),
-    getMyOrders: build.query<Order[], void>({
+    getMyOrders: build.query<OrderResponse, void>({
         query: () => 'api/v1/order',
     }),
     getAllOrders: build.query<Order[], void>({

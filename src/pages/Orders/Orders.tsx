@@ -13,32 +13,22 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
+import { useGetMyOrdersQuery } from "@/features/orders/OrderApi";
+import Loading from "@/components/Loading";
 
 
-const MOCK_ORDERS = [
-  {
-    id: "INV-98231",
-    date: "Feb 14, 2026",
-    status: "Delivered",
-    total: "45,000 RWF",
-    items: [
-      { name: "Pearl Radiance Soap", qty: 2, image: "https://i.pinimg.com/1200x/d0/26/8f/d0268fa3c8390005bd185283c590fe4a.jpg" },
-      { name: "Glitz Gold Hoop", qty: 1, image: "https://i.pinimg.com/1200x/11/12/46/111246138441a0426142aa89f2385739.jpg" }
-    ]
-  },
-  {
-    id: "INV-97104",
-    date: "Feb 02, 2026",
-    status: "In Transit",
-    total: "12,500 RWF",
-    items: [
-      { name: "Natural Glow Cleanser", qty: 1, image: "https://i.pinimg.com/1200x/ed/1d/d3/ed1dd37487b944a07b4d776f5c5c6b10.jpg" }
-    ]
-  }
-];
+
 
 function Orders() {
   const [searchTerm, setSearchTerm] = useState("");
+  const { data: orders, isLoading, error } = useGetMyOrdersQuery();
+  console.log("Fetched Orders:", orders);
+  if(isLoading) {
+    return <div><Loading/> </div>;
+  }
+  if(error) {
+    return <div>Error fetching orders</div>;
+  }
 
   const getStatusStyle = (status: string) => {
     switch (status) {
@@ -73,7 +63,7 @@ function Orders() {
               <div className="w-10 h-px bg-[var(--gold-color)]" />
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Personal Archive</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-serif text-(--primary) italic tracking-tighter">
+            <h1 className="text-5xl md:text-7xl font-serif text-(--primary) italic tracking-tighter mt-5">
               Order History<span className="text-[var(--gold-color)]">.</span>
             </h1>
           </div>
@@ -91,26 +81,26 @@ function Orders() {
         </div>
 
         <div className="space-y-8">
-          {MOCK_ORDERS.length > 0 ? (
-            MOCK_ORDERS.map((order) => (
+          {orders && orders.length > 0 ? (
+            orders.slice(0, 3).map((order) => (
               <div key={order.id} className="group bg-white rounded-[2.5rem] border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
                 <div className="p-8 md:px-10 border-b border-gray-50 flex flex-wrap items-center justify-between gap-6">
                   <div className="flex items-center gap-8">
                     <div>
                       <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Order Identifier</p>
-                      <h3 className="text-sm font-black text-(--primary) tracking-tight">{order.id}</h3>
+                      <h3 className="text-sm font-black text-(--primary) tracking-tight"># {order.orderNumber.slice(0,7)}</h3>
                     </div>
                     <div className="h-8 w-px bg-gray-100 hidden sm:block" />
                     <div>
                       <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Placed On</p>
-                      <p className="text-sm font-bold text-gray-600">{order.date}</p>
+                      <p className="text-sm font-bold text-gray-600">{new Date(order.createdAt).toLocaleString()}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <div className={`px-4 py-2 rounded-full border text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${getStatusStyle(order.status)}`}>
-                      {getStatusIcon(order.status)}
-                      {order.status}
+                    <div className={`px-4 py-2 rounded-full border text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${getStatusStyle(order.orderStatus)}`}>
+                      {getStatusIcon(order.orderStatus)}
+                      {order.orderStatus}
                     </div>
                     <button className="p-3 rounded-full hover:bg-gray-50 text-gray-300 hover:text-(--primary) transition-all">
                       <ExternalLink size={18} />
@@ -124,11 +114,11 @@ function Orders() {
                       {order.items.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-4 bg-gray-50 pr-6 rounded-2xl border border-gray-100 hover:bg-white transition-colors duration-300">
                           <div className="w-20 h-20 overflow-hidden rounded-2xl border-r border-gray-100">
-                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                            <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                           </div>
                           <div>
-                            <p className="text-[10px] font-black text-(--primary) uppercase tracking-tight line-clamp-1">{item.name}</p>
-                            <p className="text-[10px] text-gray-400 font-bold mt-0.5 uppercase tracking-widest">Qty: {item.qty}</p>
+                            <p className="text-[10px] font-black text-(--primary) uppercase tracking-tight line-clamp-1">{item.product.name}</p>
+                            <p className="text-[10px] text-gray-400 font-bold mt-0.5 uppercase tracking-widest">Qty: {item.quantity}</p>
                           </div>
                         </div>
                       ))}
@@ -138,7 +128,7 @@ function Orders() {
                   <div className="lg:col-span-4 lg:border-l lg:border-gray-50 lg:pl-10 flex flex-row lg:flex-col justify-between lg:justify-center items-center lg:items-start gap-4">
                     <div>
                       <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Total Amount</p>
-                      <p className="text-2xl font-serif italic text-(--primary)">{order.total}</p>
+                      <p className="text-2xl font-serif italic text-(--primary)">{order.finalAmount} RWF</p>
                     </div>
                     <button className="w-full lg:mt-4 px-8 py-4 bg-gray-50 hover:bg-(--primary) hover:text-white text-(--primary) rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center gap-2">
                       Download Invoice <ArrowRight size={14} />

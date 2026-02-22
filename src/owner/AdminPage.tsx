@@ -10,6 +10,7 @@ import {
   User,
   Mail,
   FileText,
+  Calendar,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
@@ -23,6 +24,7 @@ import Profile from "@/owner/Profile/Profile";
 import ContactUs from "@/owner/ContactUs/ContactUs";
 import Newsletter from "@/owner/NewsLetter/NewsLetter";
 import ViewOrders from "@/owner/Order/ViewOrders";
+import Events from "@/owner/Events/Events";
 
 function AdminPage() {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
@@ -37,6 +39,7 @@ function AdminPage() {
     { name: "Products", icon: Package },
     { name: "Categories", icon: Tags },
     { name: "Orders", icon: Tags },
+    { name: "Events", icon: Calendar },
     { name: "profile", icon: User },
     { name: "contact us", icon: Mail },
     { name: "newsletter", icon: FileText },
@@ -160,6 +163,7 @@ function AdminPage() {
           {activeMenu === "profile" && <Profile />}
           {activeMenu === "contact us" && <ContactUs />}
           {activeMenu === "newsletter" && <Newsletter />}
+          {activeMenu === "Events" && <Events />}
         </main>
       </div>
     </div>

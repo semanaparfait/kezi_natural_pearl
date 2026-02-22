@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Plus, Trash2, Edit2, MapPin, Phone, User, CheckCircle2, XCircle } from "lucide-react";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-// import {useAddAddressMutation,useGetAddressesQuery} from '@/features/Address/Address'
+import {useAddAddressMutation,useGetAddressesQuery,useDeleteAddressMutation,useSetDefaultAddressMutation} from '@/features/Address/Address'
 
 interface AddressItem {
   id: string;
@@ -46,7 +46,9 @@ function Address() {
   });
 
   // const [addAddress] = useAddAddressMutation();
-  // const { data: fetchedAddresses, } = useGetAddressesQuery();
+  const { data: fetchedAddresses = [], refetch } = useGetAddressesQuery();
+  const [deleteAddress] = useDeleteAddressMutation();
+  const [setDefaultAddress] = useSetDefaultAddressMutation();
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({
@@ -98,16 +100,24 @@ function Address() {
     setShowForm(true);
   };
 
-  const handleDelete = (id: string) => {
-    setAddresses(addresses.filter(addr => addr.id !== id));
-    setUpdateMsg("Address deleted successfully.");
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteAddress(id).unwrap();
+      setUpdateMsg("Address deleted successfully.");
+      refetch();
+    } catch (error) {
+      setUpdateMsg("Failed to delete address.");
+    }
   };
 
-  const handleSetDefault = (id: string) => {
-    setAddresses(addresses.map(addr => ({
-      ...addr,
-      isDefault: addr.id === id
-    })));
+  const handleSetDefault = async (id: string) => {
+    try {
+      await setDefaultAddress(id).unwrap();
+      setUpdateMsg("Default address updated.");
+      refetch();
+    } catch (error) {
+      setUpdateMsg("Failed to set default address.");
+    }
   };
 
   return (
@@ -249,7 +259,7 @@ function Address() {
 
         {/* Addresses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {addresses.map((address) => (
+          {fetchedAddresses.map((address: any) => (
             <div
               key={address.id}
               className={`relative bg-white/90 backdrop-blur-md rounded-[32px] p-6 shadow-lg border-2 transition-all ${
@@ -272,7 +282,7 @@ function Address() {
                     <MapPin size={18} className="text-[var(--gold-color)]" />
                   </div>
                   <div>
-                    <h3 className="font-serif italic text-lg text-[var(--primary)]">{address.name}</h3>
+                    <h3 className="font-serif italic text-lg text-[var(--primary)]">{address.fullName}</h3>
                     <p className="text-[10px] text-gray-500 uppercase tracking-widest">Delivery Address</p>
                   </div>
                 </div>
@@ -282,15 +292,15 @@ function Address() {
               <div className="space-y-3 mb-6 border-t border-[var(--bolder-gray)]/50 pt-4">
                 <div className="flex items-center gap-3 text-sm text-gray-700">
                   <User size={14} className="text-[var(--gold-color)]" />
-                  <span>{address.street}</span>
+                  <span>{address.fullName},{address.phoneNumber}</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-700">
                   <MapPin size={14} className="text-[var(--gold-color)]" />
-                  <span>{address.city}, {address.province} {address.postalCode}</span>
+                  <span>{address.country},{address.city}, {address.province},{address.district}</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-700">
                   <Phone size={14} className="text-[var(--gold-color)]" />
-                  <span>{address.phone}</span>
+                  <span>{address.phoneNumber}</span>
                 </div>
               </div>
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import  { useState } from 'react';
 import { 
-  Plus, Search, Filter, MoreVertical, Users, Zap, X, 
-  ArrowUpRight, Video, Navigation, Mail, Phone, 
-  Download, ExternalLink, CheckCircle2, Loader2, Globe, CalendarDays
+  Plus, Search, Filter,  Users, Zap, X, 
+  ArrowUpRight,  Navigation, Mail,  
+  Download,  Globe, CalendarDays
 } from 'lucide-react';
 
 // --- SUB-COMPONENT: PARTICIPANT DRAWER ---

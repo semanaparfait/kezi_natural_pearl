@@ -72,7 +72,7 @@ function Shop() {
 
   return (
     <div className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
-      <div className="bg-(--primary) shadow-md"><Navbar /></div>
+      <Navbar />
       <header className="relative py-32 px-6 overflow-hidden border-b border-[var(--bolder-gray)]">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
             <h1 className="text-5xl md:text-6xl font-serif text-(--primary) mb-4 tracking-tight">Our Collection</h1>
@@ -224,7 +224,7 @@ function Shop() {
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12">
+      <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-12">
         {currentProducts.reverse().map(product => {
           const isOutOfStock = product.stockQuantity === 0;
           return (
@@ -242,7 +242,7 @@ function Shop() {
                 }
                 toast.success("We will notify you when product is back ");
               }}
-              className={`group flex flex-col h-full cursor-pointer ${product.stockQuantity === 0 ? 'opacity-70' : ''}`}
+              className={`group relative flex flex-col h-full cursor-pointer ${product.stockQuantity === 0 ? 'opacity-70' : ''}`}
             >
 
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] transition-all duration-500 hover:shadow-md">
@@ -262,14 +262,14 @@ function Shop() {
                 onClick={() => navigate(`/productdetails/${product.id}`)}
                   src={typeof product.images === 'string' ? product.images : product.images[0]}
                   alt={product.name}
-                  className={`w-full h-full object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
+                  className={`w-full h-full  relative object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
                 />
               </div>
               <div className="mt-3 flex flex-col flex-1 px-1">
                 <div className="mb-2">
                   <div className="flex items-center justify-between mb-0.5">
                     {/* <p className="text-[9px] uppercase tracking-widest text-[var(--gold-color)] font-bold">{product.category?.name}
-</p> */}
+                      </p> */}
                     <div className="flex items-center gap-1.5">
                       <span className={`w-1.5 h-1.5 rounded-full ${isOutOfStock ? 'bg-gray-300' : 'bg-[var(--success-green)] animate-pulse'}`} />
                       <span className="text-[8px] font-bold uppercase tracking-tighter text-gray-500">
@@ -292,8 +292,9 @@ function Shop() {
                   </span>
                 </div>
                 <div className="mt-auto flex items-center gap-2 pt-1">
+                  
                   <button 
-                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
+                    className={` flex items-center justify-center gap-2 py-2 px-1 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
                       ${isOutOfStock 
                         ? 'bg-gray-100 text-gray-400 cursor-pointer' 
                         : 'bg-(--primary) text-white hover:bg-[var(--primary-color)]'}`}
@@ -301,15 +302,24 @@ function Shop() {
                   >
                     
                       {isOutOfStock ? (<> Notify Me <Mail size={12} /> </>) : (<>Add to Cart <ShoppingBag size={12} /></>
-            )}
+                    )}
                   </button>
+                    {!isOutOfStock && (
+                      <button
+                        className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm bg-white text-[var(--primary)] border border-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
+                        onClick={() => navigate(`/productdetails/${product.id}`)}
+                      >
+                        Buy Now <ShoppingBag size={12} />
+                      </button>
+                    )}
 
-                  
+                  {currentUser && (
                   <button 
                     onClick={() => handleAddToWishlist(product)}
-                    className="p-2 border border-[var(--bolder-gray)] text-(--primary) rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
+                    className="p-2 border border-[var(--bolder-gray)] absolute right-2 top-2 text-[var(--primary)] rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
                     <Heart size={14} />
                   </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -100,6 +100,7 @@ function Trendings() {
                   <h3 className="text-gray-500 text-[13px] font-medium line-clamp-2">
                     {product.name}
                   </h3>
+                  <p className="text-gray-400 text-sm">{product.description.slice(0, 50)}...</p>
 
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-gray-800 text-[14px] font-semibold">

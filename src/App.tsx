@@ -21,6 +21,7 @@ import Account2 from '@/pages/Account/Account2'
 import Community from "@/pages/Community/Community";
 import Orders from "@/pages/Orders/Orders";
 import Invoice from "@/pages/Invoice/Invoice";
+import Wishlist from "@/pages/Wishlist/Wishlist";
 function App() {
 
 
@@ -48,6 +49,7 @@ function App() {
     <Route path="*" element={<NotFound />} />
     <Route path="/productdetails/:id" element={<ProductDetails />} />
     <Route path="/cart" element={<Cart />} />
+    <Route path="/wishlist" element={<Wishlist />} />
     <Route path="/blogs" element={<Blogs />} />
     <Route path="/checkout" element={<CheckOut />} />
   </Routes>

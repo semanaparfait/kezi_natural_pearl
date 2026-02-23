@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { Globe, ShoppingCart, ChevronDown, Package, LayoutDashboard, LogOut,  CircleUser } from 'lucide-react';
+import { Globe, ShoppingCart, ChevronDown, Package, LayoutDashboard, LogOut,  CircleUser,Heart } from 'lucide-react';
 import logo from '@/assets/logo.png';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useState,useEffect } from 'react';
 import {motion} from 'framer-motion'
 import {useGetCartItemsQuery} from '@/features/cart/cartApi'
+import { useGetWishlistQuery } from '@/features/wishlist/wishlist';
 
 function Navbar() {
   const pathname = useLocation().pathname;
@@ -18,6 +19,8 @@ function Navbar() {
   const cart = cartItems?.items || [];
   // console.log('Current User:', currentUser);
 
+  const { data: wishlistItems } = useGetWishlistQuery(undefined);
+  const wishlistCount = wishlistItems?.length || 0;
 
   const Links = [
     { name: 'Home', link: '/' },
@@ -85,6 +88,16 @@ function Navbar() {
               <option value="fr">FR</option>
             </select>
           </div>
+          {currentUser && (
+            <Link to="/wishlist" className="relative">
+          <Heart size={20} className="text-white" />
+          {wishlistCount > 0 && (
+            <span className="absolute top-[-0.75rem] right-[-0.75rem] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              {wishlistCount}
+            </span>
+          )}
+          </Link>
+            )}
           <Link to="/cart" className="relative">
           <ShoppingCart />
           {cart.length > 0 && (
@@ -93,6 +106,7 @@ function Navbar() {
             </span>
           )}
           </Link>
+
           <div className="relative">
   {currentUser ? (
   <>

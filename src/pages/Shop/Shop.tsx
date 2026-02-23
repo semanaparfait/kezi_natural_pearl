@@ -60,14 +60,15 @@ function Shop() {
     }
   };
 
-  const handleAddToWishlist = async () => {
-    if (!products) return;
-    try {        await addToWishlist(products.id).unwrap();
-        toast.success(`${products.name} added to wishlist!`);
+  const handleAddToWishlist = async (product: any) => {
+    if (!product) return;
+    try {
+      await addToWishlist(product.id).unwrap();
+      toast.success(`${product.name} added to wishlist!`);
     } catch (error) {
-        toast.error("Failed to add to wishlist");
+      toast.error("Failed to add to wishlist");
     }
-};
+  };
 
   return (
     <div className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
@@ -305,8 +306,8 @@ function Shop() {
 
                   
                   <button 
-                  onClick={handleAddToWishlist}
-                  className="p-2 border border-[var(--bolder-gray)] text-(--primary) rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
+                    onClick={() => handleAddToWishlist(product)}
+                    className="p-2 border border-[var(--bolder-gray)] text-(--primary) rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
                     <Heart size={14} />
                   </button>
                 </div>

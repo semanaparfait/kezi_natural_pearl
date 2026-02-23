@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useGetAllOrdersQuery } from '@/features/orders/OrderApi';
 import { 
   Package, 
-  MoreHorizontal, 
-  ExternalLink, 
   Clock, 
   CheckCircle2, 
   AlertCircle,
@@ -16,8 +14,7 @@ import {
   ChevronRight
 } from "lucide-react";
 
-/** * INTERFACES 
- */
+
 export interface OrderItem {
   product: {
     name: string;
@@ -58,8 +55,6 @@ export interface Order {
   items?: OrderItem[];
 }
 
-/** * REFINED MODAL COMPONENT
- */
 const Modal = ({ open, onClose, children }: { open: boolean, onClose: () => void, children: React.ReactNode }) => {
   if (!open) return null;
   return (
@@ -81,14 +76,11 @@ const Modal = ({ open, onClose, children }: { open: boolean, onClose: () => void
   );
 };
 
-/** * MAIN PAGE COMPONENT
- */
 const ViewOrders = () => {
   const { data: orders, error, isLoading } = useGetAllOrdersQuery(undefined);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Status Badge Styles
   const getStatusStyle = (status: string) => {
     const s = status?.toLowerCase() || '';
     if (['paid', 'delivered', 'shipped'].includes(s)) 
@@ -125,8 +117,7 @@ const ViewOrders = () => {
   return (
     <div className="min-h-screen bg-[#fcfcfc] text-slate-900 font-sans selection:bg-slate-100">
       <div className="max-w-7xl mx-auto px-6 py-12 lg:px-12 space-y-12">
-        
-        {/* Header Section */}
+
         <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
           <div className="space-y-2">
             <h1 className="text-5xl font-serif text-slate-900 tracking-tight">Registry</h1>
@@ -151,7 +142,6 @@ const ViewOrders = () => {
           </div>
         </header>
 
-        {/* Summary Stats */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             { label: 'Total Volume', value: orders?.length || 0, icon: Package },
@@ -172,7 +162,6 @@ const ViewOrders = () => {
           ))}
         </section>
 
-        {/* Main Table Container */}
         <section className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-separate border-spacing-0">
@@ -234,7 +223,6 @@ const ViewOrders = () => {
             </table>
           </div>
 
-          {/* Table Footer / Pagination */}
           <div className="px-8 py-6 bg-slate-50/30 border-t border-slate-100 flex justify-between items-center">
             <span className="text-[11px] text-slate-400 font-bold uppercase tracking-[0.15em]">
               Showing {orders?.length || 0} entries
@@ -251,11 +239,11 @@ const ViewOrders = () => {
         </section>
       </div>
 
-      {/* DETAIL MODAL */}
+
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         {selectedOrder && (
           <div className="flex flex-col max-h-[90vh]">
-            {/* Modal Header */}
+
             <div className="px-10 py-8 border-b border-slate-100 bg-slate-50/50">
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-2">Internal Record</p>
               <div className="flex justify-between items-end">
@@ -271,7 +259,6 @@ const ViewOrders = () => {
               </div>
             </div>
 
-            {/* Modal Body */}
             <div className="px-10 py-10 overflow-y-auto space-y-10 custom-scrollbar">
               <div className="grid grid-cols-2 gap-12">
                 <section>

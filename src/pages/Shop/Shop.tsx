@@ -307,7 +307,15 @@ function Shop() {
                     {!isOutOfStock && (
                       <button
                         className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm bg-white text-[var(--primary)] border border-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
-                        onClick={() => navigate(`/productdetails/${product.id}`)}
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          try {
+                            await addToCart({ productId: product.id, quantity: 1 }).unwrap();
+                            navigate('/checkout');
+                          } catch (error) {
+                            toast.error('Failed to start checkout');
+                          }
+                        }}
                       >
                         Buy Now <ShoppingBag size={12} />
                       </button>

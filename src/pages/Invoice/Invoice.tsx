@@ -1,9 +1,11 @@
 
-import { Download, Printer, CheckCircle2, MapPin, Globe } from 'lucide-react';
+import { Download, Printer, CheckCircle2, MapPin, Globe, MoveLeft } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Invoice = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const invoiceDataFromCheckout: InvoiceData = location.state?.invoiceData;
   console.log("Invoice Data from Checkout:", invoiceDataFromCheckout);
 
@@ -73,6 +75,14 @@ const Invoice = () => {
   return (
     <div className="min-h-screen bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8 font-sans text-slate-900">
       {/* Action Bar - Hidden on Print */}
+            {/* <div className="absolute top-6 left-6 z-30"> */}
+        <button
+          onClick={() => navigate("/")}
+          className="group flex items-center gap-2 px-4 py-2 rounded-full text-[9px] uppercase tracking-widest text-white/80 bg-black/20 backdrop-blur-md border border-white/10 hover:bg-black/40 transition-all"
+        >
+          <MoveLeft size={14} /> Back Home
+        </button>
+      {/* </div> */}
       <div className="max-w-4xl mx-auto mb-8 flex flex-wrap justify-between items-center gap-4 print:hidden">
         <div>
           <h1 className="text-2xl font-serif italic text-[var(--primary)]">Invoice Details</h1>

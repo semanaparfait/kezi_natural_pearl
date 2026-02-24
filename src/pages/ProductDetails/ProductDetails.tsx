@@ -1,4 +1,4 @@
-import { Facebook, Heart, Instagram, Twitter, ChevronRight, Star , Minus, Plus, Zap, ShoppingBag,Check,ShieldCheck } from "lucide-react";
+import { Facebook, Heart, Instagram, Twitter, ChevronRight, Star , Minus, Plus, Zap, ShoppingBag,ShieldCheck } from "lucide-react";
 import Button from "@/components/Button";
 import { useState,useEffect } from "react";
 import Navbar from "@/components/Navbar";
@@ -28,7 +28,7 @@ const [activeDetailTab, setActiveDetailTab] = useState<'shipping' | 'ingredients
 
 // Add review form state
 const [reviewForm, setReviewForm] = useState<{ rating: number; comment: string }>({ rating: 0, comment: '' });
-const [isAddingReview, setIsAddingReview] = useState(false);
+// Removed unused setIsAddingReview to fix TS6133 error
 console.log("Fetched Reviews:", reviews);
 
 // Refetch reviews after posting

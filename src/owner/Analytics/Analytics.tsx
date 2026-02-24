@@ -16,8 +16,7 @@ import {
 } from "chart.js";
 import { useGetAllOrdersQuery } from "@/features/orders/OrderApi";
 import { useGetUsersQuery } from "@/features/users/usersApi";
-import { useGetWishlistQuery } from "@/features/wishlist/wishlist";
-import { useGetProductsQuery } from "@/features/products/productsApi";
+// Removed unused imports to fix TS6133 errors
 
 ChartJS.register(
   CategoryScale,

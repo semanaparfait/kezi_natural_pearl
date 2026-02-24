@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MoveLeft, Check, ShieldCheck, Truck, MapPin, LocateFixed,Plus, Home, Trash2 } from "lucide-react";
 import Input from "@/components/Input";
 import { Country, State, City } from "country-state-city";
@@ -68,7 +68,6 @@ function CheckOut() {
     };
 
     const handleCheckout = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        // Only move to payment step, do not place checkout here
         event.preventDefault();
         const token = localStorage.getItem('token');
         if (token) {
@@ -100,6 +99,10 @@ function CheckOut() {
         setCurrentStep(2);
     };
     const selectClass = "w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[var(--gold-color)] focus:ring-2 focus:ring-[var(--gold-color)]/20 transition-all appearance-none cursor-pointer";
+
+    useEffect(() => {
+        if (!token) setShowNewAddressForm(true);
+    }, [token]);
 
     return (
         <section className="min-h-screen bg-gray-50/30 pb-20">

@@ -7,6 +7,7 @@ import {
   Menu,
   Settings,
   X,
+  ChartBar,
   User,
   Mail,
   FileText,
@@ -25,6 +26,7 @@ import ContactUs from "@/owner/ContactUs/ContactUs";
 import Newsletter from "@/owner/NewsLetter/NewsLetter";
 import ViewOrders from "@/owner/Order/ViewOrders";
 import Events from "@/owner/Events/Events";
+import Analytics from "./Analytics/Analytics";
 
 function AdminPage() {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
@@ -40,6 +42,7 @@ function AdminPage() {
     { name: "Categories", icon: Tags },
     { name: "Orders", icon: Tags },
     { name: "Events", icon: Calendar },
+    {name: "Analytics", icon:ChartBar},
     { name: "profile", icon: User },
     { name: "contact us", icon: Mail },
     { name: "newsletter", icon: FileText },
@@ -160,6 +163,7 @@ function AdminPage() {
           {activeMenu === "Products" && <Products />}
           {activeMenu === "Categories" && <Category />}
           {activeMenu === "Orders" && <ViewOrders />}
+          {activeMenu === "Analytics" && <Analytics />}
           {activeMenu === "profile" && <Profile />}
           {activeMenu === "contact us" && <ContactUs />}
           {activeMenu === "newsletter" && <Newsletter />}

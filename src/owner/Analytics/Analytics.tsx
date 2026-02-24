@@ -38,8 +38,7 @@ function Analytics() {
   // Fetch data
   const { data: orders = [] } = useGetAllOrdersQuery();
   const { data: users = [] } = useGetUsersQuery();
-  const { data: wishlistData = { data: [] } } = useGetWishlistQuery(undefined, { skip: false });
-  const { data: products = [] } = useGetProductsQuery(undefined, { skip: false });
+  // Removed unused wishlistData and products to fix TS6133 errors
 
   // --- Orders Per Day ---
   const ordersByDay: Record<string, number> = {};

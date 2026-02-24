@@ -77,6 +77,11 @@ function CheckOut() {
                 return;
             }
         } else {
+            // For guests, do not require saveAddress to be checked
+            if (!selectedAddressId && !(showNewAddressForm && formData.addressLine1 && formData.fullName && formData.phoneNumber)) {
+                toast.error("Please select a shipping address or add a new one.");
+                return;
+            }
             // For guests, set guestAddressSnapshot if form is filled
             if (!guestAddressSnapshot) {
                 if (formData.fullName && formData.phoneNumber && formData.addressLine1) {

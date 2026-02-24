@@ -5,7 +5,7 @@ import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { useGetUsersQuery } from '@/features/users/usersApi';
 import { useGetProductsQuery } from '@/features/products/productsApi';
 import { useGetAllOrdersQuery } from '@/features/orders/OrderApi';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Line, Pie } from 'react-chartjs-2';
 
 import {
   Chart as ChartJS,
@@ -85,7 +85,7 @@ function Dashboard() {
 
   // --- Chart: Orders Last 7 Days (Line, Days of Week) ---
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const todayIdx = new Date().getDay();
+  // removed unused todayIdx
   // Get last 7 days (ending today)
   const last7Dates: Date[] = [];
   for (let i = 6; i >= 0; i--) {
@@ -138,19 +138,19 @@ function Dashboard() {
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
               <h1 className="text-3xl md:text-4xl font-serif italic text-white leading-tight">
-                {greeting}, <span className="text-[var(--gold-color)]">{currentUser?.fullName || currentUser?.email?.split('@')[0]?.replace(/\d+/g, '') || "Admin"}</span>
+                {greeting}, <span className="text-(--gold-color)">{currentUser?.fullName || currentUser?.email?.split('@')[0]?.replace(/\d+/g, '') || "Admin"}</span>
               </h1>
               <p className="text-white/60 text-sm font-light max-w-md">Your collection is flourishing. Here is your overview for today.</p>
             </div>
-            <button className="w-fit px-8 py-3 bg-white text-(--primary) rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[var(--gold-color)] hover:text-white transition-all shadow-lg active:scale-95">
+            <button className="w-fit px-8 py-3 bg-white text-(--primary) rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-(--gold-color) hover:text-white transition-all shadow-lg active:scale-95">
               Live Boutique
             </button>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat) => (
-            <div key={stat.title} className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
-              <stat.icon className="absolute -right-2 -bottom-2 w-16 h-16 text-gray-50 group-hover:text-[var(--gold-color)]/10 transition-colors" />
+            <div key={stat.title} className="bg-white p-6 rounded-4xl border border-gray-100 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
+              <stat.icon className="absolute -right-2 -bottom-2 w-16 h-16 text-gray-50 group-hover:text-(--gold-color)/10 transition-colors" />
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-3 bg-gray-50 rounded-2xl text-(--primary) group-hover:bg-(--primary) group-hover:text-white transition-all">
@@ -234,7 +234,7 @@ function Dashboard() {
           <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8 shadow-sm">
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
               <h3 className="font-serif italic text-xl text-(--primary)">Recent Additions</h3>
-              <button className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline flex items-center gap-1">
+              <button className="text-[10px] font-bold uppercase tracking-widest text-(--gold-color) hover:underline flex items-center gap-1">
                 View Inventory <ArrowUpRight size={14} />
               </button>
             </div>
@@ -260,7 +260,7 @@ function Dashboard() {
                     />
                     <div>
                       <p className="font-medium text-gray-800">{product.name}</p>
-                      <p className="text-xs text-gray-500 truncate max-w-[200px]">{product.description.slice(0, 70)}...</p>
+                      <p className="text-xs text-gray-500 truncate max-w-50">{product.description.slice(0, 70)}...</p>
                     </div>
                   </div>
                 </td>
@@ -291,7 +291,7 @@ function Dashboard() {
           <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8 shadow-sm">
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
               <h3 className="font-serif italic text-xl text-(--primary)">Recent Registrations</h3>
-              <button className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-color)] hover:underline">CRM Portal</button>
+              <button className="text-[10px] font-bold uppercase tracking-widest text-(--gold-color) hover:underline">CRM Portal</button>
             </div>
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
@@ -401,12 +401,12 @@ function Dashboard() {
       <aside className="w-full xl:w-80 space-y-8">
  <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden">
       <div className="flex items-center gap-3 mb-6">
-        <CalendarIcon size={18} className="text-[var(--gold-color)]" />
+        <CalendarIcon size={18} className="text-(--gold-color)" />
         <h4 className="font-serif italic text-lg text-(--primary)">Operational Schedule</h4>
       </div>
       <div className="flex gap-4">
         {/* Date Block */}
-        <div className="bg-(--primary) text-white p-4 rounded-3xl text-center min-w-[70px] shadow-lg shadow-(--primary)/20">
+        <div className="bg-(--primary) text-white p-4 rounded-3xl text-center min-w-17.5 shadow-lg shadow-(--primary)/20">
           <p className="text-[10px] uppercase font-bold opacity-70">{month}</p>
           <p className="text-2xl font-bold font-serif">{day}</p>
           <p className="text-[9px] uppercase font-bold mt-1">Today</p>
@@ -414,7 +414,7 @@ function Dashboard() {
 
         {/* Events */}
         <div className="flex-1 space-y-3">
-          <div className="p-3 bg-gray-50 rounded-2xl border-l-4 border-[var(--gold-color)]">
+          <div className="p-3 bg-gray-50 rounded-2xl border-l-4 border-(--gold-color)">
             <p className="text-[10px] font-bold text-gray-400 uppercase">10:00 AM</p>
             <p className="text-xs font-bold text-(--primary)">Inventory Audit</p>
           </div>
@@ -446,9 +446,9 @@ function Dashboard() {
             )}
           </div>
         </div>
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2.5rem] p-8 text-white relative overflow-hidden group">
+        <div className="bg-linear-to-br from-gray-900 to-gray-800 rounded-[2.5rem] p-8 text-white relative overflow-hidden group">
            <Package className="absolute -right-4 -bottom-4 w-32 h-32 text-white/5 rotate-12 transition-transform group-hover:scale-110" />
-           <p className="text-[9px] uppercase tracking-[0.4em] font-bold text-[var(--gold-color)] mb-2">Artisanal Standard</p>
+           <p className="text-[9px] uppercase tracking-[0.4em] font-bold text-(--gold-color) mb-2">Artisanal Standard</p>
            <h4 className="font-serif italic text-xl mb-4">Pure Nature. <br/>Pure Rwanda.</h4>
            <p className="text-xs text-white/50 leading-relaxed font-light">Ensure every fulfillment cycle adheres to the artisanal promise of the Kezi collection.</p>
         </div>

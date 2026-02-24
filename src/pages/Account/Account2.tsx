@@ -22,7 +22,11 @@ function Account2() {
   });
   const [verificationCode, setVerificationCode] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isResettingPassword, setIsResettingPassword] = useState(false);  
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+  // Password visibility states
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -176,7 +180,7 @@ function Account2() {
               <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Select your access</p>
             </header>
 
-            <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
+            <div className="flex bg-gray-100 p-1 rounded-xl mb-6 hidden">
               <button 
                 onClick={() => setAuthType("customer")}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[9px] font-bold uppercase transition-all ${authType === 'customer' ? 'bg-white shadow text-emerald-900' : 'text-gray-400'}`}
@@ -269,19 +273,19 @@ function Account2() {
                         </div>
                         <Input
                           label="New Password"
-                          type="password"
+                          type={showNewPassword ? "text" : "password"}
                           placeholder="••••••••"
                           fullWidth
-                          rightIcon={<Eye size={17} />}
+                          rightIcon={<Eye size={17} onClick={() => setShowNewPassword(v => !v)} className="cursor-pointer" />} 
                           value={formData.newPassword}
                           onChange={(e) => setFormData({...formData, newPassword: e.target.value})}
                         />
                         <Input
                           label="Confirm Password"
-                          type="password"
+                          type={showConfirmPassword ? "text" : "password"}
                           placeholder="••••••••"
                           fullWidth
-                          rightIcon={<Eye size={17} />}
+                          rightIcon={<Eye size={17} onClick={() => setShowConfirmPassword(v => !v)} className="cursor-pointer" />} 
                           value={formData.confirmPassword}
                           onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                         />
@@ -316,13 +320,13 @@ function Account2() {
                       type="tel" placeholder="+250..."
                        fullWidth  value={formData.phoneNumber} 
                        onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})} />}
-                      <Input label="Password"
-                       type="password"
-                        placeholder="••••••••"
-                         fullWidth 
-                          rightIcon={<Eye size={17}  />} 
-                          value={formData.password}
-                           onChange={(e) => setFormData({...formData, password: e.target.value})} />
+                        <Input label="Password"
+                         type={showPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                        fullWidth 
+                         rightIcon={<Eye size={17} onClick={() => setShowPassword(v => !v)} className="cursor-pointer" />} 
+                         value={formData.password}
+                          onChange={(e) => setFormData({...formData, password: e.target.value})} />
                         {action === 'signin' && (
                         <button 
                           type="button"

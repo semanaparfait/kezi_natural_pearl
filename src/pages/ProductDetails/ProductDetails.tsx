@@ -21,7 +21,7 @@ const { data: products, error, isLoading , refetch } = useGetProductByIdQuery(St
 const { data: allProducts } = useGetProductsQuery(undefined);
 const [addToCart] = useAddToCartMutation();
 const { data: reviews = [] } = useGetReviewsQuery(String(id));
-const [addReview] = useAddReviewMutation();
+const [addReview, { isLoading: isAddingReview }] = useAddReviewMutation();
 const [count, setCount] = useState(1);
 const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 const [activeDetailTab, setActiveDetailTab] = useState<'shipping' | 'ingredients' | 'reviews' >('ingredients');

@@ -11,7 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from '@/features/category/categoryApi';
 import { useGetProductsQuery } from '@/features/products/productsApi';
 import { useAddToCartMutation } from '@/features/cart/cartApi';
-import {useAddToWishlistMutation} from '@/features/wishlist/wishlist'
+import {useAddToWishlistMutation} from '@/features/wishlist/wishlist';
+import { useGetCartItemsQuery } from '@/features/cart/cartApi';
+import { useGetWishlistQuery } from '@/features/wishlist/wishlist'
 
 
 
@@ -41,6 +43,17 @@ function Shop() {
   const indexOfFirstProduct = currentPage * productsPerPage;
   const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
   const currentProducts = sorted.reverse().slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const { data: cartData } = useGetCartItemsQuery(undefined);
+  const cartItems = cartData?.items || [];
+  const { data: wishlistData } = useGetWishlistQuery(undefined);
+  const wishlistItems = wishlistData || [];
+
+  // Track cart quantities for each product
+  const cartQuantities: Record<string, number> = {};
+  cartItems.forEach(item => {
+    cartQuantities[item.product.id] = item.quantity;
+  });
 
   const handlePageChange = (event: { selected: number }) => {
     setCurrentPage(event.selected);
@@ -227,6 +240,10 @@ function Shop() {
       <div className="grid grid-cols-2 md:grid-cols-3  gap-x-4 gap-y-12">
         {currentProducts.reverse().map(product => {
           const isOutOfStock = product.stockQuantity === 0;
+          const isInWishlist = wishlistItems.some((item: any) => item.product.id === product.id);
+          const isInCart = cartItems.some(item => item.product.id === product.id);
+          const cartQuantity = cartQuantities[product.id] || 0;
+          const availableStock = product.stockQuantity - cartQuantity;
           return (
             <div
               key={product.id}
@@ -246,23 +263,30 @@ function Shop() {
             >
 
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white border border-[var(--bolder-gray)] transition-all duration-500 hover:shadow-md">
-                {isOutOfStock ? (
-                  <div className="absolute inset-0 z-10 bg-white/60 backdrop-blur-[1px] flex items-center justify-center">
+                {/* Wishlist/Cart badges */}
+                {isInWishlist && (
+                  <span className="absolute top-2 right-2 bg-pink-100 text-pink-600 text-xs font-bold px-2 py-1 rounded-full z-20 shadow-sm">
+                    In Wishlist
+                  </span>
+                )}
+                {isInCart && (
+                  <span className="absolute top-2 left-2 bg-green-100 text-green-600 text-xs font-bold px-2 py-1 rounded-full z-20 shadow-sm">
+                    In Cart
+                  </span>
+                )}
+                {availableStock <= 0 && (
+                  <span className="absolute inset-0 z-10 bg-white/60 backdrop-blur-[1px] flex items-center justify-center">
                     <span className="bg-gray-800 text-white text-[9px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
                       Out of Stock
                     </span>
-                  </div>
-                ) : product.stockQuantity < 5 && (
-                  <div className="absolute top-2 left-2 z-10 bg-[var(--error-red)] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm flex items-center gap-1 shadow-sm">
-                    <Zap size={8} fill="currentColor" /> LOW STOCK
-                  </div>
+                  </span>
                 )}
               
                 <img
-                onClick={() => navigate(`/productdetails/${product.id}`)}
+                  onClick={() => navigate(`/productdetails/${product.id}`)}
                   src={typeof product.images === 'string' ? product.images : product.images[0]}
                   alt={product.name}
-                  className={`w-full h-full  relative object-cover transition-transform duration-700 ${!isOutOfStock && 'group-hover:scale-105'} ${isOutOfStock && 'grayscale-[0.5]'}`}
+                  className={`w-full h-full  relative object-cover transition-transform duration-700 ${availableStock > 0 ? 'group-hover:scale-105' : 'grayscale-[0.5]'}`}
                 />
               </div>
               <div className="mt-3 flex flex-col flex-1 px-1">
@@ -270,20 +294,34 @@ function Shop() {
                   <div className="flex items-center justify-between mb-0.5">
                     {/* <p className="text-[9px] uppercase tracking-widest text-[var(--gold-color)] font-bold">{product.category?.name}
                       </p> */}
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center justify-between gap-2  w-full">
+                      <div className="flex items-center gap-1.5">
                       <span className={`w-1.5 h-1.5 rounded-full ${isOutOfStock ? 'bg-gray-300' : 'bg-[var(--success-green)] animate-pulse'}`} />
                       <span className="text-[8px] font-bold uppercase tracking-tighter text-gray-500">
                         {isOutOfStock ? 'Sold Out' : 'Ready'}
                       </span>
+                      </div>
+                    <div className="flex items-baseline gap-2 ">
+                  <span className="text-sm font-bold text-gray-900">
+                    {availableStock > 0 ? `${availableStock} in stock` : 'Out of Stock'}
+                  </span>
+                  {cartQuantity > 0 && (
+                    <span className="text-[10px] text-gray-400">
+                      In Cart: {cartQuantity}
+                    </span>
+                  )}
+                </div>
+
+
                     </div>
                   </div>
 
                   <h3 className="font-serif text-[15px] text-(--primary) leading-tight line-clamp-1 group-hover:text-black transition-colors">
                     {product.name}
                   </h3>
+
                 </div>
-                
-                <div className="flex items-baseline gap-2 mb-4">
+                                    <div className="flex items-baseline gap-2 mb-4">
                   <span className="text-sm font-bold text-gray-900">
                     {product.price.toLocaleString()} RWF
                   </span>
@@ -291,20 +329,19 @@ function Shop() {
                     {product.price.toLocaleString()} RWF
                   </span>
                 </div>
-                <div className="mt-auto flex items-center gap-2 pt-1">
-                  
-                  <button 
-                    className={` flex items-center justify-center gap-2 py-2 px-1 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm
-                      ${isOutOfStock 
-                        ? 'bg-gray-100 text-gray-400 cursor-pointer' 
-                        : 'bg-(--primary) text-white hover:bg-[var(--primary-color)]'}`}
-                    onClick={!isOutOfStock ? () => handleAddToCart(product, 1) : undefined}
+
+                <div className=" flex items-center gap-2 ">
+                  <button
+                    className={`flex items-center justify-center gap-2 py-2 px-1 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm ${availableStock <= 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-(--primary) text-white hover:bg-[var(--primary-color)]'}`}
+                    onClick={() => {
+                      if (availableStock <= 0) return;
+                      handleAddToCart(product, 1);
+                    }}
+                    disabled={availableStock <= 0}
                   >
-                    
-                      {isOutOfStock ? (<> Notify Me <Mail size={12} /> </>) : (<>Add to Cart <ShoppingBag size={12} /></>
-                    )}
+                    {availableStock <= 0 ? 'Out of Stock' : 'Add to Cart'} <ShoppingBag size={12} />
                   </button>
-                    {!isOutOfStock && (
+                  {!isOutOfStock && (
                       <button
                         className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-sm bg-white text-[var(--primary)] border border-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
                         onClick={async (e) => {
@@ -321,10 +358,12 @@ function Shop() {
                       </button>
                     )}
 
-                  {currentUser && (
+                  {currentUser && !isInWishlist && (
                   <button 
                     onClick={() => handleAddToWishlist(product)}
-                    className="p-2 border border-[var(--bolder-gray)] absolute right-2 top-2 text-[var(--primary)] rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm">
+                    className="p-2 border border-[var(--bolder-gray)] absolute right-2 top-2 z-30 text-[var(--primary)] rounded-lg hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-all active:scale-95 bg-white shadow-sm"
+                    style={{ pointerEvents: 'auto' }}
+                  >
                     <Heart size={14} />
                   </button>
                   )}

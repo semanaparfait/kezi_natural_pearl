@@ -15,11 +15,11 @@ function Navbar() {
   const isHomePage = pathname === '/';
   const token = localStorage.getItem('token');
   const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !token });
-  const { data: cartItems } = useGetCartItemsQuery(undefined);
+  const { data: cartItems } = useGetCartItemsQuery(undefined, { skip: !token });
   const cart = cartItems?.items || [];
   // console.log('Current User:', currentUser);
 
-  const { data: wishlistItems } = useGetWishlistQuery(undefined);
+  const { data: wishlistItems } = useGetWishlistQuery(undefined, { skip: !token });
   const wishlistCount = wishlistItems?.length || 0;
 
   const Links = [
@@ -80,7 +80,7 @@ function Navbar() {
           ))}
         </ul>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 hidden">
+          <div className="flex items-center gap-2 ">
             <Globe />
             <select className=" rounded-md p-1 outline-none">
               <option value="en">EN</option>

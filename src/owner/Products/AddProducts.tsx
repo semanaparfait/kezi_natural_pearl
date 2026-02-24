@@ -16,10 +16,7 @@ function AddProducts() {
         categoryId: string;
         price: number;
         pictures: File[];
-        salesPrice: number;
-        costPrice: number;
         stockQuantity: number;
-        weight: number;
         ingredients: string;
     };
 
@@ -29,10 +26,7 @@ function AddProducts() {
         categoryId: '',
         price: 0,
         pictures: [],
-        salesPrice: 0,
-        costPrice: 0,
         stockQuantity: 0,
-        weight: 0,
         ingredients: ''
     });
 
@@ -80,8 +74,7 @@ function AddProducts() {
             
             setFormData({
                 name: '', description: '', categoryId: '', price: 0,
-                pictures: [], salesPrice: 0, costPrice: 0,
-                stockQuantity: 0, weight: 0, ingredients: '',
+                pictures: [], stockQuantity: 0, ingredients: '',
             });
             toast.success("Product added successfully!");
         } catch (err: any) {
@@ -165,14 +158,6 @@ function AddProducts() {
                         </select>
                     </div>
 
-                    <Input
-                        label={
-                            <span>Sales Price (RWF) <span className="text-red-500">* Required</span></span>
-                        }
-                        type="number"
-                        value={formData.costPrice.toString()}
-                        onChange={e => setFormData({ ...formData, costPrice: Number(e.target.value) })}
-                    />
 
                     <Input
                         label="Selling Price (RWF)"
@@ -188,12 +173,7 @@ function AddProducts() {
                         onChange={e => setFormData({ ...formData, stockQuantity: Number(e.target.value) })}
                     />
 
-                    <Input
-                        label="Weight (g)"
-                        type="number"
-                        value={formData.weight.toString()}
-                        onChange={e => setFormData({ ...formData, weight: Number(e.target.value) })}
-                    />
+
                 </div>
 
                 <div>

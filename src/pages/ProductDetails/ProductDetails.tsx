@@ -110,9 +110,9 @@ const handleAddRelatedToCart = async (product: any) => {
         <section className="min-h-screen bg-[var(--secondary-cream-white)] text-gray-800">
             <Navbar />
 
-            <div className="relative w-full h-32 md:h-60 overflow-hidden bg-gray-900 flex items-center justify-center">
+            <div className="mt-20 relative w-full h-32 md:h-60 overflow-hidden bg-gray-900 flex items-center justify-center">
                 <img 
-                    src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1200" 
+                    src={products.category.image}
                     className="absolute w-full h-full object-cover opacity-40 grayscale"
                     alt="Hero"
                 />

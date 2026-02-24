@@ -1,4 +1,4 @@
-import { Facebook, Heart, Instagram, Twitter, ChevronRight,  Minus, Plus, Zap, ShoppingBag } from "lucide-react";
+import { Facebook, Heart, Instagram, Twitter, ChevronRight, Star , Minus, Plus, Zap, ShoppingBag,Check,ShieldCheck } from "lucide-react";
 import Button from "@/components/Button";
 import { useState,useEffect } from "react";
 import Navbar from "@/components/Navbar";
@@ -9,6 +9,8 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import {useGetProductByIdQuery,useGetProductsQuery} from '@/features/products/productsApi'
 import { useAddToCartMutation } from '@/features/cart/cartApi';
+import {useGetReviewsQuery,useAddReviewMutation} from '@/features/reviews/reviewsApi'
+
 
 
 function ProductDetails() {
@@ -18,10 +20,23 @@ const { id } = useParams();
 const { data: products, error, isLoading , refetch } = useGetProductByIdQuery(String(id));
 const { data: allProducts } = useGetProductsQuery(undefined);
 const [addToCart] = useAddToCartMutation();
-
+const { data: reviews = [] } = useGetReviewsQuery(String(id));
+const [addReview] = useAddReviewMutation();
 const [count, setCount] = useState(1);
 const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
-const [activeDetailTab, setActiveDetailTab] = useState<'shipping' | 'ingredients' | 'reviews'>('ingredients');
+const [activeDetailTab, setActiveDetailTab] = useState<'shipping' | 'ingredients' | 'reviews' >('ingredients');
+
+// Add review form state
+const [reviewForm, setReviewForm] = useState<{ rating: number; comment: string }>({ rating: 0, comment: '' });
+const [isAddingReview, setIsAddingReview] = useState(false);
+console.log("Fetched Reviews:", reviews);
+
+// Refetch reviews after posting
+const refetchReviews = () => {
+  // If useGetReviewsQuery provides a refetch function, use it, otherwise reload page or update reviews manually
+  // For now, just call refetch from useGetProductByIdQuery to refresh product details and reviews
+  refetch();
+};
 
 useEffect(() => {
   if (products?.images?.length) {
@@ -241,6 +256,111 @@ const handleAddRelatedToCart = async (product: any) => {
                                 <p>{products.ingredients}</p>
                             </div>
                             )}
+
+                        {activeDetailTab === 'reviews' && (
+                            <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                                
+                                {/* Write a Review Form */}
+                                <div className="bg-[var(--secondary-cream-white)] rounded-xl p-4 border border-gray-100 shadow-sm max-w-xs mx-auto">
+                                    <h3 className="text-base font-serif italic text-(--primary) mb-3">Share Your Experience</h3>
+                                    <div className="space-y-3">
+                                        {/* Star Rating Selector */}
+                                        <div>
+                                            <div className="flex gap-1 text-[var(--gold-color)] justify-center">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <button
+                                                        key={star}
+                                                        onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                                                        className="transition-transform hover:scale-110 active:scale-90"
+                                                    >
+                                                        <Star 
+                                                            size={18} 
+                                                            className={star <= reviewForm.rating ? "fill-current" : "text-gray-300"} 
+                                                        />
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        {/* Comment Input */}
+                                        <div>
+                                            <textarea
+                                                value={reviewForm.comment}
+                                                onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                                                placeholder="Your review..."
+                                                className="w-full bg-white border border-gray-100 rounded-xl p-2 text-xs font-serif italic focus:outline-none focus:ring-2 focus:ring-[var(--gold-color)] min-h-[60px] transition-all"
+                                            />
+                                        </div>
+                                        <Button 
+                                            onClick={async () => {
+                                                if (reviewForm.rating === 0) return toast.error("Please select a rating");
+                                                try {
+                                                    await addReview({ 
+                                                        productId: products.id, 
+                                                        ...reviewForm 
+                                                    }).unwrap();
+                                                    toast.success("Thank you for your review!");
+                                                    setReviewForm({ rating: 0, comment: '' });
+                                                    refetchReviews();
+                                                } catch (err) {
+                                                    toast.error("Failed to post review");
+                                                }
+                                            }}
+                                            disabled={isAddingReview || !reviewForm.comment}
+                                            className="w-full px-6 bg-(--primary) text-white rounded-full text-[10px] uppercase font-black tracking-widest h-8"
+                                        >
+                                            {isAddingReview ? "Posting..." : "Post Review"}
+                                        </Button>
+                                    </div>
+                                </div>
+
+
+
+                                {/* Reviews List - horizontal scroll */}
+                                <div className="flex gap-4 overflow-x-auto  scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                                    {reviews.length > 0 ? reviews.map((review: any) => (
+                                        <div key={review.id} className="min-w-[220px] max-w-xs bg-gray-50 rounded-xl p-4 border border-gray-100 shadow-sm flex-shrink-0 animate-in fade-in duration-500">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-(--primary) font-serif italic text-base border border-gray-100 shadow-sm">
+                                                    {/* {review.reviewer.name.charAt(0).toUpperCase()} */}
+                                                </div>
+                                                <div>
+                                                    <h4 className="text-xs font-black text-(--primary) uppercase tracking-tight">
+                                                        {review.reviewer.name || "KEZI Customer"}
+                                                    </h4>
+                                                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                                        {new Date(review.createdAt).toLocaleDateString('en-US', { 
+                                                            month: 'short', 
+                                                            day: 'numeric', 
+                                                            year: '2-digit' 
+                                                        })}
+                                                    </p>
+                                                </div>
+                                                <div className="flex gap-0.5 text-[var(--gold-color)] ml-auto">
+                                                    {[...Array(5)].map((_, i) => (
+                                                        <Star key={i} size={10} className={i < review.rating ? "fill-current" : "text-gray-200"} />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p className="text-gray-600 leading-relaxed italic font-serif text-xs">
+                                                    "{review.comment}"
+                                                </p>
+                                                {review.isVerifiedPurchase && (
+                                                    <div className="flex items-center gap-1 mt-2 text-[8px] font-black uppercase tracking-[0.2em] text-[var(--gold-color)]">
+                                                        <ShieldCheck size={10} />
+                                                        Verified
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )) : (
+                                        <div className="text-center py-6 min-w-[220px]">
+                                            <p className="font-serif italic text-gray-400">Be the first to leave a review for this product.</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
 
 
                             {/* </p> */}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGetAllOrdersQuery } from '@/features/orders/OrderApi';
+import { useGetAllOrdersQuery, useCancelOrderMutation, useConfirmOrderMutation, useShipOrderMutation, useDeliverOrderMutation } from '@/features/orders/OrderApi';
 import { 
   Package, 
   Clock, 
@@ -80,6 +80,11 @@ const ViewOrders = () => {
   const { data: orders, error, isLoading } = useGetAllOrdersQuery(undefined);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
+  const [cancelOrder] = useCancelOrderMutation();
+  const [confirmOrder] = useConfirmOrderMutation();
+  const [shipOrder] = useShipOrderMutation();
+  const [deliverOrder] = useDeliverOrderMutation();
 
   const getStatusStyle = (status: string) => {
     const s = status?.toLowerCase() || '';
@@ -90,6 +95,21 @@ const ViewOrders = () => {
     if (['failed', 'cancelled', 'refunded'].includes(s)) 
       return 'bg-rose-50 text-rose-700 border-rose-100';
     return 'bg-slate-50 text-slate-600 border-slate-100';
+  };
+
+  const handleStatusChange = async (orderId: string, status: string) => {
+    setUpdatingOrderId(orderId);
+    try {
+      if (status === 'Cancel') await cancelOrder(orderId).unwrap();
+      else if (status === 'Confirm') await confirmOrder(orderId).unwrap();
+      else if (status === 'Ship') await shipOrder(orderId).unwrap();
+      else if (status === 'Delivered') await deliverOrder(orderId).unwrap();
+      // Optionally: refetch orders here if needed
+    } catch (err) {
+      // Optionally: show error toast
+    } finally {
+      setUpdatingOrderId(null);
+    }
   };
 
   if (isLoading) {
@@ -195,9 +215,9 @@ const ViewOrders = () => {
                     </td>
                     <td className="px-6 py-6">
                       <div className="flex gap-2">
-                        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold border uppercase tracking-widest ${getStatusStyle(order.paymentStatus)}`}>
+                        {/* <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold border uppercase tracking-widest RWF{getStatusStyle(order.paymentStatus)}`}>
                           {order.paymentStatus}
-                        </span>
+                        </span> */}
                         <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold border uppercase tracking-widest ${getStatusStyle(order.orderStatus)}`}>
                           {order.orderStatus}
                         </span>
@@ -208,14 +228,28 @@ const ViewOrders = () => {
                         {order.finalAmount.toLocaleString()} RWF
                       </span>
                     </td>
-                    <td className="px-8 py-6 text-right">
+                    <td className="px-8 py-6 text-right flex">
                       <button
                         onClick={() => { setSelectedOrder(order); setModalOpen(true); }}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all group/btn"
                       >
                         <span className="text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">View Record</span>
-                        <ArrowRight size={18} />
+                        View <ArrowRight size={18} />
                       </button>
+                      <select
+                        className="px-3 text-[10px] font-bold uppercase tracking-widest border border-slate-200 rounded-lg text-slate-400 hover:border-slate-300 focus:ring-2 focus:ring-slate-100 focus:outline-none transition-all ml-2"
+                        value=""
+                        onChange={e => {
+                          handleStatusChange(order.id, e.target.value.trim());
+                        }}
+                        disabled={updatingOrderId === order.id}
+                      >
+                        <option value="">Update Status</option>
+                        <option value="Cancel">Cancel</option>
+                        <option value="Confirm">Confirm</option>
+                        <option value="Ship">Ship</option>
+                        <option value="Delivered">Delivered</option>
+                      </select>
                     </td>
                   </tr>
                 ))}
@@ -253,7 +287,7 @@ const ViewOrders = () => {
                     Authored on {new Date(selectedOrder.createdAt).toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'short' })}
                   </p>
                 </div>
-                <div className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border uppercase tracking-[0.15em] ${getStatusStyle(selectedOrder.orderStatus)}`}>
+                <div className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border uppercase tracking-[0.15em] RWF{getStatusStyle(selectedOrder.orderStatus)}`}>
                   {selectedOrder.orderStatus}
                 </div>
               </div>
@@ -319,22 +353,22 @@ const ViewOrders = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between text-xs text-slate-400 uppercase tracking-widest">
                     <span>Gross Total</span>
-                    <span>${selectedOrder.totalAmount?.toLocaleString()}</span>
+                    <span>RWF{selectedOrder.totalAmount?.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-rose-400 uppercase tracking-widest">
                     <span>Adjustments/Discounts</span>
-                    <span>-${selectedOrder.discountAmount?.toLocaleString()}</span>
+                    <span>-RWF{selectedOrder.discountAmount?.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400 uppercase tracking-widest">
                     <span>Shipping Premium</span>
-                    <span>${selectedOrder.shippingCost?.toLocaleString()}</span>
+                    <span>RWF{selectedOrder.shippingCost?.toLocaleString()}</span>
                   </div>
                   <div className="pt-4 mt-4 border-t border-slate-800 flex justify-between items-center">
                     <div>
                       <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mb-1">Total Settlement</p>
                       <p className="text-xs text-slate-400 font-light italic">All taxes included where applicable.</p>
                     </div>
-                    <p className="text-4xl font-serif tracking-tighter">${selectedOrder.finalAmount?.toLocaleString()}</p>
+                    <p className="text-4xl font-serif tracking-tighter">RWF{selectedOrder.finalAmount?.toLocaleString()}</p>
                   </div>
                 </div>
               </section>

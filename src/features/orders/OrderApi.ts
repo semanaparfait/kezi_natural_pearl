@@ -21,7 +21,31 @@ export const orderApi = baseApi.injectEndpoints({
             url: `/api/v1/order/id`,
         }),
     }),
+    cancelOrder: build.mutation({
+        query: (orderId) => ({
+            url: `/api/v1/order/cancel/id`,
+            method: 'PATCH',
+  }),
+    }),
+    confirmOrder: build.mutation({
+      query: (orderId) => ({
+        url: `/api/v1/order/confirm/id`,
+        method: 'PATCH',
+        }),
+    }),
+    shipOrder: build.mutation({
+      query: (orderId) => ({
+        url: `/api/v1/order/ship/id`,
+        method: 'PATCH',
+        }),
+    }),
+    deliverOrder: build.mutation({
+      query: (orderId) => ({
+        url: `/api/v1/order/deliver/id`,
+        method: 'PATCH',
+        }),
+    }),
   }),
 });
 
-export const { useCreateOrderMutation, useGetMyOrdersQuery, useGetOrderByIdQuery, useGetAllOrdersQuery } = orderApi;
+export const { useCreateOrderMutation, useGetMyOrdersQuery, useGetOrderByIdQuery, useGetAllOrdersQuery, useCancelOrderMutation, useConfirmOrderMutation, useShipOrderMutation, useDeliverOrderMutation } = orderApi;

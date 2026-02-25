@@ -1,14 +1,12 @@
 import { useGetProductsQuery, useDeleteProductMutation, useEditProductMutation } from "@/features/products/productsApi";
 import Loading from "@/components/Loading";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
 import { useGetCategoriesQuery } from "@/features/category/categoryApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Edit3, Trash2, Search, Package, X, Camera } from "lucide-react";
+import { Edit3, Trash2, Search, X, Camera } from "lucide-react";
 
 function ListProducts() {
-  const { data: products, isLoading, isError } = useGetProductsQuery();
+  const { data: products, isLoading } = useGetProductsQuery();
   const [deleteProduct] = useDeleteProductMutation();
   const [editProduct, { isLoading: isEditing }] = useEditProductMutation();
   const { data: categories } = useGetCategoriesQuery();

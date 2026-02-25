@@ -77,7 +77,7 @@ function Category() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-6 md:px-8"
+        className="mt-8 grid grid-cols-1 md:grid-cols-4  gap-6 max-w-6xl mx-auto px-6 md:px-8"
       >
         {categories?.slice(0,4).map((category) => (
           <motion.div

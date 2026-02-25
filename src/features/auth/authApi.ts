@@ -31,14 +31,14 @@ export const authSlice = baseApi.injectEndpoints({
                 body: { email },
             }),
         }),
-        updateUser: builder.mutation< AuthResponse, Partial<RegisterData>>({
-            query: (data) => ({
-                url: '/api/v1/user/update',
-                method: 'PATCH',
-                body: data,
+            updateUser: builder.mutation<AuthResponse, FormData>({
+                query: (formData) => ({
+                    url: '/api/v1/user/update',
+                    method: 'PATCH',
+                    body: formData,
+                }),
+                invalidatesTags: ['User'],
             }),
-            invalidatesTags: ['User'],
-        }),
             updateUserProfile: builder.mutation<AuthResponse, FormData>({
             query: (formData) => ({
                 url: '/api/v1/user/me',

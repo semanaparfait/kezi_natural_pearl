@@ -71,7 +71,7 @@ function Blogs() {
             </div>
 
             <h1 className="font-serif text-4xl md:text-5xl text-(--primary) italic leading-tight">
-              Insight into <br /> Our Blog
+              Insight into <br /> Our Community
             </h1>
           </div>
 

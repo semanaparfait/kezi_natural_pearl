@@ -183,8 +183,8 @@ function Community() {
           style={{ backgroundImage: 'radial-gradient(#3f5f50 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
         </div>
 
-        <div className=" mt-10 md:mt-0 mx-auto px-6 md:px-10">
-          <div className="flex   items-center   ">
+        <div className=" mt-10 md:mt-0 mx-auto px-6 md:px-10 ">
+          <div className="flex items-center   ">
             <div className="lg:col-span-5 space-y-10 relative z-10 ">
               <div className="inline-block animate-fade-in-up">
                 <div className="flex items-center gap-3">
@@ -227,9 +227,9 @@ function Community() {
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Active Members</span>
               </div>
             </div>
-            <div className="lg:col-span-7 bg-yellow-400  relative h-[600px] md:h-[800px] flex items-center justify-center lg:justify-end ">
+            <div className="lg:col-span-7   relative h-[600px] md:h-[800px] flex items-center justify-center lg:justify-end ">
               <div className="relative w-full max-w-md md:max-w-lg h-full">
-                <div className="absolute  top-1/4 -left-12 md:-left-24 w-48 h-64 md:w-56 md:h-72 hidden md:block">
+                <div className="absolute  top-1/4  right-[-20] ml-10 w-48 h-64 md:w-56 md:h-72 hidden md:block">
                   <div className="absolute inset-0 bg-[var(--primary)] rounded-[3rem] transform -translate-x-3 translate-y-3"></div>
                   <div className="relative w-full h-full rounded-[3rem] overflow-hidden border-4 border-white shadow-xl rotate-[-5deg] hover:rotate-0 transition-all duration-500">
                     <img
@@ -276,7 +276,7 @@ function Community() {
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           {filteredBlogs.map((post) => (
             <article
               key={post.id}

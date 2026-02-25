@@ -4,29 +4,29 @@ import { motion  } from "framer-motion"
 import type{ Variants } from 'framer-motion';
 
 function WhyChooseKezi() {
-  const reasons = [
-    {
-      id: "01",
-      title: "Artisanal Craftsmanship",
-      description:
-        "Every product is handcrafted in small batches using traditional wisdom passed down through generations.",
-      icon: <Award size={20} />
-    },
-    {
-      id: "02",
-      title: "100% Organic & Bio-Active",
-      description:
-        "We source pure, nutrient-rich botanicals to ensure your skin receives only the best nature offers.",
-      icon: <Leaf size={20} />
-    },
-    {
-      id: "03",
-      title: "Dermatologically Gentle",
-      description:
-        "Our formulas are pH-balanced and free from synthetic chemicals, making them safe for sensitive skin.",
-      icon: <ShieldCheck size={20} />
-    }
-  ]
+const reasons = [
+  {
+    id: "01",
+    title: "Handcrafted with Care",
+    description:
+      "Each product is carefully made by hand in small batches to ensure high quality and attention to detail.",
+    icon: <Award size={20} />
+  },
+  {
+    id: "02",
+    title: "100% Natural Ingredients",
+    description:
+      "We use pure, natural plant ingredients that are rich in nutrients and safe for your skin.",
+    icon: <Leaf size={20} />
+  },
+  {
+    id: "03",
+    title: "Gentle on Your Skin",
+    description:
+      "Our products are balanced and free from harsh chemicals, making them safe even for sensitive skin.",
+    icon: <ShieldCheck size={20} />
+  }
+]
 
 
   const container: Variants = {
@@ -101,7 +101,7 @@ function WhyChooseKezi() {
               </div>
 
               <h2 className="text-4xl md:text-5xl font-serif text-(--primary) italic leading-tight">
-                Why Choose Kezi.
+                Made for You.
               </h2>
             </motion.div>
             <motion.div variants={container} className="space-y-10">

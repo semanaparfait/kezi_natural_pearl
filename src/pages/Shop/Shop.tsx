@@ -323,7 +323,7 @@ function Shop() {
                 </div>
                                     <div className="flex items-baseline gap-2 mb-4">
                   <span className="text-sm font-bold text-gray-900">
-                    {product.price.toLocaleString()} RWF
+                    {product.price.toLocaleString()} 
                   </span>
                   <span className="text-[10px] text-gray-400 line-through">
                     {product.price.toLocaleString()} RWF

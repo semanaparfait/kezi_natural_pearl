@@ -62,7 +62,14 @@ export const authSlice = baseApi.injectEndpoints({
                 method: 'POST',
             }),
         }),
+        authGoogle: builder.mutation<AuthResponse, { token: string }>({
+            query: ({ token }) => ({
+                url: '/api/v1/auth/google',
+                method: 'POST',
+                body: { token },
+            }),
+        }),
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation, useLogoutMutation } = authSlice;
+export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation, useLogoutMutation, useAuthGoogleMutation } = authSlice;

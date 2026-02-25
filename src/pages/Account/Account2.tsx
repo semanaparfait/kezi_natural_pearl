@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import toast from "react-hot-toast";
-import {useLoginMutation,useRegisterMutation} from '@/features/auth/authApi'
+import {useLoginMutation,useRegisterMutation,useForgotPasswordMutation} from '@/features/auth/authApi'
 
 function Account2() {
   const navigate = useNavigate();
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
   const [authType, setAuthType] = useState("customer");
   const [action, setAction] = useState<'signup' | 'signin' | 'forgotPassword'>('signin');
   const [forgotPasswordStep, setForgotPasswordStep] = useState<'email' | 'verify' | 'reset'>('email');
@@ -20,6 +21,7 @@ function Account2() {
     newPassword: '',
     confirmPassword: '',
   });
+  
   const [verificationCode, setVerificationCode] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
@@ -220,7 +222,7 @@ function Account2() {
                         <Input
                           label="Email Address"
                           type="email"
-                          placeholder="email@example.com"
+                          placeholder="emailforg@example.com"
                           fullWidth
                           value={formData.email}
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -245,21 +247,14 @@ function Account2() {
                           <Mail size={16} className="text-blue-600 shrink-0 mt-0.5" />
                           <p className="text-[9px] text-blue-600 font-bold">Check your email inbox and spam folder</p>
                         </div>
-                        <Input
-                          label="Verification Code"
-                          type="text"
-                          placeholder="Enter 4-6 digit code"
-                          fullWidth
-                          value={verificationCode}
-                          onChange={(e) => setVerificationCode(e.target.value)}
-                        />
-                        <Button
+
+                        {/* <Button
                           type="submit"
                           disabled={isVerifying}
                           className="w-full py-3 bg-emerald-900 text-white font-bold text-[9px] uppercase tracking-widest rounded-lg shadow-lg"
                         >
                           {isVerifying ? 'Verifying...' : 'Verify Code'}
-                        </Button>
+                        </Button> */}
                       </form>
                     )}
 

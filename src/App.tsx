@@ -22,6 +22,7 @@ import Community from "@/pages/Community/Community";
 import Orders from "@/pages/Orders/Orders";
 import Invoice from "@/pages/Invoice/Invoice";
 import Wishlist from "@/pages/Wishlist/Wishlist";
+import ForgotPassword from "./pages/Forgot-Password/ForgotPassword";
 function App() {
 
 
@@ -37,6 +38,7 @@ function App() {
     <Route path="/account" element={<Account />} />
     <Route path="/account1" element={<Account1 />} />
     <Route path="/account2" element={<Account2 />} />
+    <Route path="/forgot-password" element={<ForgotPassword />} />
     <Route path="/about" element={<About />} />
     <Route path="/community" element={<Community />} />
     <Route path="/shop" element={<Shop />} />

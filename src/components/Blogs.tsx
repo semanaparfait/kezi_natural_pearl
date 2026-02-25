@@ -1,6 +1,7 @@
 import { ArrowUpRight, Calendar } from 'lucide-react'
 import { motion } from "framer-motion"
 import type{ Variants } from "framer-motion"
+import { Link } from 'react-router-dom'
 
 function Blogs() {
 
@@ -148,9 +149,10 @@ function Blogs() {
           viewport={{ once: true }}
           className="mt-16 flex justify-center"
         >
-          <button className="px-10 py-3 rounded-full border border-(--primary) text-[11px] font-bold uppercase tracking-[0.2em] text-(--primary) hover:bg-(--primary) hover:text-white transition-all duration-300">
+          <Link to="/community"
+           className="px-10 py-3 rounded-full border border-(--primary) text-[11px] font-bold uppercase tracking-[0.2em] text-(--primary) hover:bg-(--primary) hover:text-white transition-all duration-300">
             Explore All Stories
-          </button>
+          </Link>
         </motion.div>
 
       </div>

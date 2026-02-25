@@ -24,6 +24,13 @@ export const authSlice = baseApi.injectEndpoints({
             }),
             providesTags: ['User'],
         }),
+        forgotPassword: builder.mutation<void, { email: string }>({
+            query: ({ email }) => ({
+                url: '/api/v1/auth/forgot-password',
+                method: 'POST',
+                body: { email },
+            }),
+        }),
         updateUser: builder.mutation< AuthResponse, Partial<RegisterData>>({
             query: (data) => ({
                 url: '/api/v1/user/update',
@@ -72,4 +79,4 @@ export const authSlice = baseApi.injectEndpoints({
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation, useLogoutMutation, useAuthGoogleMutation } = authSlice;
+export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery, useUpdateUserMutation, useDeleteUserMutation, useLogoutMutation, useAuthGoogleMutation, useForgotPasswordMutation } = authSlice;

@@ -80,7 +80,7 @@ function Navbar() {
           ))}
         </ul>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 ">
+          <div className="flex items-center gap-2 hidden">
             <Globe />
             <select className=" rounded-md p-1 outline-none">
               <option value="en">EN</option>
@@ -88,7 +88,7 @@ function Navbar() {
               <option value="fr">FR</option>
             </select>
           </div>
-          {currentUser && currentUser.role !== 'admin' && (
+          {currentUser &&  (
             <Link to="/wishlist" className="relative">
           <Heart size={20} className="text-white" />
           {wishlistCount > 0 && (
@@ -98,7 +98,7 @@ function Navbar() {
           )}
           </Link>
             )}
-            {currentUser && currentUser.role !== 'admin' && (
+            {/* {currentUser &&  ( */}
           <Link to="/cart" className="relative">
           <ShoppingCart />
           {cart.length > 0 && (
@@ -107,7 +107,7 @@ function Navbar() {
             </span>
           )}
           </Link>
-              )}
+              {/* )} */}
 
           <div className="relative">
   {currentUser ? (

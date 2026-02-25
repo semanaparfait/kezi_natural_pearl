@@ -62,7 +62,9 @@ function Community() {
               </h2>
 
               <p className="text-gray-500 font-light text-sm max-w-sm leading-relaxed italic">
-                Because skincare is more than just a routine—it's a shared journey toward confidence and natural purity.
+                Skincare is personal. <br />
+                It’s confidence. It’s comfort. It’s care. <br />
+                And we’re honored to be part of your journey.
               </p>
             </div>
 

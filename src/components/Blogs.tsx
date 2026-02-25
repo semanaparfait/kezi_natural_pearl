@@ -77,7 +77,7 @@ function Blogs() {
 
           <div className="md:text-right max-w-sm">
             <p className="text-gray-400 text-sm font-light italic leading-relaxed">
-              A curated space for skincare rituals, sustainability stories, and the science of natural beauty.
+              This is where we share moments, events, skincare tips, and stories from the Kezi family.
             </p>
           </div>
         </motion.div>

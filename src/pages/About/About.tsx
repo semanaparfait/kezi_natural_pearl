@@ -27,7 +27,8 @@ function About() {
           <span className="text-[10px] uppercase tracking-[0.5em] font-bold mb-4 block">Since 2020</span>
           <h1 className="font-serif italic text-5xl md:text-7xl mb-4">Our Essence</h1>
           <p className="max-w-xl mx-auto font-light text-gray-200 italic leading-relaxed">
-            Revolutionizing the skincare industry through the raw power of Rwandan botanicals and artisanal purity.
+            We care about your skin and your confidence.
+ Kezi Natural was created to bring you gentle, honest skincare made with carefully selected natural ingredients from trusted global sources.
           </p>
         </div>
       </div>
@@ -54,10 +55,9 @@ function About() {
             </div>
             <h2 className="font-serif text-4xl md:text-5xl text-(--primary) italic">A Legacy Crafted by Nature</h2>
             <p className="text-gray-600 font-light leading-relaxed italic">
-              Our journey began with a simple observation: nature already holds the secrets to radiance. Founded in 2020, Kezi Natural Pearl was built to bridge the gap between traditional wisdom and modern luxury. 
-              <br /><br />
-              Every pearl essence and botanical extract is a testament to our commitment to the Rwandan soil and the hands that harvest its bounty.
-            </p>
+            Kezi began with a simple belief: nature already holds the power to nourish and restore the skin.
+            Since 2020, we have been crafting skincare products inspired by botanical purity and modern simplicity.              <br /><br />
+            Every formula reflects our commitment to quality, transparency, and care — so you can feel confident in what you use every day.            </p>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[var(--bolder-gray)]/30">
@@ -80,8 +80,8 @@ function About() {
             <Quote className="text-[var(--gold-color)] opacity-30" size={64} />
             <h2 className="font-serif text-4xl md:text-5xl italic leading-tight">Our Mission is <br /> <span className="text-[var(--gold-color)]">Transparency.</span></h2>
             <p className="text-gray-300 font-light text-lg leading-relaxed italic max-w-lg">
-              We exist to empower our community and your skin. By sourcing 100% organic ingredients directly from local Rwandan farmers, we ensure that every drop is as ethical as it is effective.
-            </p>
+We believe you deserve to know what touches your skin.
+That’s why we focus on clear ingredient sourcing, ethical production practices, and formulas that are gentle yet effective.            </p>
             <div className="pt-4">
                <button className="px-10 py-3 rounded-full border border-[var(--gold-color)] text-[var(--gold-color)] text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-[var(--gold-color)] hover:text-white transition-all">
                  Read Our Ethics
@@ -121,11 +121,12 @@ function About() {
               
               <h2 className="font-serif text-4xl md:text-5xl text-(--primary) italic leading-tight">
                 A Future Rooted in <br />
-                <span className="text-[var(--gold-color)]">Artisanal Luxury.</span>
+                <span className="text-[var(--gold-color)]">Care.</span>
               </h2>
               
               <p className="text-gray-500 font-light text-lg leading-relaxed italic max-w-lg">
-                We envision a world where beauty is no longer defined by synthetic speed, but by the slow, intentional rhythm of nature. Our goal is to set the global standard for Rwandan skincare excellence.
+As we grow, our promise remains simple, to create skincare that feels safe, natural, and thoughtfully made.
+ Our goal is not just beauty, but confidence and comfort for every customer.
               </p>
             </div>
 

@@ -7,16 +7,16 @@ function WhyChooseKezi() {
 const reasons = [
   {
     id: "01",
-    title: "Handcrafted with Care",
+    title: "Made with Intention",
     description:
-      "Each product is carefully made by hand in small batches to ensure high quality and attention to detail.",
+      "Every product is handcrafted in small batches using carefully selected natural ingredients so your skin gets real care, not harsh chemicals.",
     icon: <Award size={20} />
   },
   {
     id: "02",
-    title: "100% Natural Ingredients",
+    title: "Pure, Honest Ingredients",
     description:
-      "We use pure, natural plant ingredients that are rich in nutrients and safe for your skin.",
+      "We use plant-based oils and butters rich in nutrients to nourish and protect your skin safely and naturally.",
     icon: <Leaf size={20} />
   },
   {
@@ -103,6 +103,9 @@ const reasons = [
               <h2 className="text-4xl md:text-5xl font-serif text-(--primary) italic leading-tight">
                 Made for You.
               </h2>
+              <p>We care about your skin and your confidence.
+                  At Kezi Natural, skincare isn’t just routine it’s comfort.
+                  Welcome home.</p>
             </motion.div>
             <motion.div variants={container} className="space-y-10">
               {reasons.map((reason) => (

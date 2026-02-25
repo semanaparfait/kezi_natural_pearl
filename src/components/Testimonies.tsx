@@ -67,7 +67,8 @@ function Testimonies() {
           Loved by Our Customers
         </h2>
         <p className="text-sm text-gray-500 font-light leading-relaxed">
-          See how our artisanal soaps have helped people feel confident and refreshed in their natural skin.
+          Real stories from people who trust Kezi every day.
+
         </p>
       </motion.div>
 

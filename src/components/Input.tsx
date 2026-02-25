@@ -3,13 +3,14 @@ import type { InputProps } from "@/types/InputTypes"
 import { useId } from "react"
 
 interface EnhancedInputProps extends InputProps {
-  error?: string
-  helperText?: string
-  fullWidth?: boolean
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
-  min?: number
-  max?: number
+  error?: string;
+  helperText?: string;
+  fullWidth?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  min?: number;
+  max?: number;
+  name?: string;
 }
 
 const baseClass =

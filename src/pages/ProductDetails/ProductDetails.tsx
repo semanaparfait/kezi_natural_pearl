@@ -253,7 +253,12 @@ const handleAddRelatedToCart = async (product: any) => {
 
                             {activeDetailTab === 'ingredients' && (
                             <div className="space-y-3 text-gray-700">
-                                <p>{products.ingredients}</p>
+                                {/* <p>{products.ingredients}</p> */}
+                                <ul>
+                                {products.ingredients.split(',').map((item, index) => (
+                                    <li key={index}>{item.trim()}</li>
+                                ))}
+                                </ul>
                             </div>
                             )}
 

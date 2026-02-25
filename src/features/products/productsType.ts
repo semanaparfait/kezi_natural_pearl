@@ -17,11 +17,11 @@ export interface ProductTypeResponse {
   name: string;
   description: string;
   category: {
+    id: string;
     name: string;
-    image:string;
+    image: string;
   };
   price: number;
   stockQuantity: number;
   ingredients: string;
-
 }

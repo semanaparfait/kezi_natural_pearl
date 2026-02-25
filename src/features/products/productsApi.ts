@@ -1,5 +1,6 @@
 import { baseApi } from "@/services/baseApi";
 import type {ProductTypeResponse} from '@/features/products/productsType'
+import { Edit } from "lucide-react";
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -32,7 +33,18 @@ export const productsApi = baseApi.injectEndpoints({
         }),
         providesTags: (_result, _error, id) => [{ type: 'Products', id }],
     }),
+    EditProduct: builder.mutation<ProductTypeResponse, { id: string; formData: FormData }>({
+        query: ({ id, formData }) => ({
+            url: `/api/v1/product/${id}`,
+            method: "PATCH",
+            body: formData,
+        }),
+                invalidatesTags: (_result, _error, { id }) => [
+                    { type: 'Products', id },
+                    { type: 'Products' }, // Invalidate the list so useGetProductsQuery refetches
+                ],
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useAddProductMutation, useDeleteProductMutation, useGetProductByIdQuery } = productsApi;
+export const { useGetProductsQuery, useAddProductMutation, useDeleteProductMutation, useGetProductByIdQuery, useEditProductMutation } = productsApi;

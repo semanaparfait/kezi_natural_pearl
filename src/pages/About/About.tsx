@@ -2,6 +2,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Quote,ArrowRight } from "lucide-react";
 import owner from '@/assets/about/WhatsApp Image 2026-01-26 at 1.07.31 PM (2).jpeg'
+import about from '@/assets/about/about.jpeg'
 import Testimonies from "@/components/Testimonies";
 
 function About() {
@@ -39,7 +40,7 @@ function About() {
           <div className="relative">
             <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-[12px] border-white w-full aspect-square md:w-[450px]">
               <img 
-                src="https://i.pinimg.com/736x/fb/04/4b/fb044bc8dd66189574cb992b0abf6f9a.jpg" 
+                src={about} 
                 alt="Our Story" 
                 className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110"
               />

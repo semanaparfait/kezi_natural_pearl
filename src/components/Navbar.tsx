@@ -88,7 +88,7 @@ function Navbar() {
               <option value="fr">FR</option>
             </select>
           </div>
-          {currentUser &&  (
+          {currentUser && (
             <Link to="/wishlist" className="relative">
           <Heart size={20} className="text-white" />
           {wishlistCount > 0 && (
@@ -98,7 +98,6 @@ function Navbar() {
           )}
           </Link>
             )}
-            {/* {currentUser &&  ( */}
           <Link to="/cart" className="relative">
           <ShoppingCart />
           {cart.length > 0 && (
@@ -107,7 +106,6 @@ function Navbar() {
             </span>
           )}
           </Link>
-              {/* )} */}
 
           <div className="relative">
   {currentUser ? (

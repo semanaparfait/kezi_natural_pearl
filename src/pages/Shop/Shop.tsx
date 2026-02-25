@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  ShoppingBag, Heart, ArrowUpDown,  X,User, Banknote } from "lucide-react";
+import {  ShoppingBag, Heart, ArrowUpDown,  X,User, Banknote,ChevronDown  } from "lucide-react";
 // import {products} from "@/components/products"
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -14,6 +14,7 @@ import { useAddToCartMutation } from '@/features/cart/cartApi';
 import {useAddToWishlistMutation} from '@/features/wishlist/wishlist';
 import { useGetCartItemsQuery } from '@/features/cart/cartApi';
 import { useGetWishlistQuery } from '@/features/wishlist/wishlist'
+import {useGetCurrencyQuery,useUpdateCurrencyMutation} from '@/features/Currency/Currency'
 
 
 
@@ -28,6 +29,8 @@ function Shop() {
   const { data: products } = useGetProductsQuery(undefined);
   const [addToCart] = useAddToCartMutation();
   const [addToWishlist] = useAddToWishlistMutation();
+  const { data: currencyData } = useGetCurrencyQuery(undefined);
+  const [updateCurrency] = useUpdateCurrencyMutation();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const productsPerPage = 6;
   
@@ -211,19 +214,40 @@ function Shop() {
           <span className="text-(--primary)">{sorted.length}</span> Curated Items
         </p>
         {/* for currences */}
-        <div className="flex items-center gap-2">
-          <Banknote size={12} className="text-gray-400" />
+      <div className="group relative flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-100 bg-white/50 hover:bg-white hover:shadow-sm transition-all duration-300">
+        {/* The Icon */}
+        <Banknote size={14} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
+        
+        <div className="relative flex items-center">
           <select
             value={currency}
-            onChange={e => setCurrency(e.target.value)}
-            className="bg-transparent text-[10px] font-bold uppercase tracking-widest focus:outline-none cursor-pointer text-(--primary)"
+            onChange={async (e) => {
+              const newCurrencyId = e.target.value;
+              setCurrency(newCurrencyId);
+              try {
+                await updateCurrency({ currencyId: newCurrencyId }).unwrap();
+                toast.success('Currency updated!');
+              } catch (err) {
+                toast.error('Failed to update currency');
+              }
+            }}
+            className="appearance-none bg-transparent pr-5 text-[10px] font-black uppercase tracking-[0.15em] text-slate-700 focus:outline-none cursor-pointer z-10"
           >
-            <option value="RWF">RW (RWF)</option>
-            <option value="USD">Dollar (USD)</option>
-            <option value="EUR">Euro (EUR)</option>
-            <option value="GBP">Pound (GBP)</option>
+            <option>Select currency</option>
+            {currencyData?.map((curr) => (
+              <option key={curr.id} value={curr.id}>
+                {curr.code} — {curr.name}
+              </option>
+            ))}
           </select>
+          
+          {/* Custom Chevron - Makes it look "Classic" rather than "Default Browser" */}
+          <ChevronDown 
+            size={10} 
+            className="absolute right-0 pointer-events-none text-slate-400 group-hover:text-slate-900 transition-colors" 
+          />
         </div>
+      </div>
         {/* price sorting */}
                 <div className="flex items-center gap-2">
           <ArrowUpDown size={12} className="text-gray-400" />
@@ -323,11 +347,13 @@ function Shop() {
                 </div>
                                     <div className="flex items-baseline gap-2 mb-4">
                   <span className="text-sm font-bold text-gray-900">
-                    {product.price.toLocaleString()} 
+                    {product.priceFormatted.toLocaleString()} 
                   </span>
-                  <span className="text-[10px] text-gray-400 line-through">
-                    {product.price.toLocaleString()} RWF
-                  </span>
+            {product.oldPriceFormatted && !isNaN(Number(product.oldPriceFormatted)) && (
+              <span className="text-[10px] text-gray-400 line-through">
+                {Number(product.oldPriceFormatted).toLocaleString()} RWF
+              </span>
+            )}
                 </div>
 
                 <div className=" flex items-center gap-2 ">

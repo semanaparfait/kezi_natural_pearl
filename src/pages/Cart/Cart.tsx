@@ -189,7 +189,7 @@ function Cart() {
                     </div>
 
                     <div className="text-right flex flex-col items-end gap-4 min-w-[100px]">
-                      <p className="font-serif text-lg text-[var(--primary)]">{(item.totalPrice || 0).toLocaleString()} RWF</p>
+                      <p className="font-serif text-lg text-[var(--primary)]">{item.totalPriceFormatted} </p>
                       <button onClick={() => removeItem(item.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-all">
                         <Trash2 size={16} />
                       </button>
@@ -226,7 +226,7 @@ function Cart() {
             <div className="space-y-4">
               <div className="flex justify-between text-sm font-light text-white/70 italic">
                 <span>Subtotal</span>
-                <span>{subtotal.toLocaleString()} RWF</span>
+                <span>{subtotal.toLocaleString()} </span>
               </div>
               {/* <div className="flex justify-between text-sm font-light text-white/70 italic hidden">
                 <span>Shipping Fees</span>
@@ -242,7 +242,7 @@ function Cart() {
               <div className="pt-6 mt-6 border-t border-white/10 flex justify-between items-end">
                 <div>
                   <p className="text-[9px] uppercase tracking-[0.3em] text-[var(--gold-color)] font-black">Total</p>
-                  <p className="text-3xl font-serif italic mt-1">{total.toLocaleString()} RWF</p>
+                  <p className="text-3xl font-serif italic mt-1">{total.toLocaleString()} </p>
                 </div>
               </div>
 

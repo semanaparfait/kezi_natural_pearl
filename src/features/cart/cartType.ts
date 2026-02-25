@@ -17,6 +17,8 @@ export interface CartItemResponse {
       quantity: number;
       unitPrice: number;
       totalPrice: number;
+      unitPriceFormatted: string;
+      totalPriceFormatted: string;
     },
 ]
 }

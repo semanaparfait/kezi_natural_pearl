@@ -21,7 +21,11 @@ export interface ProductTypeResponse {
     name: string;
     image: string;
   };
-  price: number;
-  stockQuantity: number;
-  ingredients: string;
+    price: number;
+    priceFormatted: string;
+    oldPrice: number;
+    oldPriceFormatted: string;
+    stockQuantity: number;
+    ingredients: string;
+
 }

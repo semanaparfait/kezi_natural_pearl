@@ -80,7 +80,7 @@ function Footer() {
       {/* Copyright */}
       <footer className='border-t border-white/20 px-6 py-6'>
         <div className='mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4'>
-          <p className='text-sm text-white/70'>&copy; {new Date().getFullYear()} Kezi Natural Pearls. All rights reserved.</p>
+          <p className='text-sm text-white/70'>&copy; {new Date().getFullYear()} Kezi Natural Pearls. powered by Solvit A frica.</p>
           <div className='flex gap-6 text-sm text-white/70'>
             <a href='#' className='hover:text-white transition'>Privacy Policy</a>
             <a href='#' className='hover:text-white transition'>Terms of Service</a>

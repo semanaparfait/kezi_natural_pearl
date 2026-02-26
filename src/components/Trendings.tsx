@@ -59,7 +59,7 @@ function Trendings() {
           One Girl's Journey To Making Her Fashion Dreams Come True
         </p>
 
-        <div className="flex justify-center gap-8 text-xs font-bold tracking-widest border-b border-gray-100 pb-4 max-w-xs mx-auto">
+        <div className="flex justify-center gap-8 text-xs font-bold tracking-widest border-b border-gray-100 pb-4 max-w-xs mx-auto hidden">
           <button className="text-black border-b-2 border-black pb-4 -mb-4">FEATURED</button>
           <button className="text-gray-400 hover:text-black">BEST SELLERS</button>
           <button className="text-gray-400 hover:text-black">NEW ARRIVALS</button>

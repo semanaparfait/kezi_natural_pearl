@@ -22,28 +22,31 @@ export const orderApi = baseApi.injectEndpoints({
         }),
     }),
     cancelOrder: build.mutation({
-        query: () => ({
-          url: `/api/v1/order/cancel/id`,
+        query: (id) => ({
+          url: `/api/v1/order/admin/cancel/${id}`,
           method: 'PATCH',
         }),
     }),
     confirmOrder: build.mutation({
-      query: () => ({
-        url: `/api/v1/order/confirm/id`,
+      query: (id) => ({
+        url: `/api/v1/order/admin/process/${id}`,
         method: 'PATCH',
       }),
+      invalidatesTags: ['Orders'],
     }),
     shipOrder: build.mutation({
-      query: () => ({
-        url: `/api/v1/order/ship/id`,
+      query: (id) => ({
+        url: `/api/v1/order/admin/ship/${id}`,
         method: 'PATCH',
       }),
+      invalidatesTags: ['Orders'],
     }),
     deliverOrder: build.mutation({
-      query: () => ({
-        url: `/api/v1/order/deliver/id`,
+      query: (id) => ({
+        url: `/api/v1/order/admin/deliver/${id}`,
         method: 'PATCH',
       }),
+      invalidatesTags: ['Orders'],
     }),
   }),
 });

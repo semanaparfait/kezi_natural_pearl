@@ -349,7 +349,7 @@ function CheckOut() {
                                     <div className="flex-1 min-w-0">
                                         <p className="text-sm font-black text-[var(--primary)] uppercase tracking-tight truncate">{item.product.name}</p>
                                         <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">Quantity: {item.quantity}</p>
-                                        <p className="text-xs font-black text-gray-800 mt-2">{item.totalPrice.toLocaleString()} RWF</p>
+                                        <p className="text-xs font-black text-gray-800 mt-2">{item.totalPrice.toLocaleString()} </p>
                                     </div>
                                 </div>
                             ))}

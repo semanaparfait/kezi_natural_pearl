@@ -8,6 +8,7 @@ const currencyApi = baseApi.injectEndpoints({
                     url: '/api/v1/currency',
                     method: 'GET',
                 }),
+                 
             }),
             updateCurrency: builder.mutation<CurrencyResponse, { currencyId: string }>({
                 query: ({ currencyId }) => ({
@@ -15,6 +16,7 @@ const currencyApi = baseApi.injectEndpoints({
                     method: 'PATCH',
                     body: { currencyId },
                 }),
+                invalidatesTags: ['Products'],
             }),
         };
     },

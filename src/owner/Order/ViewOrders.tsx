@@ -12,7 +12,6 @@ import {
   CheckCircle2, 
   AlertCircle,
   Search,
-  Filter,
   X,
   ArrowRight,
   Printer,
@@ -20,7 +19,7 @@ import {
   ChevronRight,
   ChevronDown
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export interface OrderItem {
   product: {
